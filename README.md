@@ -30,7 +30,7 @@ NixOS-Test
 
 ---
 
-- ## [LOGBOOK]([./DOC/LOGBOOK.md](./LOGBOOK.md))
-- ## [LINKS]([./DOC/LINK.md](./LINK.md))
-- 
+- ## [LOGBOOK](./LOGBOOK.md)
+- ## [LINKS](./LINK.md))
+
 ---
