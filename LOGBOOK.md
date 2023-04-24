@@ -4,6 +4,8 @@
   - [SEMAINE 2 :](#semaine-2)
   - [SEMAINE 3 :](#semaine-3)
   - [SEMAINE 4 :](#semaine-4)
+  - [SEMAINE 5 :](#semaine-5)
+  - [SEMAINE 6 :](#semaine-6)
 
 ---
 
@@ -80,6 +82,29 @@
 ## Semaine 2 :
 
 ## 24/04/23 :
+- Création de clés ssh sur les différents ordinateurs ammenés à devoir communiquer avec Grid5000
+- Création d'un fichier de configuration pour les clés ssh en lien avec grid5000
+- Connexion au réseau Grid5000 via plusieurs machines
+- Continuation du tuto nixos-compose (en utilisant grid5000)
+- Réalisation de la "formation" obligatoire du CNRS (prévention des risques et incendies) (environ 2h00) (Elle doit être réalisée sur le temps de travail.)
+- Création de "jobs" sur le réseau de grid5000
+- Deploiement de job dans la platforme grid5000 sur plusieur machines
+- Connection et liberation de node du systeme grid5000
+- Ajout de paquets suplementaire dans des environnement (simple) grid5000
+- Apprentissage rapide du fonctionnement de tmux (ce qui sera utile notamment pour les liens ssh entre les machines)
+  - Ctrl + b + % = switch into 2 panes verticalement (Ctrl + b -> \<direction\> pour changer)
+  - Ctrl + b + " = switch into 2 panes horizontalement (Ctrl + b -> \<direction\> pour changer)
+  - Ctrl + b -> c = créer une nouvelle fenetre (change le numero en bas) (* montre la fenetre actuelle comme git)
+  - Ctrl + b -> \<num\> = change de fentre a celle avec le numero
+  - Ctrl + b -> , = renommage de la fenetre actuelle
+  - sur tmux les sessions correspond au processus et garde leur etat même en cas de perte de connexion par exemple donc très utilse en ssh
+  - Ctrl + b -> d = détacher la session du terminal en cours
+  - Ctrl + b -> s = Voir et choisir es différentes session a reprendre
+  - tmux ls = voir tous les session tmux en cours
+  - tmux attach -t \<nom ou num\> = pour reatacher la session
+  - tmux rename session -t \<nom ou num\> \<nouveau nom\>
+  - tmux new -S \<nouveau nom\> = creer une nouvelle session avec directement le nom
+  - tmux kill-session -t \<nom ou num\> = détruit la session
 
 ## 25/04/23 :
 
@@ -105,3 +130,26 @@
 
 ## Semaine 4 :
 
+## 09/05/23 :
+
+## 10/05/23 :
+
+## 11/05/23 :
+
+## 12/05/23 :
+
+---
+
+## Semaine 5 :
+
+## 15/05/23 :
+
+## 16/05/23 :
+
+## 17/05/23 :
+
+## 19/05/23 :
+
+-- 
+
+## Semaine 6 :
