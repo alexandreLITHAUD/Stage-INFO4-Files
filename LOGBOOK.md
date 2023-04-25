@@ -107,6 +107,21 @@
   - tmux kill-session -t \<nom ou num\> = détruit la session
 
 ## 25/04/23 :
+- **REUNION :**
+  - Rapel du premier objectif : implementation de nouveaux FS (PFS et pas NFS) notamment **[beegfs](https://github.com/NixOS/nixpkgs/tree/master/nixos/tests)**, **[gluster](https://github.com/NixOS/nixpkgs/blob/master/nixos/tests/glusterfs.nix)**, **[ceph](https://github.com/NixOS/nixpkgs/blob/master/nixos/tests/ceph-multi-node.nix)** des FS present sur nixpkgs sauf pour beegfs.
+  - PFS = Parallel File System: [NFS](https://github.com/NixOS/nixpkgs/tree/master/nixos/tests/nfs) = Network File System (Vu en cours)
+  - L'objectif de l'implementation de nouveaux file system dans nixos compose est de regarder les performance du foldind.
+  - Papier sue les performance sur le foldind : https://hal.science/hal-04038000/document
+  - Foldind = Comme on ne veux / peux pas envoyer un cluster entier de machines dans grid5000 (beaucoup de machine nécessaire) on va en envoyer moins et "virtualiser" certaine machine dans d'autre (c'est le folding). On veux voir a quel point chaque FS est capable de folder avant d'avoir une perte de performance importante
+  - Apres implementation des FS on pourras faire une "courte" phase de test de performance (ior, md2bench pour voir les performance (comme sur le tuto-nxc))
+  - (Donc on essai de limiter le nombre de machine dans dans les calculateur pour la recherche donc ecologique)
+- Continuation du tuto-nxc
+- Maintenance de 8h30 à 18h00 de la platforme Gird5000 Grenoble.. (Donc reinstallation complete dans la platforme de nancy)
+- Vision du language MPI (Message Passing Interface) (creation de topologie dans un systeme distribué)
+- Finition de la partie de base du tuto-nxc (TODO : Faire la partie "To go further")
+- Lecture des différents paquets de nixpkgs qui compose glusterfs (Dont le fichier de test)
+- Analyse du depot de glusterfs et nfs sur nixos-compose
+- Questionnement sur le fonctionnement de la creation de volume
 
 ## 26/04/23 :
 
