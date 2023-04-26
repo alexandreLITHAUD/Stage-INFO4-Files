@@ -124,6 +124,20 @@
 - Questionnement sur le fonctionnement de la creation de volume
 
 ## 26/04/23 :
+- Question sur le sujet et sur les dépots deja existant
+  - Commencer par faire les commandes à la main avant de tout automatiser
+  - (commande git grep <>)
+  - **TODO** : Lire et comprendre les modules nixos (utiliser pour l'automatisation des fileSystems)
+  - **TODO** : Lire et comprendre le fonctionnement et comment travailler avec le systemd
+  - **TODO** : Lire et comprendre les test nixos et comment les utiliser efficacement
+- Lecture de la documentation sur systemd : **[Chapter 58. Service Management](https://nixos.org/manual/nixos/stable/index.html#sect-nixos-systemd-general)**
+- Lecture de la documentation sur les modules nix : **[Chapter 67. Writing NixOS Modules](https://nixos.org/manual/nixos/stable/#sec-writing-modules)**
+- Lecture de la documentation sur les test nix : **[Chapter 71. NixOS Tests](https://nixos.org/manual/nixos/stable/#sec-nixos-tests)**
+- Création des premiers modules nixos. (after \[ ..., ... \] signifie de faire apres que les services sont vrai; oneshot = faire une seule fois même si erreur ou autre) (import -> importation d'autre modules; option -> description des valeur par défaut et du type des valeur du module; config -> la définition du module)
+- Création des premiers test nixos (+- ce que fait composition.nix -> des node/client; des serveur; (role) et un script python, C'est ce quil y a dans nixos/pkgs/tests avec un import de test python)
+- Creation d'un systeme de fichier PFS glusterfs et deploiement *manuel* sur grid5000
+- Lecture du terme d'Overlay dans NixOs : **TODO** : relire la doc **[Chapter 3. Overlays](https://nixos.org/manual/nixpkgs/stable/#chap-overlays)**
+- Test de facon de resoudre le problème de mauvaise brick lors de la creation de gluster dans grid5000 sans filesystem a part.
 
 ## 27/04/23 :
 
