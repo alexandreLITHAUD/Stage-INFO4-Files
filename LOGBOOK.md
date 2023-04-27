@@ -140,6 +140,22 @@
 - Test de facon de resoudre le problème de mauvaise brick lors de la creation de gluster dans grid5000 sans filesystem a part.
 
 ## 27/04/23 :
+- Continuation du "projet" glusterfs (FS distribué avec nixos compose)
+- Test de fonctionnement du principe de base en utilisant les VM plutot que grid5000.
+- Connexion et test de Glusterfs dans les VM (même constat que sur g5k). (Continuer à chercher)
+- Premiere vision de NUR : **[depot offciel](https://github.com/nix-community/NUR)** | **[depot](https://github.com/oar-team/nur-kapack)**
+- Lecture de la documentation NUR
+- Test de NUR
+- Lecture de l'issue beegfs sur nixos. Pour pouvoir reprendre les information pour implementer beegfs dans nixos-compose.
+  - **issue** : https://github.com/NixOS/nixpkgs/pull/740
+- Copie et analyse du default.nix et test.nix de beegfs avant la suppresion du dépot nixos.
+- Essai de fonctionnement de beegfs sur nixos-compose en utilisant les ressources supprimé du dépot officiel.
+- Creation de script de base (pas encore fonctionel)
+- Analyse des dépots et de plusieurs issues github sur le sujet
+- Correction de bug sur le script (notamment le problème du au fait que le package n'est plus existant et que son appel entraine une erreur ce qui fait qu'il faut renommer les services dans le module)
+- Objectif :
+  - Simplifier ce script afin de faire marcher un volume simple.
+  - Puis améliorer ce script pour le rendre automatique (module et overlays)
 
 ## 28/04/23 :
 
