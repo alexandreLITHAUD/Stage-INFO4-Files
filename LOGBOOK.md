@@ -158,6 +158,21 @@
   - Puis améliorer ce script pour le rendre automatique (module et overlays)
 
 ## 28/04/23 :
+- Continuation d'amelioration du script pour beegfs
+- Lecture et Analyse du module kernel de l'issues github
+- Simplification et correction de quelques bug sur le script
+- Test de fonctionnement du script classique simple (encore quelque bug)
+- **Problemes** : 
+  - Le module depend encore d'un autre module qui n'existe plus
+  - Donc je commence par juste essayer d'importer le default.nix pour voir si le paquet fonctionne
+  - Probleme de packaging du default.nix de beegfs il est donc pas possible de l'importer pour le moment (default est une derivation)
+  - Erreur me disant que le package n'est pas unfree ?? (sachant que ma configuration accept deja les paquets unfree) 
+  - Le probleme viens du git?? C'est peut etre le fichier LICENSE.txt du git qui entraine ce comportement??
+  - Le git utilisé (url = "https://git.beegfs.com/pub/v7/repository/archive.tar.bz2?ref=\$\{version\}";) n'est pas acessible (il semble que l'extention ne soie plus .com mais .io mais meme en faisant ce changement on posède un problème de license)
+  - Reflexion sur des pistes de solutions sur le problème (*has an unfree license (‘unknown’), refusing to evaluate*)
+- Le script de beegfs n'a vraiment plus l'air de marcher (je continue les tests cepandant)
+- Lecture de multiples forums afin d'essayer de comprendre la raison du bug de license (https://discourse.nixos.org/t/allowunfree-predicate-does-not-apply-to-self-packages/21734/27)
+- TODO : comprendre d'ou viens le probleme et le corriger
 
 ---
 
