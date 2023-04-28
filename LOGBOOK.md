@@ -172,7 +172,8 @@
   - Reflexion sur des pistes de solutions sur le problème (*has an unfree license (‘unknown’), refusing to evaluate*)
 - Le script de beegfs n'a vraiment plus l'air de marcher (je continue les tests cepandant)
 - Lecture de multiples forums afin d'essayer de comprendre la raison du bug de license (https://discourse.nixos.org/t/allowunfree-predicate-does-not-apply-to-self-packages/21734/27)
-- TODO : comprendre d'ou viens le probleme et le corriger
+- Correction du probleme de base et creation de la VM réussite.
+- TODO : reussir a creer un volume fonctionel entre le client et le server
 
 ---
 
