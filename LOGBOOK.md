@@ -124,16 +124,70 @@
 - Questionnement sur le fonctionnement de la creation de volume
 
 ## 26/04/23 :
+- Question sur le sujet et sur les dépots deja existant
+  - Commencer par faire les commandes à la main avant de tout automatiser
+  - (commande git grep <>)
+  - **TODO** : Lire et comprendre les modules nixos (utiliser pour l'automatisation des fileSystems)
+  - **TODO** : Lire et comprendre le fonctionnement et comment travailler avec le systemd
+  - **TODO** : Lire et comprendre les test nixos et comment les utiliser efficacement
+- Lecture de la documentation sur systemd : **[Chapter 58. Service Management](https://nixos.org/manual/nixos/stable/index.html#sect-nixos-systemd-general)**
+- Lecture de la documentation sur les modules nix : **[Chapter 67. Writing NixOS Modules](https://nixos.org/manual/nixos/stable/#sec-writing-modules)**
+- Lecture de la documentation sur les test nix : **[Chapter 71. NixOS Tests](https://nixos.org/manual/nixos/stable/#sec-nixos-tests)**
+- Création des premiers modules nixos. (after \[ ..., ... \] signifie de faire apres que les services sont vrai; oneshot = faire une seule fois même si erreur ou autre) (import -> importation d'autre modules; option -> description des valeur par défaut et du type des valeur du module; config -> la définition du module)
+- Création des premiers test nixos (+- ce que fait composition.nix -> des node/client; des serveur; (role) et un script python, C'est ce quil y a dans nixos/pkgs/tests avec un import de test python)
+- Creation d'un systeme de fichier PFS glusterfs et deploiement *manuel* sur grid5000
+- Lecture du terme d'Overlay dans NixOs : **TODO** : relire la doc **[Chapter 3. Overlays](https://nixos.org/manual/nixpkgs/stable/#chap-overlays)**
+- Test de facon de resoudre le problème de mauvaise brick lors de la creation de gluster dans grid5000 sans filesystem a part.
 
 ## 27/04/23 :
+- Continuation du "projet" glusterfs (FS distribué avec nixos compose)
+- Test de fonctionnement du principe de base en utilisant les VM plutot que grid5000.
+- Connexion et test de Glusterfs dans les VM (même constat que sur g5k). (Continuer à chercher)
+- Premiere vision de NUR : **[depot offciel](https://github.com/nix-community/NUR)** | **[depot](https://github.com/oar-team/nur-kapack)**
+- Lecture de la documentation NUR
+- Test de NUR
+- Lecture de l'issue beegfs sur nixos. Pour pouvoir reprendre les information pour implementer beegfs dans nixos-compose.
+  - **issue** : https://github.com/NixOS/nixpkgs/pull/740
+- Copie et analyse du default.nix et test.nix de beegfs avant la suppresion du dépot nixos.
+- Essai de fonctionnement de beegfs sur nixos-compose en utilisant les ressources supprimé du dépot officiel.
+- Creation de script de base (pas encore fonctionel)
+- Analyse des dépots et de plusieurs issues github sur le sujet
+- Correction de bug sur le script (notamment le problème du au fait que le package n'est plus existant et que son appel entraine une erreur ce qui fait qu'il faut renommer les services dans le module)
+- Objectif :
+  - Simplifier ce script afin de faire marcher un volume simple.
+  - Puis améliorer ce script pour le rendre automatique (module et overlays)
 
 ## 28/04/23 :
+- Continuation d'amelioration du script pour beegfs
+- Lecture et Analyse du module kernel de l'issues github
+- Simplification et correction de quelques bug sur le script
+- Test de fonctionnement du script classique simple (encore quelque bug)
+- **Problemes** : 
+  - Le module depend encore d'un autre module qui n'existe plus
+  - Donc je commence par juste essayer d'importer le default.nix pour voir si le paquet fonctionne
+  - Probleme de packaging du default.nix de beegfs il est donc pas possible de l'importer pour le moment (default est une derivation)
+  - Erreur me disant que le package n'est pas unfree ?? (sachant que ma configuration accept deja les paquets unfree) 
+  - Le probleme viens du git?? C'est peut etre le fichier LICENSE.txt du git qui entraine ce comportement??
+  - Le git utilisé (url = "https://git.beegfs.com/pub/v7/repository/archive.tar.bz2?ref=\$\{version\}";) n'est pas acessible (il semble que l'extention ne soie plus .com mais .io mais meme en faisant ce changement on posède un problème de license)
+  - Reflexion sur des pistes de solutions sur le problème (*has an unfree license (‘unknown’), refusing to evaluate*)
+- Le script de beegfs n'a vraiment plus l'air de marcher (je continue les tests cepandant)
+- Lecture de multiples forums afin d'essayer de comprendre la raison du bug de license (https://discourse.nixos.org/t/allowunfree-predicate-does-not-apply-to-self-packages/21734/27)
+- Correction du probleme de base et creation de la VM réussite.
+- TODO : reussir a creer un volume fonctionel entre le client et le server
 
 ---
 
 ## Semaine 3 :
 
 ## 02/05/23 :
+- Continuation du projet beegfs : **[REPO](./beegfs_test)**
+- Correction de quelques bug (mais toujours non fonctionel du a des problemes)
+- "Apprentissage" rapide de cmake afin de comprendre d'ou viennent les erreur de creation de la VM
+- Probleme du au fait que le programme ne trouve pas cmake et egl-wayland. Ce probleme vien apparement du manque d'une librairie. Ajout de `environment.noXlibs = false;` pour les reactiver . Issue git : https://discourse.nixos.org/t/unable-to-install-paperless-ngx/19962
+- Probleme de version dans openjdk. Par defaut c'est la version 17 qui est utiliser mais elle ne contien pas l'executable javah qui est nécessaire pour le fonctionnement de beegfs. Donc changement de la version et utilisation de openjdk8-bootsrapt et jr8 afin de s'assurer d'avoir l'executable.
+-  Manque d'une bibliothèque si on enleve la ligne noXlib. Il semble donc bien manquer des bibliothèques dans les Xlib. ` Package requirements (cairo-xlib >= 1.6) were not met: No package 'cairo-xlib' found`. Issues git : https://github.com/Homebrew/linuxbrew-core/issues/7199  |  https://github.com/NixOS/nixpkgs/issues/102137  |  https://github.com/NixOS/nixpkgs/pull/189507
+- Si on active noXlib il manque allors la presence d'un ficheir de header xattr.h qui viendrait apparement de la librairie libattr qui n'est pas presente sur nixpkgs. `fatal error: attr/xattr.h: No such file or directory`. Issues git : https://github.com/rrthomas/plptools/issues/4  |  https://github.com/pmem/pmemfile/pull/253  |  https://community.nxp.com/t5/i-MX-Processors/IMX8-fatal-error-attr-xattr-h-No-such-file-or-directory/m-p/1469852  |  https://stackoverflow.com/questions/11202056/xattrs-are-not-supported
+- Reprise de glusterfs en essayant de créer le volume dans une partition différente de celle de root. En regardant si on a toujours le problème de brick offline.
 
 ## 03/05/23 :
 
