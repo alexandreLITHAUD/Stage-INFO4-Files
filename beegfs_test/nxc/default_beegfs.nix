@@ -1,5 +1,5 @@
 { stdenv, fetchurl, pkgconfig, unzip, which #,  cmake, egl-wayland
-, libuuid, attr, xfsprogs, cppunit, rdma-core 
+, libuuid, attr, xfsprogs, cppunit, rdma-core
 , zlib, openssl, sqlite, jre8, openjdk8-bootstrap, ant
 , openssh, perl, gfortran, influxdb, curl
 } :
@@ -36,7 +36,7 @@ in stdenv.mkDerivation {
     sha256 = "1wsljd5ybyhl94aqrdfvcs8a0l8w4pr0bs1vhjrf4y7ldhw35m3k";
   };
 
-  nativeBuildInputs = [ which unzip pkgconfig cppunit openjdk8-bootstrap ant perl ]; # cmake egl-wayland ];
+  nativeBuildInputs = [ which unzip attr pkgconfig cppunit openjdk8-bootstrap ant perl ]; # cmake egl-wayland ];
 
   buildInputs = [
     libuuid
@@ -67,6 +67,26 @@ in stdenv.mkDerivation {
     tar xf pcopy-0.96.tar.gz
     sed -i 's/\([^_]\)rank/\1grank/' pcopy-0.96/src/pcp.cpp
     cd ../..
+
+    ls storage/source/toolkit
+
+    find . -name  "IncompleteInode.cpp"
+    find . -name "StorageTkEx.h"
+
+    substituteInPlace ctl/source/toolkit/XAttrTk.cpp --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
+    substituteInPlace ctl/source/toolkit/XAttrTk.h --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
+    substituteInPlace storage/source/toolkit/StorageTkEx.cpp --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
+    substituteInPlace storage/source/toolkit/StorageTkEx.h --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
+    substituteInPlace mgmtd/source/toolkit/StorageTkEx.h --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
+    substituteInPlace meta/source/toolkit/StorageTkEx.cpp --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
+    substituteInPlace meta/source/toolkit/XAttrTk.cpp --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
+    substituteInPlace meta/source/toolkit/StorageTkEx.h --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
+    substituteInPlace meta/source/toolkit/XAttrTk.h --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
+
+    substituteInPlace meta/source/toolkit/XAttrTk.cpp --replace "ENOATTR" "ENOTTY"
+
+    substituteInPlace meta/source/storage/IncompleteInode.cpp --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
+    substituteInPlace meta/source/storage/IncompleteInode.h --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
   '';
 
   buildPhase = ''
