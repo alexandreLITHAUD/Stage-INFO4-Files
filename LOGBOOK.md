@@ -183,10 +183,13 @@
 - Continuation du projet beegfs : **[REPO](./beegfs_test)**
 - Correction de quelques bug (mais toujours non fonctionel du a des problemes)
 - "Apprentissage" rapide de cmake afin de comprendre d'ou viennent les erreur de creation de la VM
-- Probleme du au fait que le programme ne trouve pas cmake et egl-wayland. Ce probleme vien apparement du manque d'une librairie. Ajout de `environment.noXlibs = false;` pour les reactiver . Issue git : https://discourse.nixos.org/t/unable-to-install-paperless-ngx/19962
+- Probleme du au fait que le programme ne trouve pas cmake et egl-wayland. Ce probleme vien apparement du manque d'une librairie. Ajout de `environment.noXlibs = false;` pour les reactiver . Issue git : https://discourse.nixos.org/t/unable-to-install-paperless-ngx/19962  |  https://github.com/NixOS/nixpkgs/issues/179938
 - Probleme de version dans openjdk. Par defaut c'est la version 17 qui est utiliser mais elle ne contien pas l'executable javah qui est nécessaire pour le fonctionnement de beegfs. Donc changement de la version et utilisation de openjdk8-bootsrapt et jr8 afin de s'assurer d'avoir l'executable.
 -  Manque d'une bibliothèque si on enleve la ligne noXlib. Il semble donc bien manquer des bibliothèques dans les Xlib. ` Package requirements (cairo-xlib >= 1.6) were not met: No package 'cairo-xlib' found`. Issues git : https://github.com/Homebrew/linuxbrew-core/issues/7199  |  https://github.com/NixOS/nixpkgs/issues/102137  |  https://github.com/NixOS/nixpkgs/pull/189507
 - Si on active noXlib il manque allors la presence d'un ficheir de header xattr.h qui viendrait apparement de la librairie libattr qui n'est pas presente sur nixpkgs. `fatal error: attr/xattr.h: No such file or directory`. Issues git : https://github.com/rrthomas/plptools/issues/4  |  https://github.com/pmem/pmemfile/pull/253  |  https://community.nxp.com/t5/i-MX-Processors/IMX8-fatal-error-attr-xattr-h-No-such-file-or-directory/m-p/1469852  |  https://stackoverflow.com/questions/11202056/xattrs-are-not-supported
+- Test de chaque phase de compilation du default manuellement (pas de comportement différent a premiere vue)
+- Changement de \<attr/xattr.h\> en \<sys/xattr.h\> sur tous les fichier qui importait cette bibliothèque en utilisant substituteInPlace. Mainteant erreur sur un flag : ` error: 'ENOATTR' was not declared in this scope; did you mean 'ENOTTY'?` TODO Corriger ça
+- Quand ça fonctionnera on pourra essayer de mettre le projet dans nur-kapack afin de rendre le projet facilement recuperable et utilisable 
 - Reprise de glusterfs en essayant de créer le volume dans une partition différente de celle de root. En regardant si on a toujours le problème de brick offline.
 
 ## 03/05/23 :
