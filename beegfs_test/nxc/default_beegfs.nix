@@ -87,6 +87,26 @@ in stdenv.mkDerivation {
 
     substituteInPlace meta/source/storage/IncompleteInode.cpp --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
     substituteInPlace meta/source/storage/IncompleteInode.h --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
+
+    substituteInPlace meta/source/storage/DirInode.h --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
+    substituteInPlace meta/source/storage/DirInode.cpp --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
+
+    substituteInPlace storage/source/net/msghelpers/MsgHelperIO.h --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
+
+    substituteInPlace upgrade/beegfs_mirror_md/source/beegfs-mirror-md.cpp --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
+
+    substituteInPlace meta/source/storage/FileInode.h --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
+    substituteInPlace meta/source/storage/FileInode.cpp --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
+
+    substituteInPlace meta/source/storage/MetaStore.h --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
+    substituteInPlace meta/source/storage/MetaStore.cpp --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
+
+    substituteInPlace meta/source/storage/DirEntry.h --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
+    substituteInPlace meta/source/storage/DirEntry.cpp --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
+    substituteInPlace meta/source/storage/DirEntry.h --replace "ENOATTR" "ENOTTY"
+    substituteInPlace meta/source/storage/DirEntry.cpp --replace "ENOATTR" "ENOTTY"
+
+    rm common/tests/TestNIC.cpp
   '';
 
   buildPhase = ''
