@@ -193,6 +193,34 @@
 - Reprise de glusterfs en essayant de créer le volume dans une partition différente de celle de root. En regardant si on a toujours le problème de brick offline.
 
 ## 03/05/23 :
+- Continuation du projet beegfs : **[REPO](./beegfs_test)**
+- Apprentissage de l'utilisation de nur-kapack (Grace à l'aide de Monsieur Richard)
+- Utilisation de l'outils de nur-kapack pour realiser les étapes de compilation manuellement afin de pouvoir facilement et rapidement corriger les erreurs.
+- Liste de commandes :
+  - Modification du nur.nix afin de rajouter le lien vers le projet que l'on veux rajouter (ici pkgs/beegfs)
+  - Rajout du fichier default.nix dans le dossier. Ce fichier contient la dérivation que l'on veux tester.
+  - `nix-shell . -A beegfs` afin de lancer un terminal avec les commandes utiles. (`declare -F` , `type function_name`)
+  - `unpackPhase` afin de 'fetch' les sources
+  - `configurationPhase`
+  - `patchPhase`
+  - `buildPhase`
+  - `installPhase`
+- Creation d'un bash de lancement de la partie build car `buildPhase` et `installPhase` cherche des makefiles or il n'y en a pas a la racine du projet. On fait donc le build "manuellement"
+- Grace a cela le probleme de sources mal localisé à pu être modifier directement dans la patchPhase avec la commande bash `substituteInPlace`
+- Probleme de test :
+```    
+> [----------] Global test environment tear-down
+> [==========] 41 tests from 12 test cases ran. (5103 ms total)
+> [  PASSED  ] 40 tests.
+> [  FAILED  ] 1 test, listed below:
+> [  FAILED  ] NIC.nic
+>
+>  1 FAILED TEST
+>   YOU HAVE 12 DISABLED TESTS
+```
+- Le fichier TestNIC.cpp semble ne pas fonctionner ici. Test de fonctionnement en supprimant le test pendant la phase de patch.
+- Build completed !
+- **TODO** : Creer des volumes distribués sur des clients et servers (faire un fichier composition.nix efficace) et mettre le projet dans nur-kapack.
 
 ## 04/05/23 :
 
