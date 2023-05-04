@@ -223,6 +223,26 @@
 - **TODO** : Creer des volumes distribués sur des clients et servers (faire un fichier composition.nix efficace) et mettre le projet dans nur-kapack.
 
 ## 04/05/23 :
+- Test des différent binaires obtenue par le build de la dérivation (fonctionnel mais manque les fichier de configuration nécessaire)
+- Discution sur le fonctionnement de nur-kapack (pk nur et pas flakes ?)
+- Discution sur le fonctionnement d'un tel systeme de packaging
+- Correction du module de fonctionnement de base de beegfs. (Il permet notamment de creer les fichiers de configurations dans le /etc qui sont essentiel pour la 
+fabrication de volume) (meta, storage, client, mgmtd)
+- Comprehention du fonctionnement de beegfs et des différents roles possible pour le bon fonctionnement d'un volume distribué
+- Problème :
+  - Existance de dépendance a pkgs.beegfs présent dans le module (le paquet à été supprimer du dépot).
+  - Ajout du path absolue donc **impure** afin de tester le bon fonctionnemet du module (toujous des problèmes notamment ligne 120 avec les makeWrappers)
+  - **TODO** trouver un moyen de corriger ce probleme
+- Test de fonctionnement du build dans nur-kapack.
+- Création d'une nouvelle branche dans nur-kapack afin de tester l'upgrade de beegfs. (Avant 7.0 maintenant 7.3)
+- Meme après l'upgrade nous avons toujous les meme probleme dans les bibliothèque libattr donc il faut toujours garder les substitution dans la `patchPhase`
+- Test de fonctionnement dans plusieurs environnement de "l'upgrade" de beegfs
+- Ajout du module beegfs dans nur-kapack. (cela permet de faciliter la compilation du module et le deploiement de l'application)
+- Debug du module dans nur-kapack (probleme de path du au fait que **${pkgs.beegfs}** deviens **${pkgs.nur.repos.kapack.beegfs}** )
+- Faire attention : il manque peux etre le module kernel sur beegfs (appel de ce module dans le module de base a voir si il est completement néessaire (je pense pas on peux faire un script plutot))
+- Problème avec a la fonction makeWrapper dans le module de beegfs (`Cannot wrap '/run/current-system/sw/bin/beegfs-check-servers' because it is not an executable file`)
+- **TODO** Faire la composition.nix de nixos-compose en utilisant le paquet pkgs de nur-kapack et pas nixpks "classique" (en train d'être fait)
+- **TODO** continuer de corriger le module et tester le fonctionnement de l'application pour pouvoir la deployer.
 
 ## 05/05/23 :
 
