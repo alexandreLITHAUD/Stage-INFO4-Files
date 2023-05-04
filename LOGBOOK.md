@@ -240,6 +240,7 @@ fabrication de volume) (meta, storage, client, mgmtd)
 - Ajout du module beegfs dans nur-kapack. (cela permet de faciliter la compilation du module et le deploiement de l'application)
 - Debug du module dans nur-kapack (probleme de path du au fait que **${pkgs.beegfs}** deviens **${pkgs.nur.repos.kapack.beegfs}** )
 - Faire attention : il manque peux etre le module kernel sur beegfs (appel de ce module dans le module de base a voir si il est completement néessaire (je pense pas on peux faire un script plutot))
+- Problème avec a la fonction makeWrapper dans le module de beegfs (`Cannot wrap '/run/current-system/sw/bin/beegfs-check-servers' because it is not an executable file`)
 - **TODO** Faire la composition.nix de nixos-compose en utilisant le paquet pkgs de nur-kapack et pas nixpks "classique" (en train d'être fait)
 - **TODO** continuer de corriger le module et tester le fonctionnement de l'application pour pouvoir la deployer.
 
