@@ -5,7 +5,7 @@
 } :
 
 let
-  version = "7.0";
+  version = "7.3";
 
   subdirs = [
     "beeond_thirdparty/build"
@@ -67,11 +67,6 @@ in stdenv.mkDerivation {
     tar xf pcopy-0.96.tar.gz
     sed -i 's/\([^_]\)rank/\1grank/' pcopy-0.96/src/pcp.cpp
     cd ../..
-
-    ls storage/source/toolkit
-
-    find . -name  "IncompleteInode.cpp"
-    find . -name "StorageTkEx.h"
 
     substituteInPlace ctl/source/toolkit/XAttrTk.cpp --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"
     substituteInPlace ctl/source/toolkit/XAttrTk.h --replace "#include <attr/xattr.h>" "#include <sys/xattr.h>"

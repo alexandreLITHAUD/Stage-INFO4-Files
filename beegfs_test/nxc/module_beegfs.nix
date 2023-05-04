@@ -74,8 +74,11 @@ let
     requires = [ "network-online.target" ];
     after = [ "network-online.target" ];
     serviceConfig = rec {
+      # pkgs.beegfs n'existe pas
+      # On tente des technologies ici
+      # ${pkgs.beegfs}/bin/beegfs-${service} \
       ExecStart = ''
-        ${pkgs.beegfs}/bin/beegfs-${service} \
+          /run/current-system/sw/bin/beegfs-${service} \
           cfgFile=${cfgFile name cfg} \
           pidFile=${PIDFile}
       '';
@@ -90,8 +93,11 @@ let
     requires = [ "network-online.target" ];
     after = [ "network-online.target" ];
     serviceConfig = rec {
+      # pkgs.beegfs n'existe pas
+      # ${pkgs.beegfs}/bin/beegfs-helperd \
+      # dans sur on remplacera par pkgs.nur.repos.kapack.beegfs
       ExecStart = ''
-        ${pkgs.beegfs}/bin/beegfs-helperd \
+          /run/current-system/sw/bin/beegfs-helperd \
           cfgFile=${configHelperd name cfg} \
           pidFile=${PIDFile}
       '';
@@ -101,23 +107,27 @@ let
    }))) cfg;
 
   # wrappers to beegfs tools. Avoid typing path of config files
+
+  # ${lib.makeBinPath [ "/run/current-system/sw" ]} --> ligne 123 (--prefix PATH :)
+  # --prefix PATH : ${lib.makeBinPath [ "/run/current-system/sw" ]}
   utilWrappers = mapAttrsToList ( name: cfg:
     ( pkgs.runCommand "beegfs-utils-${name}" {
         nativeBuildInputs = [ pkgs.makeWrapper ];
         preferLocalBuild = true;
+        # pkgs.beegfs n'existe pas
         } ''
         mkdir -p $out/bin
 
-        makeWrapper ${pkgs.beegfs}/bin/beegfs-check-servers \
+        makeWrapper /run/current-system/sw/bin/beegfs-check-servers \
                     $out/bin/beegfs-check-servers-${name} \
                     --add-flags "-c ${configClientFilename name}" \
-                    --prefix PATH : ${lib.makeBinPath [ pkgs.beegfs ]}
+                    --prefix PATH : /run/current-system/sw/
 
-        makeWrapper ${pkgs.beegfs}/bin/beegfs-ctl \
+        makeWrapper /run/current-system/sw/bin/beegfs-ctl \
                     $out/bin/beegfs-ctl-${name} \
                     --add-flags "--cfgFile=${configClientFilename name}"
 
-        makeWrapper ${pkgs.beegfs}/bin/beegfs-ctl \
+        makeWrapper /run/current-system/sw/bin/beegfs-ctl \
                     $out/bin/beegfs-df-${name} \
                     --add-flags "--cfgFile=${configClientFilename name}" \
                     --add-flags --listtargets  \
@@ -125,7 +135,7 @@ let
                     --add-flags --pools \
                     --add-flags --spaceinfo
 
-        makeWrapper ${pkgs.beegfs}/bin/beegfs-fsck \
+        makeWrapper /run/current-system/sw/bin/beegfs-fsck \
                     $out/bin/beegfs-fsck-${name} \
                     --add-flags "--cfgFile=${configClientFilename name}"
       ''

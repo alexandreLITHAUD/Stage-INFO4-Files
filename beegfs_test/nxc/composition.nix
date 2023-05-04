@@ -3,15 +3,15 @@
     node = { pkgs, ... }:
       {
         networking.firewall.enable = false;
-        # imports = [ ./module_beegfs.nix ];
-        # services.beegfsEnable_mod = true;
+      #  imports = [ ./module_beegfs.nix ];
+      #  services.beegfsEnable_mod = true;
       #   services.beegfs_mod.default = {
       #     connAuthFile = "/etc/beegfs/auth-def.key";
       #     client = {
       #       mount = false;
       #       enable = true;
       # };
-    };
+      # };
 
     # fileSystems = pkgs.lib.mkVMOverride # FIXME: this should be creatd by the module
     #   [ { mountPoint = "/beegfs";
@@ -26,12 +26,12 @@
     #   text = "ThisIsALousySecret";
     #   mode = "0600";
     # };
-      #};
-    server = { pkgs, ... }:
+    };
+    mgmtd = { pkgs, ... }:
       {
 
-        # imports = [ ./module_beegfs.nix ];
-
+      imports = [ ./module_beegfs.nix ];
+      services.beegfsEnable_mod = true;
       #   boot.initrd.postDeviceCommands = ''
       #     ${pkgs.e2fsprogs}/bin/mkfs.ext4 -L data /dev/vdb
       #   '';
@@ -47,25 +47,25 @@
       environment.systemPackages = with pkgs; [
         (callPackage ./default_beegfs.nix {} )
       ];
-    #     environment.etc."/beegfs/auth-def.key" = {
-    #     enable = true;
-    #     text = "ThisIsALousySecret";
-    #     mode = "0600";
-    # };
+        environment.etc."/beegfs/auth-def.key" = {
+        enable = true;
+        text = "ThisIsALousySecret";
+        mode = "0600";
+    };
 
-    # services.beegfsEnable_mod = true;
-    # services.beegfs_mod.default = {
-    #   mgmtdHost = "mgmt";
-    #   connAuthFile = "/etc/beegfs/auth-def.key";
-    #   server = {
-    #     enable = true;
-    #     storeDir = "/data";
-    #   };
-  # };
+    services.beegfs_mod.default = {
+      mgmtdHost = "mgmt";
+      connAuthFile = "/etc/beegfs/auth-def.key";
+      mgmtd = {
+        enable = true;
+        storeDir = "/data";
+      };
+    };
         
     };
   };
   testScript = ''
-    foo.succeed("true")
+    server.succeed("true")
+    node.succeed("true")
   '';
 }
