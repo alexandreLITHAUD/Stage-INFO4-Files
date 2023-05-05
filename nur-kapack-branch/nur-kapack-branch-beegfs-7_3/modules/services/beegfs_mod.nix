@@ -77,9 +77,8 @@ let
       # pkgs.beegfs n'existe pas
       # On tente des technologies ici
       # ${pkgs.beegfs}/bin/beegfs-${service} \
-      # /run/current-system/sw/bin/beegfs-${service}
       ExecStart = ''
-          vn00ja3x42ia50fdywl4hz5ag3280pgr-beegfs-7.3/bin/beegfs-${service} \
+          ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-${service} \
           cfgFile=${cfgFile name cfg} \
           pidFile=${PIDFile}
       '';
@@ -97,8 +96,9 @@ let
       # pkgs.beegfs n'existe pas
       # ${pkgs.beegfs}/bin/beegfs-helperd \
       # dans sur on remplacera par pkgs.nur.repos.kapack.beegfs
+      # /run/current-system/sw/ semble marche mais est impur je croie
       ExecStart = ''
-          /nix/store/vn00ja3x42ia50fdywl4hz5ag3280pgr-beegfs-7.3/bin/beegfs-helperd \
+          ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-helperd \
           cfgFile=${configHelperd name cfg} \
           pidFile=${PIDFile}
       '';
@@ -108,14 +108,6 @@ let
    }))) cfg;
 
   # wrappers to beegfs tools. Avoid typing path of config files
-
-  # ${lib.makeBinPath [ "/run/current-system/sw" ]} --> ligne 123 (--prefix PATH :)
-  # --prefix PATH : ${lib.makeBinPath [ "/run/current-system/sw" ]}
-  # --prefix PATH : /run/current-system/sw/
-
-  # vn00ja3x42ia50fdywl4hz5ag3280pgr-beegfs-7.3
-  # gcnczws1gmmky3rv8ydvf9njh2xs3hfk-beegfs-7.3
-  # 547hci4rn05qslz09wxyrbwbzcqagskf-beegfs-7.0
   utilWrappers = mapAttrsToList ( name: cfg:
     ( pkgs.runCommand "beegfs-utils-${name}" {
         nativeBuildInputs = [ pkgs.makeWrapper ];
@@ -124,16 +116,16 @@ let
         } ''
         mkdir -p $out/bin
 
-        makeWrapper ${pkgs.beegfs}/bin/beegfs-check-servers \
+        makeWrapper ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-check-servers \
                     $out/bin/beegfs-check-servers-${name} \
                     --add-flags "-c ${configClientFilename name}" \
-                    
+                    --prefix PATH : ${lib.makeBinPath [ ${pkgs.nur.repos.kapack.beegfs} ]}
 
-        makeWrapper /nix/store/vn00ja3x42ia50fdywl4hz5ag3280pgr-beegfs-7.3/bin/beegfs-ctl \
+        makeWrapper ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-ctl \
                     $out/bin/beegfs-ctl-${name} \
                     --add-flags "--cfgFile=${configClientFilename name}"
 
-        makeWrapper /nix/store/vn00ja3x42ia50fdywl4hz5ag3280pgr-beegfs-7.3/bin/beegfs-ctl \
+        makeWrapper ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-ctl \
                     $out/bin/beegfs-df-${name} \
                     --add-flags "--cfgFile=${configClientFilename name}" \
                     --add-flags --listtargets  \
@@ -141,7 +133,7 @@ let
                     --add-flags --pools \
                     --add-flags --spaceinfo
 
-        makeWrapper /nix/store/vn00ja3x42ia50fdywl4hz5ag3280pgr-beegfs-7.3/bin/beegfs-fsck \
+        makeWrapper ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-fsck \
                     $out/bin/beegfs-fsck-${name} \
                     --add-flags "--cfgFile=${configClientFilename name}"
       ''
@@ -336,7 +328,7 @@ in
   config =
     mkIf config.services.beegfsEnable_mod {
 
-    # environment.systemPackages = utilWrappers;
+    environment.systemPackages = utilWrappers;
 
     # Put the client.conf files in /etc since they are needed
     # by the commandline tools
