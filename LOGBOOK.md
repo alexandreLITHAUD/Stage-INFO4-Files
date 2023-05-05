@@ -6,6 +6,8 @@
   - [SEMAINE 4 :](#semaine-4)
   - [SEMAINE 5 :](#semaine-5)
   - [SEMAINE 6 :](#semaine-6)
+  - [SEMAINE 7 :](#semaine-7)
+  - [SEMAINE 8 :](#semaine-8)
 
 ---
 
@@ -245,6 +247,20 @@ fabrication de volume) (meta, storage, client, mgmtd)
 - **TODO** continuer de corriger le module et tester le fonctionnement de l'application pour pouvoir la deployer.
 
 ## 05/05/23 :
+- Correction du module de beegfs pour le faire fonctionner en local
+- Creation d'un script nix de text qui va utiliser nur-kapack pour installer beegfs sur nixos-compose
+- Creation de volumes beegfs et tentative de connexion des volume clients et serveurs
+- Pas le bon path present dans le module : le lien est celui du raccourcie vers le binaire pas le binaire en lui meme d'ou l'erreur de wrapping
+- (Discution avec les doctorants sur rust sont utilisation et son interet) (https://doc.rust-lang.org/book/title-page.html)
+- Test de fonctionnement de creation de volume sans utiliser les wrapper (qui n'arrive a pas a localiser les executables)
+- http://www.beegfs.io/wiki/ManualInstallWalkThrough (lien du site que j'ai utilisé)
+- Test de fonctionnement uniquement avec nur-kapack pour le module 
+- Reprise de l'exemple de oar sur oar-team (setup.toml (-s dev pour appeller tous les dev.* du setup))
+- Creation de nouveau fichier de base de fonctionnement pour beegfs en utilisant nur-kappack (il va faloir que je mete tout dans un git)
+- Etude de fonctionnement de oar sur oar-team (utilisation de nur-kapack)
+- Creation d'un composition.nix qui va tester grace a un setup.toml le module et la derivation du nix (**[REPO](./nur_kapack/nur-kapack-branch-beegfs-7_3)**  |  **[DERIVATION](./nur_kapack/nur-kapack-branch-beegfs-7_3/pkgs/beegfs/default.nix)**  |  **[MODULE](./nur_kapack/nur-kapack-branch-beegfs-7_3/modules/services/beegfs_mod.nix)** )
+- TODO : Verifier le module (je suis pas persuadé que pkgs.nur.kappack fonctionne car on fait pkgs.wrapper donc il faudra surement changer)
+- Problèmes : Erreur de compilation (recursion infini qui proviens probablement du module)
 
 ---
 
@@ -270,6 +286,32 @@ fabrication de volume) (meta, storage, client, mgmtd)
 
 ## 19/05/23 :
 
--- 
+---
 
 ## Semaine 6 :
+
+## 22/05/23 :
+
+## 23/05/23 :
+
+## 24/05/23 :
+
+## 25/05/23 :
+
+## 26/05/23 :
+
+---
+
+## Semaine 7 :
+
+## 30/05/23 :
+
+## 31/05/23 :
+
+## 01/06/23 :
+
+## 02/06/23 :
+
+---
+
+## Semaine 8 :
