@@ -324,6 +324,8 @@ fabrication de volume) (meta, storage, client, mgmtd)
   - Je n'ai pas trop d'idée pour la correction de ce probleme donc je vais aller demander a un doctorant
 - Creation de test simple afin d'essayer de comprendre ce qui ne marche pas
 - Regard d'issue git existant pour voir si il n'a pas des personnes qui ont eu des problèmes similaires (infructueux)
+- En autorisants les exception avec `set e+` alors on est capable de build
+- **TODO** : verifier que le comportement de l'application est celui escompté malgré les erreurs dans les Makefile
 
 ## 10/05/23 :
 
