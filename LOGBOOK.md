@@ -267,6 +267,63 @@ fabrication de volume) (meta, storage, client, mgmtd)
 ## Semaine 4 :
 
 ## 09/05/23 :
+- Demenagement dans le laboratoire 434
+- Acceuil de Samuel dans le batiement et le laboratoire  
+- Retour sur beegfs en utilisant nur-kappack
+- Creation d'un fichier common config afin de pouvoir simplement tester le fonctionnement de l'appel des derivations de nur
+- Problemes :
+  - Recursion infini lors de l'execution du programme (peux etre du au module)
+  - Correction des erreurs de syntaxe du programme et reecriture de setup.toml
+  - si on fait [pkgs.nur.repos.kapack.beegfs] on a une erreur car le unpackage de l'application ne fonctonne pas et bloque donc logiquement dans la partie de patch
+  - si on fait [nur.repos.kapack.beegfs] on a une erreur lors de la phase de build (unpackaing fonctionel et patch aussi) :
+  ```
+  make: Entering directory '/build/v7-7.0-d7fc807f40aea0e88afd714cbecee7a0dbadabf7/beeond_thirdparty/build'
+  tar -C /build/v7-7.0-d7fc807f40aea0e88afd714cbecee7a0dbadabf7/beeond_thirdparty/build/../source -xzf /build/v7-7.0-d7fc807f40aea0e88afd714cbecee7a0dbadabf7/beeond_thirdparty/build/../source/mctp3.tar.gz        
+  tar -C /build/v7-7.0-d7fc807f40aea0e88afd714cbecee7a0dbadabf7/beeond_thirdparty/build/../source -xzf /build/v7-7.0-d7fc807f40aea0e88afd714cbecee7a0dbadabf7/beeond_thirdparty/build/../source/GPI2-1.2.0.tar.gz
+  cd /build/v7-7.0-d7fc807f40aea0e88afd714cbecee7a0dbadabf7/beeond_thirdparty/build/../source/GPI2-1.2.0 && ./install.sh -p /build/v7-7.0-d7fc807f40aea0e88afd714cbecee7a0dbadabf7/beeond_thirdparty/build/../source/GPI2-1.2.0/out --with-ethernet
+  Installation path to be used: /build/v7-7.0-d7fc807f40aea0e88afd714cbecee7a0dbadabf7/beeond_thirdparty/build/../source/GPI2-1.2.0/out
+  With Ethernet support
+  Building GPI... done.
+  Building tests...Compilation of tests failed (see install.log)
+  Aborting...
+  make: *** [Makefile:31: gpi] Error 1
+  ```
+  - ce fichier proviens de (/home/alex/Documents/TestNix)/nur-kapack/v7-7.0-d7fc807f40aea0e88afd714cbecee7a0dbadabf7/beeond_thirdparty/source/GPI2-1.2.0.tar.gz -> dans cette archive il a un Makefile qui ne marche pas dans notre cas.
+  ```
+  DOXYGEN:=$(shell which doxygen)
+  GFORTRAN:=$(shell which gfortran)
+  all: gpi fortran tests
+
+  gpi:
+    $(MAKE) -C src gpi
+
+  fortran:
+    $(MAKE) -C src fortran
+
+  mic:
+    $(MAKE) -C src mic
+
+  tests: gpi
+    cd tests && $(MAKE) && cd ..
+
+  docs:
+    @if test "$(DOXYGEN)" = ""; then \
+      echo "Doxygen not found."; \
+      echo "Install doxygen to be able to generate documentation."; \
+      echo "Or consult it online at: http://www.gpi-site.com/gpi2/docs/";\
+      false; \
+    fi
+    doxygen Doxyfile
+
+  clean:
+    $(MAKE) -C src clean
+    $(MAKE) -C tests clean
+
+  .PHONY: all tests docs clean 
+  ``` 
+  - Je n'ai pas trop d'idée pour la correction de ce probleme donc je vais aller demander a un doctorant
+- Creation de test simple afin d'essayer de comprendre ce qui ne marche pas
+- Regard d'issue git existant pour voir si il n'a pas des personnes qui ont eu des problèmes similaires (infructueux)
 
 ## 10/05/23 :
 
