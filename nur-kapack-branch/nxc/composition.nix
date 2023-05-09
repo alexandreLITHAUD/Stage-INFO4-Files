@@ -1,15 +1,22 @@
 { pkgs, modulesPath, nur, helpers, ... }: {
-  roles = {
-    mgmtd = { pkgs, nur, ... }:
+  roles =
+    let
+      commonConfig = import ./common_config.nix {inherit pkgs nur;}; 
+    in {
+    mgmtd = { ... }:
       {
+
+        imports = [ commonConfig ];
+        # services.beegfsEnable_mod = true;
+
+      # environment.noXlibs = false;
+      # environment.systemPackages = [
+      #   pkgs.nur.repos.kapack.beegfs
+      # ];
+
       # imports = [ pkgs.nur.repos.kapack.modules.beegfs ];
 
       # services.beegfsEnable_mod = true;
-
-      environment.noXlibs = false;
-      environment.systemPackages = [
-        pkgs.nur.repos.kapack.beegfs
-      ];
 
       # environment.etc."/beegfs/auth-def.key" = {
       #   enable = true;

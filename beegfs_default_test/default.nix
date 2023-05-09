@@ -61,9 +61,6 @@ in stdenv.mkDerivation {
     find -type f -name Makefile -exec sed -i "s:/bin/true:true:" \{} \;
     find -type f -name "*.mk" -exec sed -i "s:/bin/true:true:" \{} \;
 
-    pwd
-    ls -al
-
     # unpack manually and patch variable name
     sed -i '/tar -C $(SOURCE_PATH) -xzf $(PCOPY_TAR)/d' beeond_thirdparty/build/Makefile
     cd beeond_thirdparty/source
@@ -108,13 +105,10 @@ in stdenv.mkDerivation {
   '';
 
   buildPhase = ''
-    set +e
-    
     for i in ${toString subdirs}; do
-      echo $i
-      make -k -C $i BEEGFS_OPENTK_IBVERBS=1 ''${enableParallelBuilding:+-j''${NIX_BUILD_CORES} -l''${NIX_BUILD_CORES}}
+      make -C $i BEEGFS_OPENTK_IBVERBS=1 ''${enableParallelBuilding:+-j''${NIX_BUILD_CORES} -l''${NIX_BUILD_CORES}}
     done
-    make -k -C admon/build admon_gui BEEGFS_OPENTK_IBVERBS=1
+    make -C admon/build admon_gui BEEGFS_OPENTK_IBVERBS=1
   '';
 
   enableParallelBuilding = true;

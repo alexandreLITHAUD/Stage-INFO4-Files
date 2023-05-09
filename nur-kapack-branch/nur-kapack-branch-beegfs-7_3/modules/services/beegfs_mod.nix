@@ -119,7 +119,7 @@ let
         makeWrapper ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-check-servers \
                     $out/bin/beegfs-check-servers-${name} \
                     --add-flags "-c ${configClientFilename name}" \
-                    --prefix PATH : ${lib.makeBinPath [ ${pkgs.nur.repos.kapack.beegfs} ]}
+                    --prefix PATH : ${lib.makeBinPath [ pkgs.nur.repos.kapack.beegfs} ]}
 
         makeWrapper ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-ctl \
                     $out/bin/beegfs-ctl-${name} \
