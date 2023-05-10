@@ -1,8 +1,10 @@
 [project]
-selected = "dev"
 
 [dev.options]
 nix-flags = "--impure --override-input kapack path:/home/alex/Documents/TestNix/alithaud/nur-kapack-branch/nur-kapack-branch-beegfs-7_3"
 
 # [dev.build.nur.repos.kapack.beegfs]
 # src = "/home/alex/Documents/TestNix/alithaud/nur-kapack-branch/nur-kapack-branch-beegfs-7_3/pkgs/beegfs"
+
+# [dev.build.nur.repos.kapack.modules]
+# src = "/home/alex/Documents/TestNix/alithaud/nur-kapack-branch/nur-kapack-branch-beegfs-7_3/modules/"
