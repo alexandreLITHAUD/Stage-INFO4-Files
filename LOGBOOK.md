@@ -340,6 +340,7 @@ fabrication de volume) (meta, storage, client, mgmtd)
 - Comprehention avancé du fonctionnement de l'appel des bibiliothèque (lien entre les flakes)
 - Compréhention avancé du systeme de fonctionnement du setup (ici setup.toml). Afin de pouvoir creer facilement plusieurs configurations différente (ici test pour le "simuler" en local)
 - Ecoute de la conférence sur les 20ans de G5K
+- Lien utile : http://www.beegfs.io/wiki/ManualInstallWalkThrough
 
 ## 11/05/23 :
 
