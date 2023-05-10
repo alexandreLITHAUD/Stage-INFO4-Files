@@ -341,6 +341,7 @@ fabrication de volume) (meta, storage, client, mgmtd)
 - Compréhention avancé du systeme de fonctionnement du setup (ici setup.toml). Afin de pouvoir creer facilement plusieurs configurations différente (ici test pour le "simuler" en local)
 - Ecoute de la conférence sur les 20ans de G5K
 - Lien utile : http://www.beegfs.io/wiki/ManualInstallWalkThrough
+- Lecture approfondie de stdenv ( *The Standard Environnement* ) : https://ryantm.github.io/nixpkgs/stdenv/stdenv/
 
 ## 11/05/23 :
 
