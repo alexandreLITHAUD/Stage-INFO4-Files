@@ -231,7 +231,7 @@
 - Correction du module de fonctionnement de base de beegfs. (Il permet notamment de creer les fichiers de configurations dans le /etc qui sont essentiel pour la 
 fabrication de volume) (meta, storage, client, mgmtd)
 - Comprehention du fonctionnement de beegfs et des différents roles possible pour le bon fonctionnement d'un volume distribué
-- Problème :
+- **Problème** :
   - Existance de dépendance a pkgs.beegfs présent dans le module (le paquet à été supprimer du dépot).
   - Ajout du path absolue donc **impure** afin de tester le bon fonctionnemet du module (toujous des problèmes notamment ligne 120 avec les makeWrappers)
   - **TODO** trouver un moyen de corriger ce probleme
@@ -271,7 +271,7 @@ fabrication de volume) (meta, storage, client, mgmtd)
 - Acceuil de Samuel dans le batiement et le laboratoire  
 - Retour sur beegfs en utilisant nur-kappack
 - Creation d'un fichier common config afin de pouvoir simplement tester le fonctionnement de l'appel des derivations de nur
-- Problemes :
+- **Problemes** :
   - Recursion infini lors de l'execution du programme (peux etre du au module)
   - Correction des erreurs de syntaxe du programme et reecriture de setup.toml
   - si on fait [pkgs.nur.repos.kapack.beegfs] on a une erreur car le unpackage de l'application ne fonctonne pas et bloque donc logiquement dans la partie de patch
@@ -328,6 +328,18 @@ fabrication de volume) (meta, storage, client, mgmtd)
 - **TODO** : verifier que le comportement de l'application est celui escompté malgré les erreurs dans les Makefile
 
 ## 10/05/23 :
+- Correction de bug dans certains fichier du projet beegfs notamment le module
+- Creation manuel de volume beegfs en utilisant un noeud mgmt, meta, storage, et client
+- Maintenant capable d'appeler et de faire fonctionner le module et le package beegfs a partir de beegfs (tester en local seulement mais fonctionne aussi en ligne)
+- Le projet compile avec le module en utilisant les fichier present sur le nur kapack
+- Les binaire sont present et utilisable par les machine qui les importent
+- Il manque cependant les fichier de configuation qui sont definie par le module (/data et les mounts...)
+- **TODO** : verifier que le bon fonctionnement global du fichier module et le modifier pour qu'il puisse autogenerer le volume
+- Sinon rajouter un script dans testScript (en modifiant l'architecture de la composition pour que testScript puisse utiliser les valeurs generer par le role) (la "balise" script de base ne permet de permet pas de recuperer les valeur et donc de faire une generation automatique modulable)
+- Il faut donc trouver un moyen dans le composition.nix de faire un script qui va dependre des roles predefinies par le programmes
+- Comprehention avancé du fonctionnement de l'appel des bibiliothèque (lien entre les flakes)
+- Compréhention avancé du systeme de fonctionnement du setup (ici setup.toml). Afin de pouvoir creer facilement plusieurs configurations différente (ici test pour le "simuler" en local)
+- Ecoute de la conférence sur les 20ans de G5K
 
 ## 11/05/23 :
 
