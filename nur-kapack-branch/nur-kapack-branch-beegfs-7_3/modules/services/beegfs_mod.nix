@@ -81,11 +81,14 @@ let
           ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-${service} \
           cfgFile=${cfgFile name cfg} \
           pidFile=${PIDFile}
+
+
       '';
       PIDFile = "/run/beegfs-${service}-${name}.pid";
       TimeoutStopSec = "300";
     };
   }))) cfg);
+
 
   systemdHelperd =  mapAttrs' ( name: cfg:
     (nameValuePair "beegfs-helperd-${name}" (mkIf cfg.client.enable {
@@ -340,26 +343,40 @@ in
     }))) cfg;
 
     # Kernel module, we need it only once per host.
-    boot = mkIf (
-      foldr (a: b: a || b) false
-        (map (x: x.client.enable) (collect (x: x ? client) cfg)))
-    {
-      kernelModules = [ "beegfs" ]; ## FIXME ??
-      # extraModulePackages = [ pkgs.linuxPackages.beegfs-module ];
-    };
+    # boot = mkIf (
+    #   foldr (a: b: a || b) false
+    #     (map (x: x.client.enable) (collect (x: x ? client) cfg)))
+    # {
+    #   kernelModules = [ "beegfs" ]; ## FIXME ??
+    #   # extraModulePackages = [ pkgs.linuxPackages.beegfs-module ];
+    # };
 
     # generate fstab entries
-    fileSystems = mapAttrs' (name: cfg:
-      (nameValuePair cfg.client.mountPoint (optionalAttrs cfg.client.mount (mkIf cfg.client.enable {
-      device = "beegfs_nodev";
-      fsType = "beegfs";
-      mountPoint = cfg.client.mountPoint;
-      options = [ "cfgFile=${configClientFilename name}" "_netdev" ];
-    })))) cfg;
+    # fileSystems = mapAttrs' (name: cfg:
+    #   (nameValuePair cfg.client.mountPoint (optionalAttrs cfg.client.mount (mkIf cfg.client.enable {
+    #   device = "beegfs_nodev";
+    #   fsType = "beegfs";
+    #   mountPoint = cfg.client.mountPoint;
+    #   options = [ "cfgFile=${configClientFilename name}" "_netdev" ];
+    # })))) cfg;
 
     # generate systemd services
     systemd.services = systemdHelperd //
       foldr (a: b: a // b) {}
         (map (x: systemdEntry x.service x.cfgFile) serviceList);
+
+    ## FIXME
+    ## TODO utiliser le oneshot
+    #     systemd.services.beegfs_mod = {   # TODO mkIfmkIfmkIfmkIfmkIfmkIf
+    #     wantedBy = [ ];#"multi-user.target" ];
+    #     requires = [ ];#"network-online.target" ];
+    #     after = [ ];#"network-online.target" ];
+    #     serviceConfig.Type = "oneshot";
+    #     script = ''
+    #       ${pkgs.sudo}/bin/sudo -u orangefs -g orangefs ${cfg.package}/bin/pvfs2-server /etc/orangefs/server.conf -f
+    #       if [ "${cfg.type.options}" ]
+    # #     '';
+    ## TODO
+    ## FIXME
   };
 }

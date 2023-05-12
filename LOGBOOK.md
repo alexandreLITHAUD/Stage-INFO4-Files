@@ -1,13 +1,44 @@
 # Logbook du déroulement du stage
 - [Logbook du déroulement du stage](#logbook-du-déroulement-du-stage)
-  - [SEMAINE 1 :](#semaine-1)
-  - [SEMAINE 2 :](#semaine-2)
-  - [SEMAINE 3 :](#semaine-3)
-  - [SEMAINE 4 :](#semaine-4)
-  - [SEMAINE 5 :](#semaine-5)
-  - [SEMAINE 6 :](#semaine-6)
-  - [SEMAINE 7 :](#semaine-7)
-  - [SEMAINE 8 :](#semaine-8)
+  - [Semaine 1 :](#semaine-1-)
+  - [17/04/23 :](#170423-)
+  - [18/04/23 :](#180423-)
+  - [19/04/23 :](#190423-)
+  - [20/04/23 :](#200423-)
+  - [21/04/23 :](#210423-)
+  - [Semaine 2 :](#semaine-2-)
+  - [24/04/23 :](#240423-)
+  - [25/04/23 :](#250423-)
+  - [26/04/23 :](#260423-)
+  - [27/04/23 :](#270423-)
+  - [28/04/23 :](#280423-)
+  - [Semaine 3 :](#semaine-3-)
+  - [02/05/23 :](#020523-)
+  - [03/05/23 :](#030523-)
+  - [04/05/23 :](#040523-)
+  - [05/05/23 :](#050523-)
+  - [Semaine 4 :](#semaine-4-)
+  - [09/05/23 :](#090523-)
+  - [10/05/23 :](#100523-)
+  - [11/05/23 :](#110523-)
+  - [12/05/23 :](#120523-)
+  - [Semaine 5 :](#semaine-5-)
+  - [15/05/23 :](#150523-)
+  - [16/05/23 :](#160523-)
+  - [17/05/23 :](#170523-)
+  - [19/05/23 :](#190523-)
+  - [Semaine 6 :](#semaine-6-)
+  - [22/05/23 :](#220523-)
+  - [23/05/23 :](#230523-)
+  - [24/05/23 :](#240523-)
+  - [25/05/23 :](#250523-)
+  - [26/05/23 :](#260523-)
+  - [Semaine 7 :](#semaine-7-)
+  - [30/05/23 :](#300523-)
+  - [31/05/23 :](#310523-)
+  - [01/06/23 :](#010623-)
+  - [02/06/23 :](#020623-)
+  - [Semaine 8 :](#semaine-8-)
 
 ---
 
@@ -344,8 +375,50 @@ fabrication de volume) (meta, storage, client, mgmtd)
 - Lecture approfondie de stdenv ( *The Standard Environnement* ) : https://ryantm.github.io/nixpkgs/stdenv/stdenv/
 
 ## 11/05/23 :
-
+- Il va falloir rajouter des `systemd.service` afin de pouvoir rajouter script dans le module qui vont pouvoir "auto-generer" les différents fichier nécessiare pour le fonctionnement de beegfs (comportement que j'avais oublier dans les moodules nix)
+- Lecture de la partie du manuel nixos sur les activation script : **[69.2. Activation script](https://nixos.org/manual/nixos/stable/index.html#sec-activation-script)** script executer avant meme systemd qui permet de faire du "pre-script sur les programmes nix". Cet outil ne sera probablement pas utile pour le corriger le module mais il sera surement utile a un autre moment.
+- Continuation de la correction du module nix afin de faire fonctionner les modules nix:
+- **Seminaire** : (14h-15h30) Frank Cappello - How can we reduce data without losing science
+  - Importance of data in science -> bit the more it w need to analyse it the bigger it gets
+  - Creation of a lossy compression app (compression that has the change of losing some part of the information)
+  - Decorelation --> Approximation --> Coding (done by Shanon already)
+  - Use of predictors use both for compression and decompression that tries to approxiamte the next value to compress it
+  - SZ -> compression tool (only works for float value (or cast integer) and data sets)
+  - We dont know the bound of compressability for a specific data set
+  - Find a way to calculate the compresse size before doing it using Black-Box Statistical predictors
+  - In search for the absolute compressibility
+- **TODO** : Simplfifier le module afin de ne pas garder les phases inutile (dans notre cas) de la configuration
+  
 ## 12/05/23 :
+- Correction et notamment simplification du module afin de pourvoir en comprendre le fonctionnement
+- Le code est capable de creer des script de configurationde base pour le client
+- Rajout de roles dans la composition nxc qui correspondent a chaque compsant nécessaire de la fabricationde volume beegfs correct
+- Il faut toujours trouver un moyen d'excuter le code `beegfs-setup-<service>` pour chaque service avec les bon parametres pour cela il faudra utiliser sytemd (site : https://www.freedesktop.org/wiki/Software/systemd/) pour cela on va utiliser l'exemple de ear :
+```
+systemd.services.oar-node-register = mkIf (cfg.node.register.enable) { ## IF BON MODULE (FAIRE UN NOM POUR CHAQUE SERVICES)
+  wantedBy = [ "multi-user.target" ];  ## SERVICE UTILISE PAR BEEGFS (beegfs.mgmtd notamment) 
+  after = [ "network.target" "oar-user-init.service" "oar-conf-init.service" "oar-node.service" ];
+  serviceConfig.Type = "oneshot";
+  path = [ pkgs.hostname ];
+  script = concatStringsSep "\n" [
+    (optionalString cfg.node.register.add  ### CODE A FAIRE
+      "/run/wrappers/bin/oarnodesetting -a -s Alive")
+    (optionalString (cfg.node.register.extraCommand != "") ''
+      ${cfg.node.register.extraCommand}
+    '')
+  ];
+};
+``` 
+- **TODO** : relire le code du module et en comprendre le code, apprentisage avance du langague. 
+```
+Exemple :
+
+systemd.services = systemdHelperd //
+  foldr (a: b: a // b) {}
+    (map (x: systemdEntry x.service x.cfgFile) serviceList);
+```
+- Pour cela ne pas hésiter a demander a des doctorant et a chercher grace a `git grep <nom_fonction> =` dans le nixpkgs
+- Finir le systeme d'auto generation du volume pour dans le futur pour utiliser des script python afin de pouvoir tester l'efficacité de beegfs a la manière de NFS et pour donc les comparer.
 
 ---
 
