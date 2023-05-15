@@ -35,13 +35,19 @@
           mountPoint = "/run/beegfs";
         };
       };
-      # service.beegfs_mod.fileSystems_mod = pkgs.lib.mkVMOverride # FIXME: this should be creatd by the module
-      #   [ { mountPoint = "/beegfs";
+
+      # services.beegfs_mod.fileSystems = pkgs.lib.attrsets.nameValuePair "/run/beegfs" 
+      #   { mountPoint = "/run/beegfs";
       #       device = "default";
       #       fsType = "beegfs";
       #       options = [ "cfgFile=/etc/beegfs/client-default.conf" "_netdev" ];
-      #     }
-      #   ];
+      #   };
+      # services.beegfs_mod.fileSystems = { "/run/beegfs" = 
+      #   { mountPoint = "/run/beegfs";
+      #       device = "default";
+      #       fsType = "beegfs";
+      #       options = [ "cfgFile=/etc/beegfs/client-default.conf" "_netdev" ];
+      #   }; };
       };
 
 
@@ -78,6 +84,6 @@
       };
   };
   testScript = ''
-
+    
   '';
 }

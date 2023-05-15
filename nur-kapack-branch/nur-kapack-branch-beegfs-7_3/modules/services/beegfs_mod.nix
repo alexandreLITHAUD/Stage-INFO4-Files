@@ -352,18 +352,18 @@ in
     # };
 
     # generate fstab entries
-    # fileSystems = mapAttrs' (name: cfg:
-    #   (nameValuePair cfg.client.mountPoint (optionalAttrs cfg.client.mount (mkIf cfg.client.enable {
-    #   device = "beegfs_nodev";
-    #   fsType = "beegfs";
-    #   mountPoint = cfg.client.mountPoint;
-    #   options = [ "cfgFile=${configClientFilename name}" "_netdev" ];
-    # })))) cfg;
+    fileSystems = mapAttrs' (name: cfg:
+      (nameValuePair cfg.client.mountPoint (optionalAttrs cfg.client.mount (mkIf cfg.client.enable {
+      device = "beegfs_nodev";
+      fsType = "beegfs";
+      mountPoint = cfg.client.mountPoint;
+      options = [ "cfgFile=${configClientFilename name}" "_netdev" ];
+    })))) cfg;
 
     # generate systemd services
-    systemd.services = systemdHelperd //
-      foldr (a: b: a // b) {}
-        (map (x: systemdEntry x.service x.cfgFile) serviceList);
+    # systemd.services = systemdHelperd //
+    #   foldr (a: b: a // b) {}
+    #     (map (x: systemdEntry x.service x.cfgFile) serviceList);
 
     ## FIXME
     ## TODO utiliser le oneshot
@@ -378,5 +378,18 @@ in
     # #     '';
     ## TODO
     ## FIXME
+
+    systemd.services.start_mgmtd = mkIf (cfg."default".mgmtd.enable) {
+      wantedBy = [ "multi-user.target" ];
+      requires = [ "network-online.target" ];
+      after = [ "network-online.target" ];
+      serviceConfig.Type = "oneshot";
+      path = [];
+      script = ''
+        beegfs-setup-mgmtd -C -p ${cfg."default".mgmtd.storeDir}
+      '';
+    };
+
+
   };
 }

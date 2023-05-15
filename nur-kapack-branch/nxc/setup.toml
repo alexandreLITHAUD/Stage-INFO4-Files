@@ -1,4 +1,5 @@
 [project]
+selected = "dev"
 
 [dev.options]
 nix-flags = "--impure --override-input kapack path:/home/alex/Documents/TestNix/alithaud/nur-kapack-branch/nur-kapack-branch-beegfs-7_3"
