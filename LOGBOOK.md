@@ -1,43 +1,12 @@
 # Logbook du déroulement du stage
 - [Logbook du déroulement du stage](#logbook-du-déroulement-du-stage)
   - [Semaine 1 :](#semaine-1-)
-  - [17/04/23 :](#170423-)
-  - [18/04/23 :](#180423-)
-  - [19/04/23 :](#190423-)
-  - [20/04/23 :](#200423-)
-  - [21/04/23 :](#210423-)
   - [Semaine 2 :](#semaine-2-)
-  - [24/04/23 :](#240423-)
-  - [25/04/23 :](#250423-)
-  - [26/04/23 :](#260423-)
-  - [27/04/23 :](#270423-)
-  - [28/04/23 :](#280423-)
   - [Semaine 3 :](#semaine-3-)
-  - [02/05/23 :](#020523-)
-  - [03/05/23 :](#030523-)
-  - [04/05/23 :](#040523-)
-  - [05/05/23 :](#050523-)
   - [Semaine 4 :](#semaine-4-)
-  - [09/05/23 :](#090523-)
-  - [10/05/23 :](#100523-)
-  - [11/05/23 :](#110523-)
-  - [12/05/23 :](#120523-)
   - [Semaine 5 :](#semaine-5-)
-  - [15/05/23 :](#150523-)
-  - [16/05/23 :](#160523-)
-  - [17/05/23 :](#170523-)
-  - [19/05/23 :](#190523-)
   - [Semaine 6 :](#semaine-6-)
-  - [22/05/23 :](#220523-)
-  - [23/05/23 :](#230523-)
-  - [24/05/23 :](#240523-)
-  - [25/05/23 :](#250523-)
-  - [26/05/23 :](#260523-)
   - [Semaine 7 :](#semaine-7-)
-  - [30/05/23 :](#300523-)
-  - [31/05/23 :](#310523-)
-  - [01/06/23 :](#010623-)
-  - [02/06/23 :](#020623-)
   - [Semaine 8 :](#semaine-8-)
 
 ---
@@ -241,7 +210,7 @@
 - Creation d'un bash de lancement de la partie build car `buildPhase` et `installPhase` cherche des makefiles or il n'y en a pas a la racine du projet. On fait donc le build "manuellement"
 - Grace a cela le probleme de sources mal localisé à pu être modifier directement dans la patchPhase avec la commande bash `substituteInPlace`
 - Probleme de test :
-```    
+```    bash
 > [----------] Global test environment tear-down
 > [==========] 41 tests from 12 test cases ran. (5103 ms total)
 > [  PASSED  ] 40 tests.
@@ -307,7 +276,7 @@ fabrication de volume) (meta, storage, client, mgmtd)
   - Correction des erreurs de syntaxe du programme et reecriture de setup.toml
   - si on fait [pkgs.nur.repos.kapack.beegfs] on a une erreur car le unpackage de l'application ne fonctonne pas et bloque donc logiquement dans la partie de patch
   - si on fait [nur.repos.kapack.beegfs] on a une erreur lors de la phase de build (unpackaing fonctionel et patch aussi) :
-  ```
+  ```bash
   make: Entering directory '/build/v7-7.0-d7fc807f40aea0e88afd714cbecee7a0dbadabf7/beeond_thirdparty/build'
   tar -C /build/v7-7.0-d7fc807f40aea0e88afd714cbecee7a0dbadabf7/beeond_thirdparty/build/../source -xzf /build/v7-7.0-d7fc807f40aea0e88afd714cbecee7a0dbadabf7/beeond_thirdparty/build/../source/mctp3.tar.gz        
   tar -C /build/v7-7.0-d7fc807f40aea0e88afd714cbecee7a0dbadabf7/beeond_thirdparty/build/../source -xzf /build/v7-7.0-d7fc807f40aea0e88afd714cbecee7a0dbadabf7/beeond_thirdparty/build/../source/GPI2-1.2.0.tar.gz
@@ -320,7 +289,7 @@ fabrication de volume) (meta, storage, client, mgmtd)
   make: *** [Makefile:31: gpi] Error 1
   ```
   - ce fichier proviens de (/home/alex/Documents/TestNix)/nur-kapack/v7-7.0-d7fc807f40aea0e88afd714cbecee7a0dbadabf7/beeond_thirdparty/source/GPI2-1.2.0.tar.gz -> dans cette archive il a un Makefile qui ne marche pas dans notre cas.
-  ```
+  ```make
   DOXYGEN:=$(shell which doxygen)
   GFORTRAN:=$(shell which gfortran)
   all: gpi fortran tests
@@ -394,7 +363,7 @@ fabrication de volume) (meta, storage, client, mgmtd)
 - Le code est capable de creer des script de configurationde base pour le client
 - Rajout de roles dans la composition nxc qui correspondent a chaque compsant nécessaire de la fabricationde volume beegfs correct
 - Il faut toujours trouver un moyen d'excuter le code `beegfs-setup-<service>` pour chaque service avec les bon parametres pour cela il faudra utiliser sytemd (site : https://www.freedesktop.org/wiki/Software/systemd/) pour cela on va utiliser l'exemple de ear :
-```
+```nix
 systemd.services.oar-node-register = mkIf (cfg.node.register.enable) { ## IF BON MODULE (FAIRE UN NOM POUR CHAQUE SERVICES)
   wantedBy = [ "multi-user.target" ];  ## SERVICE UTILISE PAR BEEGFS (beegfs.mgmtd notamment) 
   after = [ "network.target" "oar-user-init.service" "oar-conf-init.service" "oar-node.service" ];
@@ -410,8 +379,8 @@ systemd.services.oar-node-register = mkIf (cfg.node.register.enable) { ## IF BON
 };
 ``` 
 - **TODO** : relire le code du module et en comprendre le code, apprentisage avance du langague. 
-```
-Exemple :
+```nix
+# Exemple :
 
 systemd.services = systemdHelperd //
   foldr (a: b: a // b) {}
@@ -425,6 +394,91 @@ systemd.services = systemdHelperd //
 ## Semaine 5 :
 
 ## 15/05/23 :
+- Discution sur le fonctionnement intrasect de Nix et sue le fonctionnement des dépenances
+- Comprehention avancé des fonctions quisont utiliser par le module (notamment MapAttrs, MapAttrs' et nameValuePair)
+```nix
+  /* Apply a function to each element in an attribute set, creating a new attribute set.
+
+     Example:
+       mapAttrs (name: value: name + "-" + value)
+          { x = "foo"; y = "bar"; }
+       => { x = "x-foo"; y = "y-bar"; }
+
+     Type:
+       mapAttrs :: (String -> Any -> Any) -> AttrSet -> AttrSet
+  */
+  mapAttrs = builtins.mapAttrs or
+    (f: set:
+      listToAttrs (map (attr: { name = attr; value = f attr set.${attr}; }) (attrNames set)));
+
+
+  /* Like `mapAttrs`, but allows the name of each attribute to be
+     changed in addition to the value.  The applied function should
+     return both the new name and value as a `nameValuePair`.
+
+     Example:
+       mapAttrs' (name: value: nameValuePair ("foo_" + name) ("bar-" + value))
+          { x = "a"; y = "b"; }
+       => { foo_x = "bar-a"; foo_y = "bar-b"; }
+
+     Type:
+       mapAttrs' :: (String -> Any -> { name :: String; value :: Any; }) -> AttrSet -> AttrSet
+  */
+  mapAttrs' =
+    # A function, given an attribute's name and value, returns a new `nameValuePair`.
+    f:
+    # Attribute set to map over.
+    set:
+    listToAttrs (map (attr: f attr set.${attr}) (attrNames set));
+
+```
+```nix
+  mkOverride = priority: content:
+    { _type = "override";
+      inherit priority content;
+    };
+
+  mkOptionDefault = mkOverride 1500; # priority of option defaults
+  mkDefault = mkOverride 1000; # used in config sections of non-user modules to set a default
+  defaultOverridePriority = 100;
+  mkImageMediaOverride = mkOverride 60; # image media profiles can be derived by inclusion into host config, hence needing to override host config, but do allow user to mkForce
+  mkForce = mkOverride 50;
+  mkVMOverride = mkOverride 10; # used by ‘nixos-rebuild build-vm’
+
+```
+```nix
+  /* “right fold” a binary function `op` between successive elements of
+     `list` with `nul` as the starting value, i.e.,
+     `foldr op nul [x_1 x_2 ... x_n] == op x_1 (op x_2 ... (op x_n nul))`.
+
+     Type: foldr :: (a -> b -> b) -> b -> [a] -> b
+
+     Example:
+       concat = foldr (a: b: a + b) "z"
+       concat [ "a" "b" "c" ]
+       => "abcz"
+       # different types
+       strange = foldr (int: str: toString (int + 1) + str) "a"
+       strange [ 1 2 3 4 ]
+       => "2345a"
+  */
+  foldr = op: nul: list:
+    let
+      len = length list;
+      fold' = n:
+        if n == len
+        then nul
+        else op (elemAt list n) (fold' (n + 1));
+    in fold' 0;
+
+```
+Code trouvable dans le fichier nixpkgs/lib/attrsets.nix
+- Annalyse du fonctionnement de AttrSet et de la raison de sont utilisation dans le module en cours
+- Analyse du foncionnement avancé du module Nix de beegfs
+- Lecture des parties nécessaire du manuel systemd pour comprendre le fonctionnement du `systemd.services.<...>` afin de pouvoirexecuter les script bash au bon moment lors du flow d'execution
+- Debut de l'ajout des script de chaque module en utilisant les services systemd
+- Comprenhention basique des technique de set de submodule dans nix (a ameliorer)
+
 
 ## 16/05/23 :
 
