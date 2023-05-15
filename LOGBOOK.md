@@ -432,11 +432,52 @@ systemd.services = systemdHelperd //
     listToAttrs (map (attr: f attr set.${attr}) (attrNames set));
 
 ```
+```nix
+  mkOverride = priority: content:
+    { _type = "override";
+      inherit priority content;
+    };
+
+  mkOptionDefault = mkOverride 1500; # priority of option defaults
+  mkDefault = mkOverride 1000; # used in config sections of non-user modules to set a default
+  defaultOverridePriority = 100;
+  mkImageMediaOverride = mkOverride 60; # image media profiles can be derived by inclusion into host config, hence needing to override host config, but do allow user to mkForce
+  mkForce = mkOverride 50;
+  mkVMOverride = mkOverride 10; # used by ‘nixos-rebuild build-vm’
+
+```
+```nix
+  /* “right fold” a binary function `op` between successive elements of
+     `list` with `nul` as the starting value, i.e.,
+     `foldr op nul [x_1 x_2 ... x_n] == op x_1 (op x_2 ... (op x_n nul))`.
+
+     Type: foldr :: (a -> b -> b) -> b -> [a] -> b
+
+     Example:
+       concat = foldr (a: b: a + b) "z"
+       concat [ "a" "b" "c" ]
+       => "abcz"
+       # different types
+       strange = foldr (int: str: toString (int + 1) + str) "a"
+       strange [ 1 2 3 4 ]
+       => "2345a"
+  */
+  foldr = op: nul: list:
+    let
+      len = length list;
+      fold' = n:
+        if n == len
+        then nul
+        else op (elemAt list n) (fold' (n + 1));
+    in fold' 0;
+
+```
 Code trouvable dans le fichier nixpkgs/lib/attrsets.nix
 - Annalyse du fonctionnement de AttrSet et de la raison de sont utilisation dans le module en cours
 - Analyse du foncionnement avancé du module Nix de beegfs
 - Lecture des parties nécessaire du manuel systemd pour comprendre le fonctionnement du `systemd.services.<...>` afin de pouvoirexecuter les script bash au bon moment lors du flow d'execution
 - Debut de l'ajout des script de chaque module en utilisant les services systemd
+- Comprenhention basique des technique de set de submodule dans nix (a ameliorer)
 
 
 ## 16/05/23 :
