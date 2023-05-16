@@ -61,6 +61,7 @@
         mgmtdHost = "mgmt1";
         connAuthFile = "/etc/beegfs/auth-def.key";
         meta = {
+          enable = true;
           storeDir = "/data";
         };
       };
@@ -77,6 +78,7 @@
         mgmtdHost = "mgmt1";
         connAuthFile = "/etc/beegfs/auth-def.key";
         storage = {
+          enable = true;
           storeDir = "/data";
         };
       };
