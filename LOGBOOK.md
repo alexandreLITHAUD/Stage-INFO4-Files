@@ -479,8 +479,16 @@ Code trouvable dans le fichier nixpkgs/lib/attrsets.nix
 - Debut de l'ajout des script de chaque module en utilisant les services systemd
 - Comprenhention basique des technique de set de submodule dans nix (a ameliorer)
 
-
 ## 16/05/23 :
+- Correction des submodules de fichier de base de beegfs et mise a jours dans la branche de nur-kapack
+- Comprehention de la creation et surtout de la manipulation des submodules en nix. Ainsi que des différentes facon d'architecturer les modules en nix (listes de submodules, attributeSet de submodules...)
+- Visite du datacenter de l'imag :
+  - Visite et presentation du systeme de fonctionnement de ce centre
+  - Presentation et visualisation des serveur de fonctionnement de grid5000
+  - Visualisation et tentative de correction d'un probleme d'ordre de grandeur dans la comsomation energetique de certaines machines
+- Correction du fichier module pour simplifier les fonctions d'initialisation des différents services de beegfs (en faisant une fonction d'initialisation pour chaque service et non pas un seul generique qui a des risques a cause de mauvais ordonnancement des initilisation (mgmtd doit être prioritaire a tous les autres))
+- **TODO** : Finaliser le script pour faire en sorte que les volume soit effectif dès le début de la composition (vérifier comment faire un volume car un petit problème à été détecté)
+- Creation de script nix de base dans des projets a part afin de pouvoir simplifier le plus possible l'utilisation de scripts  
 
 ## 17/05/23 :
 
