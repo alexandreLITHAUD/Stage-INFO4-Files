@@ -5,7 +5,7 @@
       "role": "cli",
       "host": "cli1",
       "vm_id": 1,
-      "init": "/nix/store/w1g69zi96pk2xx858m5vzfwqfm0ql0jw-nixos-system-unnamed-22.11pre-git/init"
+      "init": "/nix/store/i7d52qdkx1xiglzraggi5v3ndwnq5301-nixos-system-unnamed-22.11pre-git/init"
     },
     "192.168.1.2": {
       "role": "meta",
@@ -27,14 +27,14 @@
     }
   },
   "all": {
-    "all_compositions_registration_store_path": "/nix/store/46nzdyd5bpkg70wxpl0a0wzf5wrs3syd-all-compositions-registration-store-paths",
+    "all_compositions_registration_store_path": "/nix/store/fhfwh9r2yjwpsgz6v57d7bv444ippzgq-all-compositions-registration-store-paths",
     "init": "/nix/store/dcsbj2i29av4x1l8wgxhnqw4paqz7i21-nixos-system-unnamed-22.11pre-git/init",
     "initrd": "/nix/store/wyd9pbcq5kjjrzw4dhwvmgaipsxddc10-initrd-linux-5.15.80/initrd",
     "kernel": "/nix/store/kib8ar9yvhaxjnhj6scp8bpnf1zi1m99-image/kernel",
     "qemu_script": "/nix/store/wg0ylqrlsha9lkhb9ny6jdb0fp7g943g-qemu_script",
     "stage1": "/nix/store/36dyda0i9vq9fsm1cyswys3b1z4d88qz-stage-1-init.sh"
   },
-  "compositions_info_path": "/nix/store/9h24n7ynkw687fadvm44nn36q4j6ymxg-compositions-info.json",
+  "compositions_info_path": "/nix/store/q5571g1qwxb50akcy988w82hccm1cnq4-compositions-info.json",
   "composition": "composition",
   "user": "alex"
 }

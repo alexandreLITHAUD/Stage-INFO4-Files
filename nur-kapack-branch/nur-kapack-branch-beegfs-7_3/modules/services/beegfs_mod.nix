@@ -392,6 +392,9 @@ in
         ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-setup-mgmtd -C -p ${cfg.default.mgmtd.storeDir}
         touch fait.txt
         echo "fait" >> fait.txt
+        ${configMgmtd "mgmtd" cfg.default.mgmtd}
+        touch fait2.txt
+        echo "fait2" >> fait2.txt
       '';
     };
 
@@ -437,9 +440,9 @@ in
         touch work.txt
         echo "marche" >> work.txt      
         mkdir -p ${cfg.default.client.mountPoint}
-        touch /etc/beegfs/beegfs-mounts.conf ## ISSUE HERE
+        touch /etc/beegfs/beegfs-mounts.conf 
         echo "${cfg.default.client.mountPoint} ${configClientFilename "default"}" >> /etc/beegfs/beegfs-mounts.conf
-        ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-setup-client -m ${cfg.default.mgmtdHost} 
+        ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-setup-client -m ${cfg.default.mgmtdHost} ## ISSUE HERE
         touch fait.txt
         echo "fait" >> fait.txt        
       '';
