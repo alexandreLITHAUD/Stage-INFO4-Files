@@ -1,43 +1,12 @@
 # Logbook du déroulement du stage
 - [Logbook du déroulement du stage](#logbook-du-déroulement-du-stage)
   - [Semaine 1 :](#semaine-1-)
-  - [17/04/23 :](#170423-)
-  - [18/04/23 :](#180423-)
-  - [19/04/23 :](#190423-)
-  - [20/04/23 :](#200423-)
-  - [21/04/23 :](#210423-)
   - [Semaine 2 :](#semaine-2-)
-  - [24/04/23 :](#240423-)
-  - [25/04/23 :](#250423-)
-  - [26/04/23 :](#260423-)
-  - [27/04/23 :](#270423-)
-  - [28/04/23 :](#280423-)
   - [Semaine 3 :](#semaine-3-)
-  - [02/05/23 :](#020523-)
-  - [03/05/23 :](#030523-)
-  - [04/05/23 :](#040523-)
-  - [05/05/23 :](#050523-)
   - [Semaine 4 :](#semaine-4-)
-  - [09/05/23 :](#090523-)
-  - [10/05/23 :](#100523-)
-  - [11/05/23 :](#110523-)
-  - [12/05/23 :](#120523-)
   - [Semaine 5 :](#semaine-5-)
-  - [15/05/23 :](#150523-)
-  - [16/05/23 :](#160523-)
-  - [17/05/23 :](#170523-)
-  - [19/05/23 :](#190523-)
   - [Semaine 6 :](#semaine-6-)
-  - [22/05/23 :](#220523-)
-  - [23/05/23 :](#230523-)
-  - [24/05/23 :](#240523-)
-  - [25/05/23 :](#250523-)
-  - [26/05/23 :](#260523-)
   - [Semaine 7 :](#semaine-7-)
-  - [30/05/23 :](#300523-)
-  - [31/05/23 :](#310523-)
-  - [01/06/23 :](#010623-)
-  - [02/06/23 :](#020623-)
   - [Semaine 8 :](#semaine-8-)
 
 ---
@@ -526,6 +495,9 @@ Code trouvable dans le fichier nixpkgs/lib/attrsets.nix
 - Comprehention des fichiers de configuration manquant pour la creation de volume beegfs (pas marqué sur le manuel beegfs) mais demandé par les binaire en pratique
 - Correction de certains services pour rajouter les différents fichier de configuration en les rajoutant dirrectant à l'initialisation de certain services systemd 
 - Reunion avec des membre du groupe EnOSLib pour discuter sur le fonctionnement et la potentiel utilsation de cet outils par le labo
+- Discution avec les membres du laboratoire sur des outils interessant a installer afin d'augmenter la productivité (IDE, languages, extentions...)
+- Visite (avec samuel cette fois) de data center de l'imag :
+  - Enlever une machine qui était disfonctionnel dans le centre de donnée
 
 ## 19/05/23 :
 
