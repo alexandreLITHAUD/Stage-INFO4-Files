@@ -5,36 +5,36 @@
       "role": "cli",
       "host": "cli1",
       "vm_id": 1,
-      "init": "/nix/store/i7d52qdkx1xiglzraggi5v3ndwnq5301-nixos-system-unnamed-22.11pre-git/init"
+      "init": "/nix/store/yf1xf9j4lvmyrjwdcsm9cbzh198amnhi-nixos-system-unnamed-22.11pre-git/init"
     },
     "192.168.1.2": {
       "role": "meta",
       "host": "meta1",
       "vm_id": 2,
-      "init": "/nix/store/dj3w463n1030hi4d0algbbrrqv2k98c9-nixos-system-unnamed-22.11pre-git/init"
+      "init": "/nix/store/irv9vzky3f0wsf017cks302jry42xavn-nixos-system-unnamed-22.11pre-git/init"
     },
     "192.168.1.3": {
       "role": "mgmt",
       "host": "mgmt1",
       "vm_id": 3,
-      "init": "/nix/store/51b0q521nshcqzfwx1dy3rx0bmbqgcsh-nixos-system-unnamed-22.11pre-git/init"
+      "init": "/nix/store/4zi6mk9y5lyb27blkl5igzf2xhaxlrvk-nixos-system-unnamed-22.11pre-git/init"
     },
     "192.168.1.4": {
       "role": "sto",
       "host": "sto1",
       "vm_id": 4,
-      "init": "/nix/store/1044gj0k5llf50bcsvgq1zh27h9z5k35-nixos-system-unnamed-22.11pre-git/init"
+      "init": "/nix/store/cr5i31fy5dkkm9cdiv803mybjvzp17j2-nixos-system-unnamed-22.11pre-git/init"
     }
   },
   "all": {
-    "all_compositions_registration_store_path": "/nix/store/fhfwh9r2yjwpsgz6v57d7bv444ippzgq-all-compositions-registration-store-paths",
+    "all_compositions_registration_store_path": "/nix/store/afmby4dg4kc40c4yqj2w06i35srrv3zj-all-compositions-registration-store-paths",
     "init": "/nix/store/dcsbj2i29av4x1l8wgxhnqw4paqz7i21-nixos-system-unnamed-22.11pre-git/init",
     "initrd": "/nix/store/wyd9pbcq5kjjrzw4dhwvmgaipsxddc10-initrd-linux-5.15.80/initrd",
     "kernel": "/nix/store/kib8ar9yvhaxjnhj6scp8bpnf1zi1m99-image/kernel",
     "qemu_script": "/nix/store/wg0ylqrlsha9lkhb9ny6jdb0fp7g943g-qemu_script",
     "stage1": "/nix/store/36dyda0i9vq9fsm1cyswys3b1z4d88qz-stage-1-init.sh"
   },
-  "compositions_info_path": "/nix/store/q5571g1qwxb50akcy988w82hccm1cnq4-compositions-info.json",
+  "compositions_info_path": "/nix/store/s11sk0gn3nfj429kmnqqrr3c9q6bfv83-compositions-info.json",
   "composition": "composition",
   "user": "alex"
 }
