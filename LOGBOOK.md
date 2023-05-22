@@ -499,13 +499,43 @@ Code trouvable dans le fichier nixpkgs/lib/attrsets.nix
 - Visite (avec samuel cette fois) de data center de l'imag :
   - Enlever une machine qui était disfonctionnel dans le centre de donnée
 
-## 19/05/23 :
+## 19/05/23 
+- Lecture de docuementation avancé sur le fonctionnement des modules et des library en nix
+- Test des modules et librairies nix en utilisant un clone de nixpkgs 
+- Correction de quelque Bug sur le module
+- Remarque : il manque des systemd dans les vm de beegfs je ne sais pas si c'est ce qu'il pose problème mais c'est un comportement incohérent
+- Creation du fichier composition.nix final qui devrai (quand le module sera reparer) pouvoir creer tous les nodes nécessaire pour le bon fonctionnement de beegfs cad : *mgmtd(1), storage(1,\*), meta(1), client(1,\*), helperd(0,1)*
+- Meta et mgmtd sont unique et essentiel storage doit etre present au une 1 fois et client aussi. Helperd est optionel.
+- J'ai donc une composition simple qui utilise comme base le fichier node.yaml
+```yaml
+mgmtd: 1
+client: 1
+meta: 1
+storage: 1
+```
+- Ce fichier pourra être ammenner a changer au fil des besoins
 
 ---
 
 ## Semaine 6 :
 
 ## 22/05/23 :
+- Verification et certification de certain problème present dans la version actuelle de beegfs
+- Notamment : **Problemes** :
+  - Les services correspondant au différents élement de beegfs ne sont pas present dans les fichier mais sont present dans le store (étrange)
+  - Il est donc impossible de les appeller et de faire fonctionner les volumes
+  - Donc essai de regarder d'ou viens le problème et ce qui devrai les activer
+  - C'est une ligne mise en commentaire d'un certain systemd qui induit ce problème 
+  ```nix
+  systemd.services = systemdHelperd //
+  foldr (a: b: a // b) {}
+    (map (x: systemdEntry x.service x.cfgFile) serviceList);
+  ```
+  - Probleme etant que cette ligne entre en conflit avec les fichier de configuration que j'ai creer au dessus
+  - Il faut donc trouver un moyen d'executer quand meme ces commande mais elles sont différentes en fonction du service.
+- Test de creation de volume manuellement afin de verifier qu'il ne manque pas de fichier en plus qu'il faudrai rajouter
+- Mise en commentaire des rajout de systemd que j'ai realiser pour essayer de la "concatener" avec ce qui a deja été fait avant (Poblème d'ordre, surement)
+- Verification du lancement sur plusieur "flavour" afin de s'assurer que le code est toujours efficace sur les différents deploiement possible
 
 ## 23/05/23 :
 
