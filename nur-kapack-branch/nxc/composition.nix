@@ -6,6 +6,7 @@
     mgmt = { ... }:
       {
 
+
       imports = [ commonConfig ];
       services.beegfsEnable_mod = true;
 
@@ -17,6 +18,10 @@
           storeDir = "/data";
         };
       };
+
+      boot.initrd.postDeviceCommands = ''
+        ${pkgs.e2fsprogs}/bin/mkfs.ext4 -L data /dev/vdb
+      '';
 
       };
 

@@ -13,10 +13,11 @@
   outputs = { self, nixpkgs, nxc, NUR, kapack }:
     let
       system = "x86_64-linux";
-    in {
+    in
+    {
       packages.${system} = nxc.lib.compose {
         inherit nixpkgs system NUR;
-        repoOverrides = {inherit kapack;};
+        repoOverrides = { inherit kapack; };
         setup = ./setup.toml;
         composition = ./composition.nix;
       };
@@ -24,6 +25,9 @@
       defaultPackage.${system} =
         self.packages.${system}."composition::vm";
 
-      devShells.${system}.default = nxc.devShells.${system}.nxcShell;
+      devShells.${system} {
+        default = nxc.devShells.${system}.nxcShell;
+        nxcShellFull = nxc.devShells.${system}.nxcShellFull;
+      }
     };
 }

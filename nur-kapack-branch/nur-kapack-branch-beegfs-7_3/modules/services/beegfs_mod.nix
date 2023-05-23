@@ -79,14 +79,14 @@ let
       # ${pkgs.beegfs}/bin/beegfs-${service} \
       ExecStart = ''
           ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-${service} \
-          cfgFile=${cfgFile name cfg} \
-          pidFile=${PIDFile}
+          cfgFile="/etc/beegfs/beegfs-${service}.conf" \
+          pidFile="${PIDFile}"
       '';
       PIDFile = "/run/beegfs-${service}-${name}.pid";
       TimeoutStopSec = "300";
     };
 
-
+    # # ${cfgFile name cfg} \ # OU /etc/beegfs/ IL FAUDRA PRENDRE LA VERSION QUI A ETE MODIFIER
 
   }))) cfg);
 
