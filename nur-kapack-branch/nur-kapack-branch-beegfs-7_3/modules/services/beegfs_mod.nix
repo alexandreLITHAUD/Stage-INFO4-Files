@@ -79,14 +79,14 @@ let
       # ${pkgs.beegfs}/bin/beegfs-${service} \
       ExecStart = ''
           ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-${service} \
-          cfgFile="/etc/beegfs/beegfs-${service}.conf" \
-          pidFile="${PIDFile}"
+          cfgFile=/etc/beegfs/beegfs-${service}.conf \
+          pidFile=/run/beegfs-${service}-${name}.pid
       '';
-      PIDFile = "/run/beegfs-${service}-${name}.pid";
-      TimeoutStopSec = "300";
     };
 
     # # ${cfgFile name cfg} \ # OU /etc/beegfs/ IL FAUDRA PRENDRE LA VERSION QUI A ETE MODIFIER
+    # PIDFile = "/run/beegfs-${service}-${name}.pid";
+    # TimeoutStopSec = "300";
 
   }))) cfg);
 
@@ -362,101 +362,95 @@ in
     })))) cfg;
 
     # generate systemd services
-    systemd.services = systemdHelperd //
-      foldr (a: b: a // b) {}
-        (map (x: systemdEntry x.service x.cfgFile) serviceList);
+    # systemd.services = systemdHelperd //
+    #   foldr (a: b: a // b) {}
+    #     (map (x: systemdEntry x.service x.cfgFile) serviceList);
 
-    ## FIXME
-    ## TODO utiliser le oneshot
-    #     systemd.services.beegfs_mod = {   # TODO mkIfmkIfmkIfmkIfmkIfmkIf
-    #     wantedBy = [ ];#"multi-user.target" ];
-    #     requires = [ ];#"network-online.target" ];
-    #     after = [ ];#"network-online.target" ];
-    #     serviceConfig.Type = "oneshot";
-    #     script = ''
-    #       ${pkgs.sudo}/bin/sudo -u orangefs -g orangefs ${cfg.package}/bin/pvfs2-server /etc/orangefs/server.conf -f
-    #       if [ "${cfg.type.options}" ]
-    # #     '';
-    ## TODO
-    ## FIXME
+    systemd.services.start_mgmtd = mkIf (cfg.default.mgmtd.enable) {
+      wantedBy = [ "multi-user.target" ];
+      requires = [ "network-online.target" ];
+      after = [ "network-online.target" ];
+      serviceConfig.Type = "oneshot";
+      path = [];
+      script = ''
+        mkdir -p ${cfg.default.mgmtd.storeDir};
+        touch work.txt
+        echo "marche" >> work.txt
 
-    # systemd.services.start_mgmtd = mkIf (cfg.default.mgmtd.enable) {
-    #   wantedBy = [ "multi-user.target" ];
-    #   requires = [ "network-online.target" ];
-    #   after = [ "network-online.target" ];
-    #   serviceConfig.Type = "oneshot";
-    #   path = [];
-    #   script = ''
-    #     mkdir -p ${cfg.default.mgmtd.storeDir}
-    #     touch work.txt
-    #     echo "marche" >> work.txt
-
-    #     # ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-mgmtd \ 
-    #     # cfgFile=${cfgFile name cfg} \
-    #     # pidFile="/run/beegfs-mgmtd-default.pid"
-
-    #     # touch /etc/beegfs/beegfs-mgmtd.conf
-    #     # printf "storeMgmtdDirectory = ${cfg.default.mgmtd.storeDir}\nstoreAllowFirstRunInit = false\nconnAuthFile = ${cfg.default.connAuthFile}\nconnPortShift = ${toString cfg.default.connPortShift}\n${cfg.default.mgmtd.extraConfig}" >> /etc/beegfs/beegfs-mgmtd.conf
-
-    #     touch fait.txt
-    #     echo "fait" >> fait.txt
+        cp ${pkgs.nur.repos.kapack.beegfs}/share/doc/beegfs/beegfs-mgmtd.conf /etc/beegfs/;
         
-    #     ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-setup-mgmtd -C -p ${cfg.default.mgmtd.storeDir}
+        touch fait.txt
+        echo "fait" >> fait.txt
+        
+        ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-setup-mgmtd -p ${cfg.default.mgmtd.storeDir}
 
-    #     touch fait2.txt
-    #     echo "fait2" >> fait2.txt
-    #   '';
-    # };
+        touch fait2.txt
+        echo "fait2" >> fait2.txt
+      '';
+    };
 
-    # systemd.services.start_meta = mkIf (cfg.default.meta.enable) {
-    #   wantedBy = [ "multi-user.target" ];
-    #   requires = [ "start_mgmtd.service" ];
-    #   after = [ "start_mgmtd.service" ];
-    #   serviceConfig.Type = "oneshot";
-    #   path = [];
-    #   script = ''
-    #     touch work.txt
-    #     echo "marche" >> work.txt
-    #     mkdir -p ${cfg.default.meta.storeDir}
-    #     ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-setup-meta -C -p ${cfg.default.meta.storeDir} -s 66 -m ${cfg.default.mgmtdHost} 
-    #     touch fait.txt
-    #     echo "fait" >> fait.txt      
-    #   '';
-    # };
+        #     ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-mgmtd cfgFile=/etc/beegfs/beegfs-mgmtd.conf pidFile=/run/beegfs-mgmtd-default.pid
+        #  \
+        # 
 
-    # systemd.services.start_storage = mkIf (cfg.default.storage.enable) {
-    #   wantedBy = [ "multi-user.target" ];
-    #   requires = [ "start_mgmtd.service" ];
-    #   after = [ "start_mgmtd.service" ];
-    #   serviceConfig.Type = "oneshot";
-    #   path = [];
-    #   script = ''
-    #     touch work.txt
-    #     echo "marche" >> work.txt      
-    #     mkdir -p ${cfg.default.storage.storeDir}
-    #     ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-setup-storage -C -p ${cfg.default.storage.storeDir} -s 99 -i 399 -m ${cfg.default.mgmtdHost} 
-    #     touch fait.txt
-    #     echo "fait" >> fait.txt        
-    #   '';
-    # };
+    systemd.services.start_meta = mkIf (cfg.default.meta.enable) {
+      wantedBy = [ "multi-user.target" ];
+      requires = [ "start_mgmtd.service" ];
+      after = [ "start_mgmtd.service" ];
+      serviceConfig.Type = "oneshot";
+      path = [];
+      script = ''
+        touch work.txt
+        echo "marche" >> work.txt
+        mkdir -p ${cfg.default.meta.storeDir};
 
-    # systemd.services.start_client = mkIf (cfg.default.client.enable) {
-    #   wantedBy = [ "multi-user.target" ];
-    #   requires = [ "start_mgmtd.service" "start_meta.service" "start_storage.service" ];
-    #   after = [ "start_mgmtd.service" "start_meta.service" "start_storage.service" ];
-    #   serviceConfig.Type = "oneshot";
-    #   path = [];
-    #   script = ''
-    #     touch work.txt
-    #     echo "marche" >> work.txt      
-    #     mkdir -p ${cfg.default.client.mountPoint}
-    #     touch /etc/beegfs/beegfs-mounts.conf 
-    #     echo "${cfg.default.client.mountPoint} ${configClientFilename "default"}" >> /etc/beegfs/beegfs-mounts.conf
-    #     ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-setup-client -m ${cfg.default.mgmtdHost} ## ISSUE HERE
-    #     touch fait.txt
-    #     echo "fait" >> fait.txt        
-    #   '';
-    # };
+        cp ${pkgs.nur.repos.kapack.beegfs}/share/doc/beegfs/beegfs-meta.conf /etc/beegfs/;
+
+        ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-setup-meta -p ${cfg.default.meta.storeDir} -s 66 -m ${cfg.default.mgmtdHost} 
+        touch fait.txt
+        echo "fait" >> fait.txt      
+      '';
+    };
+
+    systemd.services.start_storage = mkIf (cfg.default.storage.enable) {
+      wantedBy = [ "multi-user.target" ];
+      requires = [ "start_mgmtd.service" ];
+      after = [ "start_mgmtd.service" ];
+      serviceConfig.Type = "oneshot";
+      path = [];
+      script = ''
+        touch work.txt
+        echo "marche" >> work.txt      
+        mkdir -p ${cfg.default.storage.storeDir}
+
+        cp ${pkgs.nur.repos.kapack.beegfs}/share/doc/beegfs/beegfs-storage.conf /etc/beegfs/;
+
+        ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-setup-storage -p ${cfg.default.storage.storeDir} -s 99 -i 399 -m ${cfg.default.mgmtdHost} 
+        touch fait.txt
+        echo "fait" >> fait.txt        
+      '';
+    };
+
+    systemd.services.start_client = mkIf (cfg.default.client.enable) {
+      wantedBy = [ "multi-user.target" ];
+      requires = [ "start_mgmtd.service" "start_meta.service" "start_storage.service" ];
+      after = [ "start_mgmtd.service" "start_meta.service" "start_storage.service" ];
+      serviceConfig.Type = "oneshot";
+      path = [];
+      script = ''
+        touch work.txt
+        echo "marche" >> work.txt      
+        mkdir -p ${cfg.default.client.mountPoint}
+        touch /etc/beegfs/beegfs-mounts.conf 
+        echo "${cfg.default.client.mountPoint} ${configClientFilename "default"}" >> /etc/beegfs/beegfs-mounts.conf
+
+        cp ${pkgs.nur.repos.kapack.beegfs}/share/doc/beegfs/beegfs-client.conf /etc/beegfs/;
+
+        ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-setup-client -m ${cfg.default.mgmtdHost} ## ISSUE HERE
+        touch fait.txt
+        echo "fait" >> fait.txt        
+      '';
+    };
 
   };
 }
