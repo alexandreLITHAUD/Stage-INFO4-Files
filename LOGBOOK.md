@@ -538,6 +538,31 @@ storage: 1
 - Verification du lancement sur plusieur "flavour" afin de s'assurer que le code est toujours efficace sur les différents deploiement possible
 
 ## 23/05/23 :
+- Modification du flake afin de pouvoir directement recupere les Full commandes de nxc directtement depuis la composition beegfs
+- Discution avec Quentin sur les fichier de configurations de beegfs et comment pouvoir les recuperer et les modifier directement.
+- Donc modification de la creation des services beegfs afin qu'il utilse les fichiers de configurations de /etc/beegfs qui sont modifier et non pas les ficheir present dans le store qui sont incomplets et immutables.
+```nix
+systemdEntry = service: cfgFile: (mapAttrs' ( name: cfg:
+  (nameValuePair "beegfs-${service}-${name}" (mkIf cfg.${service}.enable {
+  wantedBy = [ "multi-user.target" ];
+  requires = [ "network-online.target" ];
+  after = [ "network-online.target" ];
+  serviceConfig = rec {
+    # pkgs.beegfs n'existe pas
+    # On tente des technologies ici
+    # ${pkgs.beegfs}/bin/beegfs-${service} \
+    ExecStart = ''
+        ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-${service} \
+        cfgFile="/etc/beegfs/beegfs-${service}.conf" \
+        pidFile="${PIDFile}"
+    '';
+    PIDFile = "/run/beegfs-${service}-${name}.pid";
+    TimeoutStopSec = "300";
+  };
+```
+- Ajout d'un formatage automatique sur les fichier nix en utilsant nixpkgs-fmt et en le reliant a l'EDI (ici vscode)
+- Lancement reussi du service de management mgmtd
+- *TODO* : Finir un script (en utilisant systemd) pour lancer le service automatiquement 
 
 ## 24/05/23 :
 
