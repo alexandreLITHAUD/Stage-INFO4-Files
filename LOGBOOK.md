@@ -538,8 +538,100 @@ storage: 1
 - Verification du lancement sur plusieur "flavour" afin de s'assurer que le code est toujours efficace sur les différents deploiement possible
 
 ## 23/05/23 :
+- Modification du flake afin de pouvoir directement recupere les Full commandes de nxc directtement depuis la composition beegfs
+- Discution avec Quentin sur les fichier de configurations de beegfs et comment pouvoir les recuperer et les modifier directement.
+- Donc modification de la creation des services beegfs afin qu'il utilse les fichiers de configurations de /etc/beegfs qui sont modifier et non pas les ficheir present dans le store qui sont incomplets et immutables.
+```nix
+systemdEntry = service: cfgFile: (mapAttrs' ( name: cfg:
+  (nameValuePair "beegfs-${service}-${name}" (mkIf cfg.${service}.enable {
+  wantedBy = [ "multi-user.target" ];
+  requires = [ "network-online.target" ];
+  after = [ "network-online.target" ];
+  serviceConfig = rec {
+    # pkgs.beegfs n'existe pas
+    # On tente des technologies ici
+    # ${pkgs.beegfs}/bin/beegfs-${service} \
+    ExecStart = ''
+        ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-${service} \
+        cfgFile="/etc/beegfs/beegfs-${service}.conf" \
+        pidFile="${PIDFile}"
+    '';
+    PIDFile = "/run/beegfs-${service}-${name}.pid";
+    TimeoutStopSec = "300";
+  };
+```
+- Ajout d'un formatage automatique sur les fichier nix en utilsant nixpkgs-fmt et en le reliant a l'EDI (ici vscode)
+- Lancement reussi du service de management mgmtd
+- *TODO* : Finir un script (en utilisant systemd) pour lancer le service automatiquement 
 
 ## 24/05/23 :
+- Creation de script capable de faire toutes les initilisation nécessaire pour la creation des fichier s de configuration et leur bonne modification (il faut juste lancer la commande finale a revoir)
+- Le service mgmtd est fonctionnel, storage aussi et le lien entre les deux s'effectue correctement
+- Cependant il y a un problème avec le serveur de metadonnée (dernier service manquant)
+```bash
+MGMTD -> SUCCESS
+==============================================================================
+(0) May24 11:45:56 Main [StoragePoolStore.cpp:565] >> Could not open storage pool mappings file. storePath: storagePools; sysErr: No such file or directory (2)
+(0) May24 11:45:56 Main [MgmtdTargetStateStore.cpp:448] >> Could not read states. NodeType: beegfs-storage; Error: Path does not exist
+(0) May24 11:45:56 Main [MgmtdTargetStateStore.cpp:448] >> Could not read states. NodeType: beegfs-meta; Error: Path does not exist
+(1) May24 11:45:56 Main [App] >> Version: 23.5-git9
+(2) May24 11:45:56 Main [App] >> LocalNode: beegfs-mgmtd mgmt1 [ID: 1]
+(2) May24 11:45:56 Main [App] >> Usable NICs: eth1(TCP) eth1(TCP) eth0(TCP) 
+==============================================================================
+MGMTD -> STORAGE INITIALIZED (LINE ADDED) -> SUCCESS
+==============================================================================
+(2) May24 11:56:05 DGramLis [Node registration] >> New node: beegfs-storage sto1 [ID: 99]; Ver: 23.5-9; Source: 192.168.1.4
+(2) May24 11:56:06 XNodeSync [Assign target to capacity pool] >> Storage target capacity pool assignment updated. NodeID: 99; TargetID: 399; Pool: Emergency;  Reason: No capacity report received.
+(2) May24 11:56:08 Worker1 [Change consistency states] >> Storage target is coming online. ID: 399
+==============================================================================
+```
+STORAGE
+```bash
+STORAGE -> SUCCESS
+==============================================================================
+(3) May24 11:56:05 Main [RegDGramLis] >> Listening for UDP datagrams: Port 8003                                        
+(1) May24 11:56:05 Main [App] >> Waiting for beegfs-mgmtd@mgmt1:8008...                                                
+(2) May24 11:56:05 RegDGramLis [Heartbeat incoming] >> New node: beegfs-mgmtd mgmt1 [ID: 1];                           
+(3) May24 11:56:05 Main [NodeConn (acquire stream)] >> Connected: beegfs-mgmtd@192.168.1.3:8008 (protocol: TCP)        
+(1) May24 11:56:05 Main [App] >> Version: 23.5-git9                                                                    
+(2) May24 11:56:05 Main [App] >> LocalNode: beegfs-storage sto1 [ID: 99]                                               
+(2) May24 11:56:05 Main [App] >> Usable NICs: eth1(TCP) eth1(TCP) eth0(TCP)                                            
+(2) May24 11:56:05 Main [App] >> Storage targets: 1                                                                    
+(3) May24 11:56:05 Main [RegDGramLis] >> Listening for UDP datagrams: Port 8003                                        
+(2) May24 11:56:05 Main [Register node] >> Node registration successful.                                               
+(2) May24 11:56:05 Main [InternodeSyncer.cpp:618] >> Storage targets registration successful.                          
+(3) May24 11:56:05 Main [App] >> Registration and management info download complete.                                   
+(3) May24 11:56:05 Main [DGramLis] >> Listening for UDP datagrams: Port 8003                                           
+(3) May24 11:56:05 Main [ConnAccept] >> Listening for TCP connections: Port 8003                          
+(3) May24 11:56:05 Main [App] >> 0 sessions restored.
+==============================================================================
+```
+
+Metadonnée
+```bash
+METADATA -> FAIL
+==============================================================================
+(3) May24 11:46:37 Main [App.cpp:656] >> Limiting number of xattrs per inode.
+(1) May24 11:46:37 Main [App] >> This appears to be a new storage directory. Creating a new root dir.
+(0) May24 11:46:37 Main [Directory (store initial metadata file)] >> Unable to store directory xattr metadata: inodes/38/51/root. Did you enable extended attributes (user_xattr) on the underlying file system?
+(0) May24 11:46:37 Main [App] >> Failed to store root directory. Unable to proceed.
+(0) May24 11:46:37 Main [App] >> Failed to store root directory
+==============================================================================
+
+TENTATIVE ->
+[root@meta1:/]# sudo tune2fs -o user_xattr /dev/vdb
+tune2fs 1.46.5 (30-Dec-2021)
+tune2fs: No such file or directory while trying to open /dev/vdb
+Couldnt find valid filesystem superblock.
+
+[root@meta1:/]# mount | grep root
+overlay on /nix/store type overlay (rw,relatime,lowerdir=/mnt-root/nix/.ro-store,upperdir=/mnt-root/nix/.rw-store/store,workdir=/mnt-root/nix/.rw-store/work)
+overlay on /nix/store type overlay (ro,relatime,lowerdir=/mnt-root/nix/.ro-store,upperdir=/mnt-root/nix/.rw-store/store,workdir=/mnt-root/nix/.rw-store/work)
+
+DANS LA COMPOSITION ->
+boot.initrd.postDeviceCommands = ''
+${pkgs.e2fsprogs}/bin/mkfs.ext4 -L data /dev/vdb
+```
 
 ## 25/05/23 :
 
