@@ -1,5 +1,0 @@
-server "storage":
-  - stor
-server "mgmtd":
-  - mg
-client: 1
