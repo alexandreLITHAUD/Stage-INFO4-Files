@@ -634,6 +634,30 @@ ${pkgs.e2fsprogs}/bin/mkfs.ext4 -L data /dev/vdb
 ```
 
 ## 25/05/23 :
+- Réorganisation du git et de l'architecture de ma machine afin de facilité l'efficacité de travail
+- Il n'est pas possible dans le falvour vm de faire fonctionner le service de metadonnée dans l'état actuel des choses car il n'y a pas de disque physique. Afin de pouvoir faire fonctionner le service il faut l'attribut user_xattr, or comme tous est en ROM il utilise un tmpfs (temporary file system) qui est imcompatible avec user_xattr. Il faut donc rajouter un disque sur les vm pour que cela devienne possible.
+- Utilisation de rsync (https://www.grid5000.fr/w/SSH) afin de pouvoir faire le liens du projet beegfs jusqu'a g5k.
+- Deploiement de beegfs dans g5k avec la flavour g5k-nfs-store et regard des différent disque potentiellement utilisable.
+```
+/dev/sda
+├──/dev/sda1 -> 3.7G -> swap
+├──/dev/sda2 -> 28.9G -> fs
+├──/dev/sda3 -> 31.7G -> fs
+├──/dev/sda4 -> 953M -> fs 
+├──/dev/sda5 -> 158.4G -> fs
+/dev/sdb
+```
+Ce sont les disk present quand on fait lsblk.
+
+On pourra utiliser en regardant dans **/dev/disk/** by-partlabel
+
+-> On trouve a l'intérieur un fichier nomé **KDPL_TMP_disk0** qu'on pourrai (je croie) utiliser.
+
+- Installation et customization de zsh afin de facilité le deplacement dans le PC (grace a oh my zsh) et ce de manière pur en utilisant les mettant dans la configuration.nix
+- Commencement de l'utilisation des flake pour la configuration nix `nixos-rebuild switch --flake .#<TODO>`
+- Rajouter home manager pour facilité le deploiement sur différentes machines
+- Installation et customization de ranger pour les mêmes raisons
+- Avec g5k il sera tout a fait possible (après avoir compris quel disque utilisé) de creer un nouveau fs avec les extra attributes activés, de faire une copie, de mount et de l'utiliser dans le storeDir du service metadata.
 
 ## 26/05/23 :
 
