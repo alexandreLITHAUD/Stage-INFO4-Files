@@ -635,7 +635,7 @@ ${pkgs.e2fsprogs}/bin/mkfs.ext4 -L data /dev/vdb
 
 ## 25/05/23 :
 - Réorganisation du git et de l'architecture de ma machine afin de facilité l'efficacité de travail
-- Il n'est pas possible dans le falvour vm de faire fonctionner le service de metadonnée dans l'état actuel des choses car il n'y a pas de disque physique. Afin de pouvoir faire fonctionner le service il faut l'attribut user_xattr, or comme tous est en ROM il utilise un tmpfs (temporary file system) qui est imcompatible avec user_xattr. Il faut donc rajouter un disque sur les vm pour que cela devienne possible.
+- Il n'est pas possible dans le flavour vm de faire fonctionner le service de metadonnée dans l'état actuel des choses car il n'y a pas de disque physique. Afin de pouvoir faire fonctionner le service il faut l'attribut user_xattr, or comme tous est en ROM il utilise un tmpfs (temporary file system) qui est imcompatible avec user_xattr. Il faut donc rajouter un disque sur les vm pour que cela devienne possible.
 - Utilisation de rsync (https://www.grid5000.fr/w/SSH) afin de pouvoir faire le liens du projet beegfs jusqu'a g5k.
 - Deploiement de beegfs dans g5k avec la flavour g5k-nfs-store et regard des différent disque potentiellement utilisable.
 ```
@@ -660,7 +660,55 @@ On pourra utiliser en regardant dans **/dev/disk/** by-partlabel
 - Avec g5k il sera tout a fait possible (après avoir compris quel disque utilisé) de creer un nouveau fs avec les extra attributes activés, de faire une copie, de mount et de l'utiliser dans le storeDir du service metadata.
 
 ## 26/05/23 :
+## **FONCTIONNEMENT DE BBEGFS**
+- Lancement de la composition nixos-compose dans g5k afin de pouvoir potentiellement faire fonctionner le serveur de metadonnées.
+- Etude et Comprehention du fonctionnement des disks et file systems en géneral et dans g5k (principe exactement similaire)
+- En faisant ls -al dans le dossier /dev/disk/by-partlabel/ on remaque que  **KDPL_TMP_disk0** est relier a sda5 c'est donc ce file system que nous allons utiliser pour stocker les données du service de meta données
+- En faisant la commande `dd if=/dev/zero of=/dev/sda5 bs=1M` on s'assure de vider complement le fs (pas necessaire sachant qu'on va le "supprmier" après mais cela evite des warning)
+- On initialise ensuite le filesystem (si il a été vidé) dans le format ext4 avec la commande `mkfs.ext4 /dev/sda5`
+- On monte ensuite le file system au reperttoire voulu en oubliant pas d'activer user_xattr (l'option que l''on voulai depuis le debut) avce la commande `mount -o user_xattr /dev/sda5 <store directory>`
+- On lance finalement le setup du serveur de metadonnée avec la commande ` beegfs-setup-meta -p <store directory> -s 66 -m <name of the managment server>`
+- On peux enfin lancer le service avec la commande `beegfs-meta cfgFile=/etc/beegfs/beegfs-meta.conf pidFile=/run/beegfs-meta-default.pid` 
 
+- Fichier de log
+```bash
+MGMTD
+
+(0) May26 12:36:54 Main [StoragePoolStore.cpp:565] >> Could not open storage pool mappings file. storePath: storagePools; sysErr: No such file or directory (2)
+(0) May26 12:36:54 Main [MgmtdTargetStateStore.cpp:448] >> Could not read states. NodeType: beegfs-storage; Error: Path does not exist
+(0) May26 12:36:54 Main [MgmtdTargetStateStore.cpp:448] >> Could not read states. NodeType: beegfs-meta; Error: Path does not exist
+(1) May26 12:36:54 Main [App] >> Version: 23.5-git25
+(2) May26 12:36:54 Main [App] >> LocalNode: beegfs-mgmtd mgmt1 [ID: 1]
+(2) May26 12:36:54 Main [App] >> Usable NICs: enp24s0f0(TCP) 
+>> STORAGE
+(2) May26 12:38:09 DGramLis [Node registration] >> New node: beegfs-storage sto1 [ID: 99]; Ver: 23.5-25; Source: 172.16.20.5
+(2) May26 12:38:12 DirectWorker1 [Change consistency states] >> Storage target is coming online. ID: 399
+>> META
+(1) May26 13:06:44 DGramLis [HBeatMgr] >> New root directory metadata node: beegfs-meta meta1 [ID: 66]
+(2) May26 13:06:44 DGramLis [Node registration] >> New node: beegfs-meta meta1 [ID: 66]; Ver: 23.5-25; Source: 172.16.20.31
+(2) May26 13:06:47 Worker4 [Change consistency states] >> Metadata node is coming online. ID: 66
+```
+
+```bash
+META
+
+(1) May26 13:06:44 Main [App] >> This appears to be a new storage directory. Creating a new root dir.
+(3) May26 13:06:44 Main [RegDGramLis] >> Listening for UDP datagrams: Port 8005
+(1) May26 13:06:44 Main [App] >> Waiting for beegfs-mgmtd@mgmt1:8008...
+(2) May26 13:06:44 RegDGramLis [Heartbeat incoming] >> New node: beegfs-mgmtd mgmt1 [ID: 1]
+(3) May26 13:06:44 Main [RegDGramLis] >> Listening for UDP datagrams: Port 8005
+(2) May26 13:06:44 Main [Register node] >> Node registration successful.
+(3) May26 13:06:44 Main [NodeConn (acquire stream)] >> Connected: beegfs-mgmtd@172.16.20.4:8008 (protocol: TCP)
+(1) May26 13:06:44 Main [InternodeSyncer.cpp:673] >> Root node ID (from sync results): 66
+(2) May26 13:06:44 Main [printSyncResults] >> Nodes added (sync results): 1 (Type: beegfs-storage)
+(3) May26 13:06:44 Main [App] >> Registration and management info download complete.
+(3) May26 13:06:44 Main [DGramLis] >> Listening for UDP datagrams: Port 8005
+(3) May26 13:06:44 Main [ConnAccept] >> Listening for TCP connections: Port 8005
+(1) May26 13:06:44 Main [App] >> Version: 23.5-git25
+(2) May26 13:06:44 Main [App] >> LocalNode: beegfs-meta meta1 [ID: 66]
+(2) May26 13:06:44 Main [App] >> Usable NICs: enp24s0f0(TCP)
+```
+- Ensuite il ne manque plus qu'a monter le client sur le serveur mgmtd et le file system est fonctionel
 ---
 
 ## Semaine 7 :
