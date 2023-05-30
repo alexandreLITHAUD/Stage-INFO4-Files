@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs,... }:
 
 with lib;
 
@@ -353,13 +353,13 @@ in
         cfg;
 
       # Kernel module, we need it only once per host.
-      # boot = mkIf (
-      #   foldr (a: b: a || b) false
-      #     (map (x: x.client.enable) (collect (x: x ? client) cfg)))
-      # {
-      #   kernelModules = [ "beegfs" ]; ## FIXME ??
-      #   # extraModulePackages = [ pkgs.linuxPackages.beegfs-module ];
-      # };
+      boot = mkIf (
+        foldr (a: b: a || b) false
+          (map (x: x.client.enable) (collect (x: x ? client) cfg)))
+      {
+        kernelModules = [ "beegfs" ]; ## FIXME ??
+        extraModulePackages = [ "${pkgs.nur.repos.kapack.beegfs_kernel pkgs.linuxPackages.kernel}" ]; # NUR
+      };
 
       # generate fstab entries
       fileSystems = mapAttrs'
@@ -385,18 +385,10 @@ in
         path = [ ];
         script = ''
           mkdir -p ${cfg.default.mgmtd.storeDir};
-          touch work.txt
-          echo "marche" >> work.txt
 
           cp ${pkgs.nur.repos.kapack.beegfs}/share/doc/beegfs/beegfs-mgmtd.conf /etc/beegfs/;
         
-          touch fait.txt
-          echo "fait" >> fait.txt
-        
           ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-setup-mgmtd -p ${cfg.default.mgmtd.storeDir}
-
-          touch fait2.txt
-          echo "fait2" >> fait2.txt
         '';
       };
 
@@ -411,17 +403,13 @@ in
         serviceConfig.Type = "oneshot";
         path = [ ];
         script = ''
-          touch work.txt
-          echo "marche" >> work.txt
           mkdir -p ${cfg.default.meta.storeDir};
           ${pkgs.e2fsprogs}/bin/mkfs.ext4 -L data ${cfg.default.meta.storeDir};
           ${pkgs.coreutils}/bin/tune2fs -o user_xattr ${cfg.default.meta.storeDir};
 
           cp ${pkgs.nur.repos.kapack.beegfs}/share/doc/beegfs/beegfs-meta.conf /etc/beegfs/;
 
-          ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-setup-meta -p ${cfg.default.meta.storeDir} -s 66 -m ${cfg.default.mgmtdHost} 
-          touch fait.txt
-          echo "fait" >> fait.txt      
+          ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-setup-meta -p ${cfg.default.meta.storeDir} -s 66 -m ${cfg.default.mgmtdHost}    
         '';
       };
 
@@ -431,16 +419,12 @@ in
         after = [ "start_mgmtd.service" ];
         serviceConfig.Type = "oneshot";
         path = [ ];
-        script = ''
-          touch work.txt
-          echo "marche" >> work.txt      
+        script = ''     
           mkdir -p ${cfg.default.storage.storeDir};
 
           cp ${pkgs.nur.repos.kapack.beegfs}/share/doc/beegfs/beegfs-storage.conf /etc/beegfs/;
 
-          ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-setup-storage -p ${cfg.default.storage.storeDir} -s 99 -i 399 -m ${cfg.default.mgmtdHost} 
-          touch fait.txt
-          echo "fait" >> fait.txt        
+          ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-setup-storage -p ${cfg.default.storage.storeDir} -s 99 -i 399 -m ${cfg.default.mgmtdHost}     
         '';
       };
 
@@ -450,18 +434,14 @@ in
         after = [ "start_mgmtd.service" "start_meta.service" "start_storage.service" ];
         serviceConfig.Type = "oneshot";
         path = [ ];
-        script = ''
-          touch work.txt
-          echo "marche" >> work.txt      
+        script = ''    
           mkdir -p ${cfg.default.client.mountPoint};
           touch /etc/beegfs/beegfs-mounts.conf;
           echo "${cfg.default.client.mountPoint} ${configClientFilename "default"}" >> /etc/beegfs/beegfs-mounts.conf;
 
           cp ${pkgs.nur.repos.kapack.beegfs}/share/doc/beegfs/beegfs-client.conf /etc/beegfs/;
 
-          ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-setup-client -m ${cfg.default.mgmtdHost};
-          touch fait.txt
-          echo "fait" >> fait.txt        
+          ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-setup-client -m ${cfg.default.mgmtdHost};       
         '';
       };
 

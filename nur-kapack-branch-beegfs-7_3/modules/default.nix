@@ -10,4 +10,5 @@
   phpfpm0 = ./services/phpfpm0.nix;
   ear = ./services/ear.nix;
   beegfs = ./services/beegfs_mod.nix;
+  # beegfs_kernel = ./services/beegfs_ker.nix;
 }
