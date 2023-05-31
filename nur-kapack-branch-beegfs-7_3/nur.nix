@@ -42,7 +42,7 @@ rec {
   batsim-docker = pkgs.callPackage ./pkgs/batsim/batsim-docker.nix { inherit batsim; };
 
   beegfs = pkgs.callPackage ./pkgs/beegfs { };
-  beegfs_kernel = kernel: pkgs.callPackage ./pkgs/beegfs/beegfs_ker.nix { inherit kernel; };
+  beegfs_kernel = config: config.boot.kernelPackages.callPackage ./pkgs/beegfs/beegfs_ker.nix { };
 
   elastisim = pkgs.callPackage ./pkgs/elastisim { };
 
