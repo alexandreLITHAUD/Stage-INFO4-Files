@@ -714,6 +714,128 @@ META
 ## Semaine 7 :
 
 ## 30/05/23 :
+- **REUNION** :
+  - Declaration des attentes quant au fonctionnement de beegfs
+  - Recherche du module kernel de beegfs avant sa supreesion de nixpkgs
+  - Il faut finaliser le module kernel du client dans la semaine pour pouvoir ensuite passer au projet regale
+  - Documentaion du code + Suppression des elements inutiles
+- Listes des essaies de fonctionnement d'implementation du module kernel :
+
+```bash
+extraModulePackages = [ "${pkgs.nur.repos.kapack.modules.beegfs_kenel}" ];
+
+error: builder for '/nix/store/riaxj3gp92f7w69bsiyzg6pn6f6b79sc-kernel-modules.drv' failed with exit code 2;
+       last 1 log lines:
+       > error: The store path /nix/store/67l671b9j448k8f6y2gq749cg5dkdzhc-beegfs_ker.nix is a file and can't be merged into an environment using pkgs.buildEnv! at /nix/store/yznq148yxflnvvafmdljbxf689vzrf7q-builder.pl line 122.
+       For full logs, run 'nix log /nix/store/riaxj3gp92f7w69bsiyzg6pn6f6b79sc-kernel-modules.drv'.
+error: 1 dependencies of derivation '/nix/store/w3pkapmsjs41d60zb6qjwwmxi1rvk3yp-nixos-system-unnamed-22.11pre-git.drv' failed to build
+error: 1 dependencies of derivation '/nix/store/07dcnd09a9r26mgs44mnil4nnq8a5s3n-closure-info.drv' failed to build
+error: 1 dependencies of derivation '/nix/store/vs73ajh8h7m3is2p4407d14gl3m2rk4r-compose-info.json.drv' failed to build
+
+==========================================================================================================================
+
+extraModulePackages = [ pkgs.nur.repos.kapack.modules.beegfs_kenel ];
+
+error: A definition for option `boot.extraModulePackages."[definition 1-entry 1]"' is not of type `package'. Definition values:
+       - In `/nix/store/clh33vqcg869sjgansaxm2kg3f2imf3x-source/modules/services/beegfs_mod.nix': /nix/store/clh33vqcg869sjgansaxm2kg3f2imf3x-source/modules/services/beegfs_ker.nix
+(use '--show-trace' to show detailed location information)'
+Error: Build return code: 1
+
+==========================================================================================================================
+
+extraModulePackages = with config.boot.kernelPackages; [ pkgs.nur.repos.kapack.modules.beegfs_kenel ]; # NUR
+
+SAME
+
+==========================================================================================================================
+
+extraModulePackages = [ pkgs.nur.repos.kapack.beegfs_kernel ]; # NUR 
+
+MISE DANS PKGS ET PAS DANS MODULE COMME C''ETAIT DEJA A LA BASE
+
+error: Function called without required argument "kernel" at /nix/store/1bjxspddgmyll5902ia02apmjms7kva8-source/pkgs/beegfs/beegfs_ker.nix:3, did you mean "fennel"?
+(use '--show-trace' to show detailed location information)
+
+==========================================================================================================================
+
+extraModulePackages = with config.boot.kernelPackages; [ pkgs.nur.repos.kapack.beegfs_kernel ]; # NUR
+
+error: syntax error, unexpected '}'
+
+       at /nix/store/8rbvwv7j261cb2wrv8a379ipjkhgw7cv-source/nur.nix:45:82:
+
+           44|   beegfs = pkgs.callPackage ./pkgs/beegfs { };
+           45|   beegfs_kernel = pkgs.callPackage ./pkgs/beegfs/beegfs_ker.nix { inherit kernel };
+             |                                                                                  ^
+           46|
+(use '--show-trace' to show detailed location information)
+
+==========================================================================================================================
+
+beegfs_kernel = kernel:
+    pkgs.callPackage ./pkgs/beegfs/beegfs_ker.nix {inherit kernel};
+
+extraModulePackages = [ pkgs.nur.repos.kapack.beegfs_kernel config.boot.kernelPackages ]; # NUR
+
+error: A definition for option `boot.extraModulePackages."[definition 1-entry 1]"' is not of type `package'. Definition values:
+       - In `/nix/store/rhr1qmcxrv2ndg47yfwsxysvhm7bmr46-source/modules/services/beegfs_mod.nix': <function>
+(use '--show-trace' to show detailed location information)'
+
+==========================================================================================================================
+
+extraModulePackages = [ "${pkgs.nur.repos.kapack.beegfs_kernel boot.config.kernelPackages}" ]; # NUR
+
+error: attribute 'lib' missing
+
+       at /nix/store/4dm8ws0sg7blxshcd3aqkwkjvmykknfz-source/pkgs/beegfs/beegfs_ker.nix:39:15:
+
+           38|
+           39|   meta = with stdenv.lib; {
+             |               ^
+           40|     description = "High performance distributed filesystem with RDMA support";
+(use '--show-trace' to show detailed location information)
+
+
+
+==========================================================================================================================
+
+(MISE EN COMMENTAIRE DE LA VAR meta)
+
+error: undefined variable 'boot'
+
+       at /nix/store/n81231yl0h0l6jck23gzb6yqjr5dl1c8-source/modules/services/beegfs_mod.nix:361:72:
+
+          360|         kernelModules = [ "beegfs" ]; ## FIXME ??
+          361|         extraModulePackages = [ "${pkgs.nur.repos.kapack.beegfs_kernel boot.config.kernelPackages}" ]; # NUR
+             |                                                                        ^
+          362|       };
+(use '--show-trace' to show detailed location information)
+
+==========================================================================================================================
+
+extraModulePackages = [ "${pkgs.nur.repos.kapack.beegfs_kernel pkgs.linuxPackages.kernel}" ]; # NUR
+
+error: builder for '/nix/store/frcbv0qhf3j4y203256v7aq094fhs43q-beegfs-module-7.3-5.15.80.drv' failed with exit code 2;
+       last 10 log lines:
+       > mkdir: cannot create directory '.tmp_1139': Permission denied
+       > mkdir: cannot create directory '.tmp_1141': Permission denied
+       > mkdir: cannot create directory '.tmp_1143': Permission denied
+       > ln: failed to create symbolic link 'source': Permission denied
+       > make[2]: *** [/nix/store/kcarlxzyvjv9ny81spv6szc7vzkg2816-linux-5.15.80-dev/lib/modules/5.15.80/source/Makefile:574: outputmakefile] Error 1
+       > make[1]: *** [/nix/store/kcarlxzyvjv9ny81spv6szc7vzkg2816-linux-5.15.80-dev/lib/modules/5.15.80/source/Makefile:739: include/config/auto.conf.cmd] Error 2
+       > make[1]: *** [include/config/auto.conf.cmd] Deleting file 'include/generated/autoconf.h'
+       > make[1]: unlink: include/generated/autoconf.h: Permission denied
+       > make[1]: Leaving directory '/nix/store/kcarlxzyvjv9ny81spv6szc7vzkg2816-linux-5.15.80-dev/lib/modules/5.15.80/build'
+       > make: *** [Makefile:143: module] Error 2
+       For full logs, run 'nix log /nix/store/frcbv0qhf3j4y203256v7aq094fhs43q-beegfs-module-7.3-5.15.80.drv'.
+error: 1 dependencies of derivation '/nix/store/nmp3qz15ajczyscy0yzflmmbzw98xvrl-kernel-modules.drv' failed to build
+error: 1 dependencies of derivation '/nix/store/ljhxkkz74jvk0rn3751scpi1y2hjd0sq-linux-5.15.80-modules.drv' failed to build
+error: 1 dependencies of derivation '/nix/store/s2yn2v4f6i0kr8y8whrl47jqgmm7qhcx-nixos-system-unnamed-22.11pre-git.drv' failed to build
+error: 1 dependencies of derivation '/nix/store/8niilj6l0v1h36zmc1lg1cn70mqd8x42-closure-info.drv' failed to build
+error: 1 dependencies of derivation '/nix/store/3di86jizyhb0frr87fagldwkiqzzi2j1-compose-info.json.drv' failed to build
+Error: Build return code: 1
+```
+Le module kernel n'est en lien mais il semble y avoir des problème de permission dans le projet.
 
 ## 31/05/23 :
 
