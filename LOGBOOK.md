@@ -884,7 +884,16 @@ error: builder for '/nix/store/k9cjkpx0m18m8v98zdfwcxlq1ydwv550-beegfs-module-7.
     For full logs, run 'nix log /nix/store/k9cjkpx0m18m8v98zdfwcxlq1ydwv550-beegfs-module-7.3-5.15.107.drv'.
 ```
 Ce problème survient systematiquement indépendamment de la version du kernel : Les tests on été fait avec les version 4.9, 4.14, 4.19, 5.18
-
+- **SEMINAIRE** Difference and convergence of HPC and Cloud by Dan Milroy:
+  - Renand Law (the power needed decrease as the transistor size decreses) and Moore's Law (Number of transistor double every 2 year) has ended.
+  - Since then, Complexity of computing has skyrocketed
+  - OpenAI number flop need has also skyrocketed
+  - Now there is a "war" between Kuberneted (one if not the most successful open source project) for Cloud and Flux for instance for HPC but both of those options has flaws than can be corrected by the other assets. So why not try to use them both ??
+  - Hard but doable -> good for bootstrap but scheduling problem
+  - MPI jobs are not perfect and are to be perfected in the future
+- Utilisation du kernel 4.14 avec beefgfs 7.3 et garde la configuration initiliale (pas de modification dans Makefile pour que ça compile)
+- Ajout de la nouvelle version du kernel dans la composition pour que tous les services utilise cette version. (Client compile correctement)
+- **TODO** : Verfier le bon fonctionnement des autres services malgré le changement 
 
 ## 02/06/23 :
 
