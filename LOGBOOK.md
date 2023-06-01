@@ -862,6 +862,29 @@ Le module kernel n'est en lien mais il semble y avoir des problème de permissio
 - Il semble anormal de tombé dans le cas du Kconfig car la compilation du kernel linux n'a pas besoin d'etre refaite pour le module il semble donc y avoir un problème
 
 ## 01/06/23 :
+- Modification du fichier afin d'isoler directement la compilation du driver (module kernel) du client 
+- Site de Beegfs etait down la matiné donc je n'ai pas pu faire tous les test possible -> j'ai donc utilisé la version de beegfs que je possèdait en mémoire (7.3)
+- Test de fonctionnement de l'isolation du driver en utilisant un module kernel d'une version antérieur 4.19, 4.14, 4.9...
+- Site de beegfs est revenue
+- Test de fonctionnemet dans les conditions de fonctionemant dans nixpkgs. En reprenant un commit de nixpkgs et la version utilsé a l'époque. Il semble y avoir un problème de taille quand on essaye d'utiliser la version 7.3 de beegfs : 
+- **Erreur** :
+```
+error: builder for '/nix/store/k9cjkpx0m18m8v98zdfwcxlq1ydwv550-beegfs-module-7.3-5.15.107.drv' failed with exit code 1;
+    last 10 log lines:
+    > ./meta/build/dist/etc/init.d/beegfs-meta.init: interpreter directive changed from "#!/bin/bash" to "/nix/store/cdfwlj71yd6p5bmxsk2gk9xqc0friykg-bash-5.1-p16/bin/bash"
+    > ./meta/build/dist/sbin/beegfs-setup-meta: interpreter directive changed from "#!/bin/bash" to "/nix/store/cdfwlj71yd6p5bmxsk2gk9xqc0friykg-bash-5.1-p16/bin/bash"
+    > ./storage/build/make-deb: interpreter directive changed from "#!/bin/bash" to "/nix/store/cdfwlj71yd6p5bmxsk2gk9xqc0friykg-bash-5.1-p16/bin/bash"
+    > ./storage/build/make-rpm: interpreter directive changed from "#!/bin/bash" to "/nix/store/cdfwlj71yd6p5bmxsk2gk9xqc0friykg-bash-5.1-p16/bin/bash"
+    > ./storage/build/dist/etc/init.d/beegfs-storage.init: interpreter directive changed from "#!/bin/bash" to "/nix/store/cdfwlj71yd6p5bmxsk2gk9xqc0friykg-bash-5.1-p16/bin/bash"
+    > ./storage/build/dist/sbin/beegfs-setup-storage: interpreter directive changed from "#!/bin/bash" to "/nix/store/cdfwlj71yd6p5bmxsk2gk9xqc0friykg-bash-5.1-p16/bin/bash"
+    > configuring
+    > no configure script, doing nothing
+    > building
+    > /nix/store/ifiygfv17dzpbssxwrld6a57iclzrb09-stdenv-linux/setup: line 87: cd: beegfs_client_module/build: No such file or directory
+    For full logs, run 'nix log /nix/store/k9cjkpx0m18m8v98zdfwcxlq1ydwv550-beegfs-module-7.3-5.15.107.drv'.
+```
+Ce problème survient systematiquement indépendamment de la version du kernel : Les tests on été fait avec les version 4.9, 4.14, 4.19, 5.18
+
 
 ## 02/06/23 :
 
