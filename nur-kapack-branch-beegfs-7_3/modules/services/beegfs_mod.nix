@@ -3,7 +3,7 @@
 with lib;
 
 let
-  beegfs_driver = config.boot.kernelPackages.callPackage ../../pkgs/beegfs/beegfs_ker.nix { };
+  
   cfg = config.services.beegfs_mod;
 
   # functions for the generations of config files
@@ -354,13 +354,13 @@ in
         cfg;
 
       # Kernel module, we need it only once per host.
-      boot = mkIf (
-        foldr (a: b: a || b) false
-          (map (x: x.client.enable) (collect (x: x ? client) cfg)))
-      {
-        kernelModules = [ "beegfs" ]; ## FIXME ??
-        extraModulePackages = [ beegfs_driver ]; # NUR
-      };
+      # boot = mkIf (
+      #   foldr (a: b: a || b) false
+      #     (map (x: x.client.enable) (collect (x: x ? client) cfg)))
+      # {
+      #   kernelModules = [ "beegfs" ]; ## FIXME ??
+      #   extraModulePackages = [ beegfs_driver ]; # NUR
+      # };
 
       # generate fstab entries
       fileSystems = mapAttrs'

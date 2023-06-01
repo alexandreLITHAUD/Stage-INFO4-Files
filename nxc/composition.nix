@@ -1,7 +1,8 @@
-{ pkgs, modulesPath, nur, helpers, ... }: {
+{ pkgs, modulesPath, nur, helpers, ... }: let kernel=pkgs.linuxPackages_4_14.kernel; in {
   roles =
     let
       commonConfig = import ./common_config.nix { inherit pkgs nur; };
+      beegfs_driver = pkgs.callPackage ./beegfs_ker.nix { kernel=kernel; };
     in
     {
       # mgmt = { ... }:
@@ -27,10 +28,14 @@
       #   };
 
       cli = { ... }:
-        {
+        { 
 
           imports = [ commonConfig ];
           services.beegfsEnable_mod = true;
+
+          boot.kernelPackages = pkgs.linuxKernel.packages.linux_4_14;
+          # beegfs_driver = config.boot.kernelPackages.callPackage ../../pkgs/beegfs/beegfs_ker.nix { };
+          boot.extraModulePackages = [ beegfs_driver ];
 
           services.beegfs_mod.default = {
             mgmtdHost = "mgmt1";
