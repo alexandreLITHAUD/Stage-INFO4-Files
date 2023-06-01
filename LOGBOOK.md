@@ -8,6 +8,9 @@
   - [Semaine 6 :](#semaine-6-)
   - [Semaine 7 :](#semaine-7-)
   - [Semaine 8 :](#semaine-8-)
+  - [Semaine 9 :](#semaine-9-)
+  - [Semaine 10 :](#semaine-10-)
+  - [Semaine 11 :](#semaine-11-)
 
 ---
 
@@ -838,6 +841,25 @@ Error: Build return code: 1
 Le module kernel n'est en lien mais il semble y avoir des problème de permission dans le projet.
 
 ## 31/05/23 :
+- Session de code avec Monsieur Richard pour essayer de faire fonctionner le module kernel de beegfs
+- Deploiement ou Unpack du projet beegfs afin de pouvoir analyser les différentes chaines de compilations du module kernel de beegfs
+- Facilitation du lien entre le module et le module kernel en ecrivant de toute piece le dossier voulu
+- Analyse complete du Makefile du module client afin d'essayer d'en comprendre le fonctionnement et d'ou viens le problème
+- Rajout de différent flag pour le makefile afin d'essayer de faire compiler le driver : 
+```bash
+"KERNELRELEASE=${kernel.modDirVersion}"
+"KDIR=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build/"
+
+"KSRCDIR=${kernel.dev}/lib/modules/${kernel.modDirVersion}/source/" ## WO -> PERMISSION DENIED || /source
+"YOP=${kernel.dev}/lib/modules/${kernel.modDirVersion}"
+"INSTALL_MOD_PATH=$(out)"
+"RELEASE_PATH=$(out)" 
+```
+- Modification du Makefile afin de copier les document dans un repertoire qui n'est pas sécurisé (/nix/store) et doonc de pour faire les modification nécessaire
+- On se retrouve avec des problèmes de configuration kernel (aka Kconfig)
+- Apres verification il semble manquer un fichier lors du cp, un certain fichier nommé **.config** qui stoke la configuration kernel du systeme
+- Tentative de hack en creant un fichier .config avant la manipulation
+- Il semble anormal de tombé dans le cas du Kconfig car la compilation du kernel linux n'a pas besoin d'etre refaite pour le module il semble donc y avoir un problème
 
 ## 01/06/23 :
 
@@ -846,3 +868,45 @@ Le module kernel n'est en lien mais il semble y avoir des problème de permissio
 ---
 
 ## Semaine 8 :
+
+## 05/06/23 :
+
+## 06/06/23 :
+
+## 07/06/23 :
+
+## 08/06/23 :
+
+## 09/06/23 :
+
+---
+
+## Semaine 9 :
+
+## 12/06/23 :
+
+## 13/06/23 :
+
+## 14/06/23 :
+
+## 15/06/23 :
+
+## 16/06/23 :
+
+---
+
+## Semaine 10 :
+
+## 19/06/23 :
+
+## 20/06/23 :
+
+## 21/06/23 :
+
+## 22/06/23 :
+
+## 23/06/23 :
+
+---
+
+## Semaine 11 :
