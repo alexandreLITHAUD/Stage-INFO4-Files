@@ -10,8 +10,9 @@ let
   version = "7.3";
 in
 stdenv.mkDerivation {
-  name = "beegfs-module-${version}-${kernel.version}";
+  name = "beegfs-module-${version}-${kernel.version}"; ## NEEDED KERNEL VERSION 4.14
 
+  
   # src = /home/alex/dev/v7-7.0-d7fc807f40aea0e88afd714cbecee7a0dbadabf7;
   src = fetchurl {
     url = "https://git.beegfs.com/pub/v7/repository/archive.tar.bz2?ref=${version}";
@@ -28,9 +29,11 @@ stdenv.mkDerivation {
 
   makeFlags = [
     "KDIR=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build/"
-    "YOP=${kernel.dev}/lib/modules/${kernel.modDirVersion}"
+    "YOP=${kernel.dev}/lib/modules/${kernel.modDirVersion}" ## NOT NEEDED ANYMORE
   ];
 
+## TESTED FLAGS (NOT NEEDED ANYMORE)
+#####################################################################################
   #"BEEGFS_BUILDDIR=client_module/build"
   # "KERNELRELEASE=${kernel.modDirVersion}"
   # "KDIR=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build/"
@@ -41,9 +44,9 @@ stdenv.mkDerivation {
   # "KDIR_PRUNED_HEAD=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build/include/generated/uapi/linux/version.h"
   # "KSRCDIR_PRUNED_HEAD=${kernel.dev}/lib/modules/${kernel.modDirVersion}/source/"
   # "KDIR_PRUNED_HEAD=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build/"
-
   # "KERNEL_DIR=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build/"
   # "INSTALL_MOD_PATH=$(out)"
+#####################################################################################
 
   NIX_CFLAGS_COMPILE = "-Wno-error=implicit-function-declaration";
 

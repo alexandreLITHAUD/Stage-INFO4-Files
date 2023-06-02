@@ -67,8 +67,10 @@ let
     { service = "storage"; cfgFile = configStorage; }
   ];
 
+#########################################################################################
   # functions to generate systemd.service entries
-
+  # ANCIENT WAY TO GENERATE THE SYSTEM SERVICES
+#########################################################################################
   systemdEntry = service: cfgFile: (mapAttrs'
     (name: cfg:
       (nameValuePair "beegfs-${service}-${name}" (mkIf cfg.${service}.enable {
@@ -115,6 +117,7 @@ let
         };
       })))
     cfg;
+#########################################################################################
 
   # wrappers to beegfs tools. Avoid typing path of config files
   utilWrappers = mapAttrsToList
@@ -353,6 +356,8 @@ in
             })))
         cfg;
 
+      # KERNEL MODULE IS DEALT WITH DIRECTLY IN THE COMPOSITION
+      # BECAUSE IT REQUIRE A DIFFRENT KERNEL VERSION
       # Kernel module, we need it only once per host.
       # boot = mkIf (
       #   foldr (a: b: a || b) false
@@ -373,11 +378,18 @@ in
           }))))
         cfg;
 
+
+      # ANCIENT WAY FOR GENERATING SYSTEMD SERVICES
       # generate systemd services
       # systemd.services = systemdHelperd //
       #   foldr (a: b: a // b) {}
       #     (map (x: systemdEntry x.service x.cfgFile) serviceList);
 
+
+      ## MANAGEMENT SERVICE INITALISATION
+      # ALL THE FILE WILL BE CORRECTLY CHANGED
+      # ALL REMAINING IS THE EXCUTE THE COMMAND **beegfs-mgmtd cfgFile=/etc/beegfs/beegfs-mgmtd.conf pidFile=/run/beegfs-mgmtd-default.pid**
+      # FOR THE SERVICE DO BE EFFECTIVELY RUNNING
       systemd.services.start_mgmtd = mkIf (cfg.default.mgmtd.enable) {
         wantedBy = [ "multi-user.target" ];
         requires = [ "network-online.target" ];
@@ -394,9 +406,12 @@ in
       };
 
       #     ${pkgs.nur.repos.kapack.beegfs}/bin/beegfs-mgmtd cfgFile=/etc/beegfs/beegfs-mgmtd.conf pidFile=/run/beegfs-mgmtd-default.pid
-      #  \
-      # 
 
+      ## METADATA SERVICE INITALISATION
+      # USE CP TO GATHER THE BASE OF CONF FILE IN THE **/nix/store/beegfs7.3/shared/doc/beegfs-meta.conf in the /etc/beegfs folder**
+      # USE THSIS COMMAND TO FREE THE WANTED DISK FS (HERE sda5) **dd if=/dev/zero of=/dev/sda5 bs=1M**
+      # USE THIS COMAND TO ADD ext4 TO THE FS WITH THE CORRECT OPTIONS **mkfs.ext4 /dev/sda5** and **mount -o user_xattr /dev/sda5 <store directory>**
+      # AFTER THAT YOU CAN INITIALIZE THE SERVICE WITH THE COMMAND **beegfs-meta cfgFile=/etc/beegfs/beegfs-meta.conf pidFile=/run/beegfs-meta-default.pid**
       systemd.services.start_meta = mkIf (cfg.default.meta.enable) {
         wantedBy = [ "multi-user.target" ];
         requires = [ "start_mgmtd.service" ];
@@ -414,6 +429,10 @@ in
         '';
       };
 
+      ## STORAGE SERVICE INITALISATION
+      # ALL THE FILE WILL BE CORRECTLY CHANGED
+      # ALL REMAINING IS THE EXCUTE THE COMMAND **beegfs-storage cfgFile=/etc/beegfs/beegfs-storage.conf pidFile=/run/beegfs-storage-default.pid**
+      # FOR THE SERVICE DO BE EFFECTIVELY RUNNING
       systemd.services.start_storage = mkIf (cfg.default.storage.enable) {
         wantedBy = [ "multi-user.target" ];
         requires = [ "start_mgmtd.service" ];
@@ -429,6 +448,8 @@ in
         '';
       };
 
+      ## STORAGE SERVICE INITALISATION
+      # ALL THE FILE WILL BE CORRECTLY CHANGED
       systemd.services.start_client = mkIf (cfg.default.client.enable) {
         wantedBy = [ "multi-user.target" ];
         requires = [ "start_mgmtd.service" "start_meta.service" "start_storage.service" ];

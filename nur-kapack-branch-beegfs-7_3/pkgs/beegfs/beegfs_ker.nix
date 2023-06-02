@@ -6,6 +6,10 @@
 , kernel
 }:
 
+## This file is a copy of the kernel module used by the client
+## This version is working but it is preferable to use the file at the nxc folder
+## It is better not to store the file in the nur repository 
+
 let
   version = "7.3";
 in
