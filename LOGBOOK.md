@@ -884,9 +884,29 @@ error: builder for '/nix/store/k9cjkpx0m18m8v98zdfwcxlq1ydwv550-beegfs-module-7.
     For full logs, run 'nix log /nix/store/k9cjkpx0m18m8v98zdfwcxlq1ydwv550-beegfs-module-7.3-5.15.107.drv'.
 ```
 Ce problème survient systematiquement indépendamment de la version du kernel : Les tests on été fait avec les version 4.9, 4.14, 4.19, 5.18
-
+- **SEMINAIRE** Difference and convergence of HPC and Cloud by Dan Milroy:
+  - Renand Law (the power needed decrease as the transistor size decreses) and Moore's Law (Number of transistor double every 2 year) has ended.
+  - Since then, Complexity of computing has skyrocketed
+  - OpenAI number flop need has also skyrocketed
+  - Now there is a "war" between Kuberneted (one if not the most successful open source project) for Cloud and Flux for instance for HPC but both of those options has flaws than can be corrected by the other assets. So why not try to use them both ??
+  - Hard but doable -> good for bootstrap but scheduling problem
+  - MPI jobs are not perfect and are to be perfected in the future
+- Utilisation du kernel 4.14 avec beefgfs 7.3 et garde la configuration initiliale (pas de modification dans Makefile pour que ça compile)
+- Ajout de la nouvelle version du kernel dans la composition pour que tous les services utilise cette version. (Client compile correctement)
+- **TODO** : Verfier le bon fonctionnement des autres services malgré le changement 
 
 ## 02/06/23 :
+- Test de fonctionnement des difféerents services en utilisant une version du kernel qui est antérieur
+- Il semble avoir un probleme dans cet aspect, quand on essai de faire cette manipulation, cela semble empacher un certain service seentiel de ce lancer et rend donc l'outils inutilisable
+- Test de fonctionnement dans le cas le plus simple possible (une composition classique trouvable dans le dossier exemple/kernel de nixos-compose)
+- Il semble avoir quelques problèmes qui deviendont surement des issues github dans le future
+  - Il y a un problème sur le fonctionnement des options quand on possède une composition multiple. En effet il faut absoluement faire : `-c <nom>::<flavour>` mais lors de ce cas -f ne fait rien du tout seul l'option -c est important. Il serai plus ergonomique de faire en sorte que cela marche de cette façon : `-c <nom> -f <flavour>`.
+  - Il ne semble pas possible dans la flavour vm de modifier la version du kernel sans causé le crash d'un service essentiel au fonctionnement de l'outils nixos-compose. Le soucis ne semble pas occurir en utilisant d'autre flavour comme celle de grid5000 par exemple.
+- Test de fonctionnement dans l'environnement grid500. Cela semble marcher très correctement. Pas de problème rencontré pendant les quelques phases de tests.
+- Reecriture et supression des passage inutiles dans les fichier de beegfs. Ecriture de docuementation afin de facilité la comprehention du code pour les prochains utilisateurs.
+- Clonage du projet Regale 
+- Analyse du projet Regale et lecture des différents ressouces sur le Sujet. (ainsi que quelque question posé a Adrien qui maintient actuellement le projet)
+- Test de fonctionnement simple de Regale 
 
 ---
 
