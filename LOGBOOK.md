@@ -913,6 +913,20 @@ Ce problème survient systematiquement indépendamment de la version du kernel :
 ## Semaine 8 :
 
 ## 05/06/23 :
+- Test de fonctionnement de regale (en utilisant grid5000)
+- Verification u bon fonctionnemement de beegfs das grid5000
+- Problème de lancement du module kernel (driver) : `modprobe beegfs` ne marche pas car il utilse toujours le module kernel 5.15.80 alors que la version a été changer au boot de la composition.
+- En faisant `uname -r` on obtient 5.15.80. Il ne prend donc pas par defaut la bonne version
+- Le module creé se trouve dans le dossier `/home/alithaud/.local/share/nix/root/nix/store/1yjyi8jxb464kxbl9mang5ky55dij8ym-beegfs-module-7.3-4.14.300/lib/module/4.14.300/extras/fs/beegfs/beegfs.ko`
+- On peux assayer de resoudre ce problème avec les options de modprobe
+  - `-d /home/alithaud/.local/share/nix/root/nix/store/1yjyi8jxb464kxbl9mang5ky55dij8ym-beegfs-module-7.3-4.14.300` permet de remplacer le dossier de base par celui donnée en parametre
+  - `-S ou --set-version=4.14.300` permet de remplcer le uname -r par default par la vresion donnée en parametre
+  - Cependant même dans cette configuration on se retrouve avec un erreur :
+  ```
+  modprobe: FATAL: Module beegfs not found in directory /home/alithaud/.local/share/nix/root/nix/store/1yjyi8jxb464kxbl9mang5ky55dij8ym-beegfs-module-7.3-4.14.300/lib/modules/4.14.300/
+  ```
+  - Ce soucie viens probablement du fait qu'il n'y ai pas tous les lien symbolique dans le dossier creé par notre fichier du module kernel
+- Regard de quelque liens sur internet et issues git en tout genre pour essayre de trouver un moyen de lancer le module directement
 
 ## 06/06/23 :
 
