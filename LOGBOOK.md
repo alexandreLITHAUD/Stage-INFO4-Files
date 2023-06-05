@@ -927,6 +927,13 @@ Ce problème survient systematiquement indépendamment de la version du kernel :
   ```
   - Ce soucie viens probablement du fait qu'il n'y ai pas tous les lien symbolique dans le dossier creé par notre fichier du module kernel
 - Regard de quelque liens sur internet et issues git en tout genre pour essayre de trouver un moyen de lancer le module directement
+- Test de deploiement de l'application avec beegfs (pour voir si c'est un problème de nxc)
+- Test de deploiement en utilisant kadeploy.
+  - Commande : `nxc build -f g5k-image` on genere beegfs en mode kadeploy
+  - Commande : `export $(oarsub -l nodes=4,walltime=1:0:0 "$(nxc helper g5k_script) 1h" -t deploy | grep OAR_JOB_ID)` afin de demander les nodes au service grid5000, il fait faire -t deploy pour faire fonctionner kadeploy
+  - Commande : `oarstat -u -J | jq --raw-output "to_entries | .[0].value.assigned_network_address | .[]" > machines` pour recuperer les nodes que g5k nous as donnés
+  - Commande : `nxc start -m machine node.yaml` pour lancer la composition sur les noeud modifié.
+
 
 ## 06/06/23 :
 
