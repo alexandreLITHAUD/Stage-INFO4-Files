@@ -933,7 +933,7 @@ Ce problème survient systematiquement indépendamment de la version du kernel :
   - Commande : `export $(oarsub -l nodes=4,walltime=1:0:0 "$(nxc helper g5k_script) 1h" -t deploy | grep OAR_JOB_ID)` afin de demander les nodes au service grid5000, il fait faire -t deploy pour faire fonctionner kadeploy
   - Commande : `oarstat -u -J | jq --raw-output "to_entries | .[0].value.assigned_network_address | .[]" > machines` pour recuperer les nodes que g5k nous as donnés
   - Commande : `nxc start -m machine node.yaml` pour lancer la composition sur les noeud modifié.
-
+- Avec kadeploy on a le même resultat cela est donc surement due a NixOs-Compose.
 
 ## 06/06/23 :
 
