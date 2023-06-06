@@ -936,6 +936,14 @@ Ce problème survient systematiquement indépendamment de la version du kernel :
 - Avec kadeploy on a le même resultat cela est donc surement due a NixOs-Compose.
 
 ## 06/06/23 :
+- Test de fonctionnement de regale et test des vresion supéreieur.
+- Test de fonctionnement de regale en utilisant un commit antérieur de nur kappack
+- Test de deploiement de multiple applications à partir d'un nur local
+- Questionnement sur le fonctionnement de nixpks
+- Questionnement sur le fonctionnement des overlays nix
+- Test de fonctionnement de plusieurs overlays nix
+- Question sur le fonctionnement de oar a Adrien
+- Creation d'une configuration home manager pour la machine
 
 ## 07/06/23 :
 
