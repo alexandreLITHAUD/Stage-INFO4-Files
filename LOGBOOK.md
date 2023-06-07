@@ -946,6 +946,45 @@ Ce problème survient systematiquement indépendamment de la version du kernel :
 - Creation d'une configuration home manager pour la machine
 
 ## 07/06/23 :
+- Mise a jour du repo regale pour utiliser la version 22.11 de nix ou lieu de la version 22.05
+- Test de mise a jour en utilisant la nouvelle version de nix 23.05
+  - Lors de ce test il y a un soucis avec poetry sur oar
+  ```
+    trace: warning: The option `services.openssh.permitRootLogin' defined in `/nix/store/cifg2pk34y6b3r54gak2qarw73c6wgrc-source/nix/flavours/shared/installation-device.nix' has been renamed to `services.openssh.settings.PermitRootLogin'.
+  trace: warning: The option `services.openssh.permitRootLogin' defined in `/nix/store/cifg2pk34y6b3r54gak2qarw73c6wgrc-source/nix/flavours/shared/installation-device.nix' has been renamed to `services.openssh.settings.PermitRootLogin'.
+  trace: warning: The option `services.openssh.permitRootLogin' defined in `/nix/store/cifg2pk34y6b3r54gak2qarw73c6wgrc-source/nix/flavours/shared/installation-device.nix' has been renamed to `services.openssh.settings.PermitRootLogin'.
+  trace: warning: The option `services.openssh.permitRootLogin' defined in `/nix/store/cifg2pk34y6b3r54gak2qarw73c6wgrc-source/nix/flavours/shared/installation-device.nix' has been renamed to `services.openssh.settings.PermitRootLogin'.
+  error: builder for '/nix/store/vhm9g9npqgbm6d1rng9g8c4ca6498rw6-python3.10-oar-3.0.0.drv' failed with exit code 2;
+        last 10 log lines:
+        >   File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+        >   File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+        >   File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+        >   File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+        >   File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+        >   File "/nix/store/kn15n62v6g10yk2ka3q5qbq8dp0syq77-python3.10-poetry-1.4.2/lib/python3.10/site-packages/poetry/masonry/api.py", line 3, in <module>
+        >     from poetry.core.masonry.api import build_sdist
+        > ModuleNotFoundError: No module named 'poetry.core'
+        > 
+        > 
+        For full logs, run 'nix log /nix/store/vhm9g9npqgbm6d1rng9g8c4ca6498rw6-python3.10-oar-3.0.0.drv'.
+  error: 1 dependencies of derivation '/nix/store/d71qj1k984kzf2n6vdhnhwhvnh8igxwn-python3-3.10.11-env.drv' failed to build
+  error: 1 dependencies of derivation '/nix/store/gd58w400h70qc6jvz4yxv64nx71fnzv2-add_resources.drv' failed to build
+  error: 1 dependencies of derivation '/nix/store/wzsh49b83ryxdpkgxax9jfilcgwp0d1d-unit-oar-db-init.service.drv' failed to build
+  error: 1 dependencies of derivation '/nix/store/0n1rklwb9aw4c6bkkhsxq7f0d912zv5b-system-units.drv' failed to build
+  error: 1 dependencies of derivation '/nix/store/c04bvmw9mpprmkw9bw3p7k02bdhadm5j-etc.drv' failed to build
+  error: 1 dependencies of derivation '/nix/store/mf80yhmqgaj0hkprjbxy1qxd79adx6di-nixos-system-unnamed-23.05pre-git.drv' failed to build
+  error: 1 dependencies of derivation '/nix/store/031hyzk9a8v77y66i1i3k65f8wnlz09s-closure-info.drv' failed to build
+  error (ignored): error: cannot unlink '/tmp/nix-build-NPB-3.4.2.drv-1': Directory not empty
+  error (ignored): error: cannot unlink '/tmp/nix-build-maturin-0.14.17.drv-2/maturin-0.14.17-vendor.tar.gz/winapi-x86_64-pc-windows-gnu/lib': Directory not empty
+  error: 1 dependencies of derivation '/nix/store/3k0ysyg20ayim7xmipjcczji6qaqcwya-compose-info.json.drv' failed to build
+  ```
+  - Ce preoblème vien apparement du module poetry.core qui a été modifier lors de la derniere majeur de poetry (1.1.0). Elle change le module en namespace module ce qui change la facon de l'importer dans Python 3.10.
+- On va donc garder la version 22.11 de oar.
+- Utilisation de la branche regale-2211 de nur kapack créer par adrien qui tien a jour oar et permet donc d'avoir une chaine de compilation utilant uniquement 22.11.
+- **OBJECTIF :**
+  - Faire en sorte que chaque depot de regale utilise la version 22.11 ou plus (bdpo, bdpo-oar, bebida, ear, ear, oar, examon, melissa-oar-ear, melissa-oar, oar).
+  - Verifier leur bon fonctionnement grace au test disponible ou en faire (les tests sont ceux des composition.nix -> testScript) qui sont utilisé la CI gitlab.
+  - pour ce faire on peux utiliser la commande `nxc driver -t` afin de lancer le testScript efficacement. (Prendre exemple sur la CI gitlab yaml)    
 
 ## 08/06/23 :
 
