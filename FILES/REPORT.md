@@ -12,6 +12,7 @@ geometry: margin=2cm
     - [BeegFS](#beegfs)
     - [Regale Upgrade](#regale-upgrade)
   - [Ce qu'il reste a faire](#ce-quil-reste-a-faire)
+  - [Résumé](#résumé)
 
 ---
 
@@ -39,7 +40,7 @@ Travaillant sur Nix il a été important de bien comprendre tous les différents
 
 Afin de ce faire j'ai réalisé de nombreux programmes utilisant le langage de programmation fonctionnel qu'est Nix. Ces programmes ont été réaliser en suivant de nombreux tutoriels disponible sur internet, le wiki de NixOs et plus particulièrement les **Nix Pills**.
 
-J'ai de plus, lors de mon stage installé sur une machine l'OS NixOS afin de pouvoir analyser son comportement et son fonctionnement. J'ai rapidement été passionné par le fonctionnement de la configuration system de NixOS et sur les différentes possibilités quelles entraînes. Si bien que j'ai réaliser dans mon temps libre un configuration Nix et Home manger utilisant les différents outils que j'ai utilisé lors du stage et que je continue d'utiliser aujourd'hui. (*ranger, zsh, tmux, neovim, fzf*) **[[LIEN DU GIT EN QUESTION](https://github.com/alexandreLITHAUD/my-nix-configuration)]**
+J'ai de plus, lors de mon stage installé sur une machine l'OS NixOS afin de pouvoir analyser son comportement et son fonctionnement. J'ai rapidement été passionné par le fonctionnement de la configuration system de NixOS et sur les différentes possibilités quelles entraînes. Si bien que j'ai réaliser dans mon temps libre un configuration Nix et Home manger utilisant les différents outils que j'ai utilisé lors du stage et que je continue d'utiliser aujourd'hui. (*ranger, zsh, tmux, neovim, fzf*) **[[LIEN](https://github.com/alexandreLITHAUD/my-nix-configuration)]**
 
 Enfin, j'ai aussi étudié le fonctionnement ainsi que créé des fichiers spéciaux Nix appelé les ***flakes***. C'est fichiers, qui sont toujours expérimentaux bien que massivement utilisé, permettent de facilement et fonctionnellement créer des environnement ou des "compositions" qui sont parfaitement reproductible car ciblant en input des fichier ou dépôts distants en assurant le téléchargement de la bonne version en utilisant des hash. Cette partie à été l'une des plus importante car elle traite d'un fondement de base de nix aujourd'hui et qui essentiel dans de nombreux dépôts comme NixOs Compose par exemple.
 
@@ -73,9 +74,9 @@ J'ai donc pu tester toutes ces fonctionnalités avec le paquet OAR dans le NUR-K
 
 ### BeegFS
 
-Ma première grosse mission à été de crée une composition permettant de faire fonctionner et de déployer un système de fichier parallèle différent dans les différentes saveurs de NixOS Compose, BeegFS. Ce travail à été de longue haleine car de nombreux problèmes ont été rencontré durant cette mission.
+Ma première grosse mission à été de créer une composition permettant de faire fonctionner et de déployer un système de fichier parallèle différent dans les différentes saveurs de NixOS Compose, BeegFS. Ce travail à été de longue haleine car de nombreux problèmes ont été rencontrés durant cette mission.
 
-TODO
+
 
 ---
 
@@ -98,3 +99,8 @@ Enfin, après avoir corrigé oar j'ai pu exécuter des tests unitaires (grâce �
 Il me reste donc à continuer de mettre à jour et de tester le fonctionnement des outils de régale (il en reste encore 7) : **bdpo, bdpo-oar, bebida, ear, examon, melissa-oar-ear et melissa-oar**.
 
 De plus, Nix étant très vaste je continue de m’améliorer et de comprendre de mieux en mieux son fonctionnement en pratiquant et en surmontant des problèmes de fonctionnement.
+
+---
+
+## Résumé
+
