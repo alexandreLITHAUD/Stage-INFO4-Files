@@ -76,7 +76,15 @@ J'ai donc pu tester toutes ces fonctionnalités avec le paquet OAR dans le NUR-K
 
 Ma première grosse mission à été de créer une composition permettant de faire fonctionner et de déployer un système de fichier parallèle différent dans les différentes saveurs de NixOS Compose, BeegFS. Ce travail à été de longue haleine car de nombreux problèmes ont été rencontrés durant cette mission.
 
+BeegFS était présent dans nixpkgs pendant un moment mais il a été supprimer du dépôt car considéré comme deprecated. J'ai donc récupéré les fichiers présent dans le dépôt avant leur suppression et les ai rajouter dans nur-kapack afin de pouvoir les modifier et l'utiliser facilement. BeegFS a été enlevé de Nixpkgs a raison car il était peux fonctionnel. Tous était a modifier. Par exemple, le fichier de création de la dérivation de base utilisai une "extra library" qui avais changé de nom il a donc fallut codifier directement un grand nombre de fichier .c et .h en remplaçant a la volé le nom de la librairie en utilisant la commande *substituteInPlace*.
 
+Après cela c'est le module a du être massivement modifier car il utilisait un certain nombre d'attribut nix n'existant plus. Il m'a fallu réécrire la plupart des services systemd de beegfs à la fin afin de pouvoir lancer directement les différents services au bon moment.
+
+Beegfs a besoin d'un certain nombre de service afin de fonctionner : **mgmtd** (Management) le service central qui s'occupe d’organiser tous les transfert et les requêtes, **meta** (Métadonnée) le service qui s'occupe de stocker les métadonnées de chaque client et chaque transfert de données, **storage** (Stockage) le service qui s'occupe de stocker les différentes fichiers partagé, **client** (Client) la machine client qui va utiliser le Système de fichier.
+
+Le service meta avais un problème car il utilisait des disque temporaire mais avais besoin d'un système de métadonnée. Ce problème à été résolu en utilisant les disque laisser a disposition par Grid5000 pour créer une partition pour les métadonnées.
+
+Enfin, le service client utilisai un driver kernel qui a du être modifier à la main afin de le faire fonctionner. Il nécessitait une certaine version du kernel Linux (4.14) afin de fonctionner il a donc fallu modifier la version du kernel par défaut. Le résultat était fonctionnel mais il n'est pas possible du a un bug dans NXC de changer la version du kernel (car nxc lui meme en dépend). J'ai donc créé des issues git afin de montrer les problèmes et comment les reproduire.  
 
 ---
 
@@ -104,3 +112,4 @@ De plus, Nix étant très vaste je continue de m’améliorer et de comprendre d
 
 ## Résumé
 
+Durant mon stage au LIG qui a commencé le 17 avril 2023, j'ai installé et utilisé Nix et NixOS. J'ai aussi utilisé et contribué au projet NixOS Compose et Nur-Kappack en rajoutant le système de fichier parallèle Beegfs dans nur. De plus, j'ai créé des démonstrateurs de beegfs et autres afin de pouvoir les faire fonctionner facilement et rapidement dans NixOS Compose et donc de pouvoir les deployer sur de nombreuse différentes "saveurs" comme VM, Docker ou Grid5000. Enfin, j'aide au quotidien l'équipe en mettant à jours les différents outils scientifique et les compositions NXC qui les déploient. En les mettant a jour avec la dernière version de Nixpkgs (23.05) qui est entré en mesure au milieu de mon stage le 1 juin 2023.
