@@ -987,6 +987,55 @@ Ce problème survient systematiquement indépendamment de la version du kernel :
   - pour ce faire on peux utiliser la commande `nxc driver -t` afin de lancer le testScript efficacement. (Prendre exemple sur la CI gitlab yaml)    
 
 ## 08/06/23 :
+- Lancement de test de fonctionnement pour OAR avec la commande `nxc driver -t`
+- Pour pouvoir tester le fonctionnement il faut avoir fait `nxc start` au préalable
+- Echec de lancement du test :
+```
+Platform detection:
+      no particular platform detected, local mode will be used
+run the test script
+additionally exposed symbols:
+    frontend, node1, node2, server,
+    ,
+    start_all, test_script, machines, driver, log, os, subtest, run_tests, join_all, retry, serial_stdout_off, serial_stdout_on, Machine
+frontend: must succeed: echo "mpirun --hostfile \$OAR_NODEFILE -mca pls_rsh_agent oarsh -mca btl tcp,self cg.C.mpi" > /users/user1/test.sh
+(finished: must succeed: echo "mpirun --hostfile \$OAR_NODEFILE -mca pls_rsh_agent oarsh -mca btl tcp,self cg.C.mpi" > /users/user1/test.sh, in 0.67 seconds)
+frontend: must succeed: chmod 755 /users/user1/test.sh && chown user1 /users/user1/test.sh
+(finished: must succeed: chmod 755 /users/user1/test.sh && chown user1 /users/user1/test.sh, in 0.45 seconds)
+frontend: must succeed: su - user1 -c "cd && oarsub -l nodes=2 ./test.sh"
+frontend: output: 
+Error: command `su - user1 -c "cd && oarsub -l nodes=2 ./test.sh"` failed (exit code 1)
+```
+- Upgrade de melissa-ear-oar de 22.05 à 22.11.
+- Manque de droit pour acceder a un outils de ear ou melissa :
+```
+warning: Git tree '/home/alex/dev/regale-nixos-compose' is dirty
+evaluating derivation 'git+file:///home/alex/dev/regale-nixos-compose?dir=melissa-ear-oar#packages.x86_64-linux.composition::vm'remote: 
+remote: ========================================================================
+remote: 
+remote: The project you were looking for could not be found or you don't have permission to view it.
+remote: 
+remote: ========================================================================
+remote: 
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+warning: could not read HEAD ref from repo at 'ssh://git@gricad-gitlab.univ-grenoble-alpes.fr/regale/tools/ExaMon_Server.git', using 'master'
+fetching Git repository 'ssh://git@gricad-gitlab.univ-grenoble-alpes.fr/regale/tools/ExaMon_Server.git'remote: 
+remote: ========================================================================
+remote: 
+remote: The project you were looking for could not be found or you don't have permission to view it.
+remote: 
+remote: ========================================================================
+remote: 
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+error: program 'git' failed with exit code 128
+``` 
+- Continuation du rapport d'avancement du stage
 
 ## 09/06/23 :
 
