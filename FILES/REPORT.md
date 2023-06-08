@@ -21,7 +21,9 @@ Ce fichier n'est qu'un résumé très succin des taches réalisées. Pour voir l
 ---
 ## Mise en contexte
 
-TODO
+Le sujet de mon stage consiste a étudier l’écosystème Nix et NixOS et de contribuer au projet de NixOS Compose qui permet de deployer des noeuds (où machines) dans différent écosystèmes comme dans un VM ou dans Grid5000. De plus il consiste à aider l'équipe DATAMOVE en maintenant certain outils ou en réalisant divers démonstrateurs de composition pour **Nxc** (NixOS Compose) 
+
+---
 ## Ce qui à été fait
 
 ### Monté en Compétences
@@ -41,11 +43,29 @@ Enfin, j'ai aussi étudié le fonctionnement ainsi que créé des fichiers spéc
 ---
 ### NixOS Compose
 
+Suite à la phase de "formation" au différentes technologies nécessaire j'ai commencé à étudier le programme et le fonctionnement de NixOS Compose pour ce faire j'ai suivie un git tutoriel permettant de comprendre rapidement comment utiliser l'outils et les différentes possibilités. De plus, j'ai pu demandé directement des informations à son mainteneur et co-créateur Quentin Guilloteau.
+
+J'ai créé quelques compositions classiques en utilisant des dépendances simple afin de tester le fonctionnement de l'outils. J'ai déployé ses applications sur plusieurs "saveur" différentes comme VM, RamDisk, Grid5000-Image ou Grid5000-nfs-store.
+
+Les "saveurs" ou flavours est le nom donné pour les différentes options de déploiement dans grid5000.  
+
+J'ai donc réalisé des applications simple permettant de deployer plusieurs machine possédant différents comportement en utilisant le principe de role inhérent à NixOS Compose. Ces machines communiquai entre elle a travers le réseaux Grid-5000 en utilisant le protocole NFS.
+
+Afin de pouvoir efficacement utiliser grid-5000 j'ai du apprendre des outils comme tmux (un multiplexeur de terminal très utile pour utiliser ssh), ssh et rsync. Ces outils se son révélé essentiel afin d’accroître ma productivité sur Nxc dans le cas de déploiement de compositions de G5K.
+
 ---
 ### Nur-Kapack
 
+Nix utilise un git spécial afin de stocker toutes les dérivations nécessaire afin d'installer un paquets ce git est nommé Nixpkgs **[[LIEN](https://github.com/NixOS/nixpkgs)]**. Ce dépôt est au centre du gestionnaire de paquet qu'est Nix. Cependant nixpkgs n'est pas le seul moyen de télécharger des paquets. Il existe aussi le principe de NUR. NUR est un répertoire de package Nix gérer par le communauté, les paquets sont build a partir de la source contrairement a nixpkgs et surtout les paquets de NUR ne sont pas review par des membres de nixpkgs. Tous le monde est donc libre de partager des paquets Nix sur NUR.
+
+J'ai été amenées à étudier le fonctionnement de NUR en utilisant un dépôt distant de l'équipe OAR nommé Nur-Kapack. **[[LIEN](https://github.com/oar-team/nur-kapack)]** J'ai pu tester le fonctionnement et faire des choses qui n'était pas possible avec nixpkgs. Comme par exemple, lancer les phases de compilations d'un outils les une après les autres. Ce qui est très utile dans le cadre de mise a jour et/ou de création de paquets cela assure une bonne capacité de debug en ciblant directement les phases de compilations qui sont problématiques.
+
+J'ai donc pu tester toutes ces fonctionnalités avec le paquet OAR dans le NUR-Kapack.
+
 ---
 ### BeegFS
+
+
 
 ---
 ### Regale Upgrade
