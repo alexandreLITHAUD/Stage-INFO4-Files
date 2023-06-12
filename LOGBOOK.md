@@ -1038,6 +1038,17 @@ error: program 'git' failed with exit code 128
 - Continuation du rapport d'avancement du stage
 
 ## 09/06/23 :
+- Finition et envoie du rapport d'avancement **[[LIEN](./FILES/REPORT.pdf)]**
+- Un problème sur oar est sur venue : (il ne marche plus maintenant)
+- Tentative de correction du problème, changement de branche et test simple en divisant le problème
+- Test de reproductivité du problème avec Monsieur Richard
+- Tentative de correction.
+- Erreur sur les hash son survenue sur un hash qui n'est présent dans aucun .lock ou fichier connue
+- Le problème viens en fait d'un code ajouter par Adriend qui permet de refaire fojnctionner l'API de OAR.
+- le code rajouté override une partie des attributs et rentre en collision avec le pricipe d'override de NXC.
+- Entrainant donc le problème de hash car le hash proviens d'un fichier juste recemment rajouté
+- Ce problème est interessant a analyser et fera surement l'object d'une issue dans le future
+- Analyse d'une composition d'Adrien qui pourrai résoudre le problème **[[LIEN](https://gitlab.inria.fr/adfaure/nixos-compositions/-/tree/master)]**
 
 ---
 
