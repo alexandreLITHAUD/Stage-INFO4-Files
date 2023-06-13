@@ -1055,6 +1055,18 @@ error: program 'git' failed with exit code 128
 ## Semaine 9 :
 
 ## 12/06/23 :
+- Modification de nur-kapack afin de résoudre le problème de hash lors de l'utilisation de NixOS Compose, l'attribut override de l'api rest a été supprimer.
+- Push des changements dans la branche regale de nur-kapack (CI failed)
+- Suppression de la branche regale-2211 apèrs son merge avec la branche regale
+- Utilisation et Analyse du fichier de composition de oar fait par Adrien Faure
+- Le fichier semble similaire mais il n'utilise plus php 74 qui est devenue décrécie avec Nix 22.11
+- Commit des changemnt de oar dans regale
+- Maintenant que j'ai les droits sur la prupart des project de regale je peux tester les compositions dans lesqueles je n'avais pas les droits
+- Test de fonctionnement de **bdpo-oar** dans regale en utilisant Nix 22.11
+- Test de fonctionnement de **bdpo** dans regale en utilisant Nix 22.11
+- Test de fonctionnement de **Melissa-ear-oar** dans regale en utilisant Nix 22.11
+- Test de fonctionnement de **ear** dans regale en utilisant Nix 22.11
+- Il ne manque plus que **bebida**, **examon** et  **ear-oar**.
 
 ## 13/06/23 :
 
