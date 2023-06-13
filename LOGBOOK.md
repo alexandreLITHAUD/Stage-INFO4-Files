@@ -1069,6 +1069,15 @@ error: program 'git' failed with exit code 128
 - Il ne manque plus que **bebida**, **examon** et  **ear-oar**.
 
 ## 13/06/23 :
+- Modification de regale pour faire en sorte que bebida et ear-oar fonctionnent en 22.11
+- Examon ne marche pas car il manque un service, mais ce problème ne provient pas de la version de nix car il ne marche deja pas en version 22.05. Il manque le service serive.examon qui a surement été supprimer de nixpkgs ou nur-kappack
+- Push de la version de la branch dans nur kapack dans la branch update-2211.
+- La pipiline a fail sur ces commit car les test de oar ne marche pas correctement, mais le comportement général de oar semble correct
+- **TODO** verifier quand meme le bon focntionnement de oar et de ear dans plusieur "saveurs"
+- Projet suivant : 'Ear' ou 'irods' (git utile ici : https://github.com/irods/irods_demo)
+- Comprehention du principe de irods
+- Lecture du code de irods et de la demo afin de comprendre les grandes étapes de fonctionnement ainsi que le moyen de communication
+- irods est present sur le nixpkgs il ne manquera surement que de faire les services (comme sur beegfs)
 
 ## 14/06/23 :
 
