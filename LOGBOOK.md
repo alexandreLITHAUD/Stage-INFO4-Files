@@ -1080,6 +1080,42 @@ error: program 'git' failed with exit code 128
 - irods est present sur le nixpkgs il ne manquera surement que de faire les services (comme sur beegfs)
 
 ## 14/06/23 :
+- Lecture de toute la docuementation autour de irods : https://docs.irods.org/4.3.0/
+- Test de fonctionnement de la demo de iRODS : https://github.com/irods/irods_demo/tree/main
+- Creation d'un docuement qui synthétise toutes les informations interessante sur IRODS de son installation a ses dépendances.
+- Test de fonctionnement du paquet nixpkgs de iRODS
+- **PROBLEME** :
+  - Le paquet ne fonctionne pas
+  ```
+    In file included from /build/source/server/core/src/catalog_utilities.cpp:9:
+    In file included from /nix/store/3rvc9ma7xli9jh0yxrk8pm9p08c9sp9r-fmt-8.1.1-dev/include/fmt/format.h:48:
+    /nix/store/3rvc9ma7xli9jh0yxrk8pm9p08c9sp9r-fmt-8.1.1-dev/include/fmt/core.h:1727:3: error: static_assert failed due to requirement 'formattable' "Cannot format an argument. To make type T formattable provide a formatter<T> specialization: https://fmt.dev/latest/api.html#udt"
+      static_assert(
+      ^
+    /nix/store/3rvc9ma7xli9jh0yxrk8pm9p08c9sp9r-fmt-8.1.1-dev/include/fmt/core.h:1853:23: note: in instantiation of function template specialization 'fmt::v8::detail::make_arg<true, fmt::v8::basic_format_context<fmt::v8::appender, char>, fmt::v8::detail::type::custom_type, const irods::experimental::catalog::entity_type &, 0>' requested here
+            data_{detail::make_arg<
+                          ^
+    /nix/store/3rvc9ma7xli9jh0yxrk8pm9p08c9sp9r-fmt-8.1.1-dev/include/fmt/core.h:1872:10: note: in instantiation of function template specialization 'fmt::v8::format_arg_store<fmt::v8::basic_format_context<fmt::v8::appender, char>, irods::experimental::catalog::entity_type>::format_arg_store<const irods::experimental::catalog::entity_type &>' requested here
+      return {std::forward<Args>(args)...};
+            ^
+    /nix/store/3rvc9ma7xli9jh0yxrk8pm9p08c9sp9r-fmt-8.1.1-dev/include/fmt/core.h:3119:28: note: in instantiation of function template specialization 'fmt::v8::make_format_args<fmt::v8::basic_format_context<fmt::v8::appender, char>, const irods::experimental::catalog::entity_type &>' requested here
+      return vformat(fmt, fmt::make_format_args(args...));
+                              ^
+    /build/source/server/core/src/catalog_utilities.cpp:121:44: note: in instantiation of function template specialization 'fmt::v8::format<const irods::experimental::catalog::entity_type &>' requested here
+                    irods::log(LOG_ERROR, fmt::format("Invalid entity type [entity_type => {}]", _entity_type));
+                                              ^
+    1 error generated.
+    make[2]: *** [CMakeFiles/irods_server.dir/build.make:2148: CMakeFiles/irods_server.dir/server/core/src/catalog_utilities.cpp.o] Error 1
+    make[2]: *** Waiting for unfinished jobs....
+    make[1]: *** [CMakeFiles/Makefile2:748: CMakeFiles/irods_server.dir/all] Error 2
+    make: *** [Makefile:156: all] Error 2
+  ```
+  - Le problème vient surement de fmt mais il n'y a pas de facon claire de résoudre le problème
+  - Lien de quelque issues : https://github.com/fmtlib/fmt/issues/627 ; https://github.com/gabime/spdlog/issues/2345
+  - Le problème peux venir de l'opérateur << qui n'est pas réconnue si on importe pas la bibliotèque `fmt/ostream.h`
+  - On pourrai le résoudre si on avais access au source comme sur nur-kapack en utilisant cette commande par exemple : `sed 18 a #include <fmt/ostream.h>`.
+  - Mais il n'est pas possible de modifier les sources de nixpkgs directement
+  - **TODO** Discuter avec Monsieur Richard et Quentin pour savoir quoi faire et sinon faire une issue git sur fmt
 
 ## 15/06/23 :
 
