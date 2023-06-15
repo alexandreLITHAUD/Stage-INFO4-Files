@@ -1118,6 +1118,24 @@ error: program 'git' failed with exit code 128
   - **TODO** Discuter avec Monsieur Richard et Quentin pour savoir quoi faire et sinon faire une issue git sur fmt
 
 ## 15/06/23 :
+- Comme le paquets nixpkgs ne fonctionne pas, Creation et modification d'un clone de nixpkgs pour y refaire marcher irods.
+- Si le resultat final fonctionne et que je reussit a refaire fonctonner irods je pourrais rpoposer un pull-requets
+- Test de fonctionnement de la demo de irods.
+- Il y a un problème evec docker compose dans la demo (la version utilisé de docker compose venai de unstable)
+```
+=> CANCELED [metalnx 2/5] RUN apt-get update &&     apt-get install -y         netcat         postgresql-client     &&     apt-get clean                                                                      28.9s
+ => [nginx-reverse-proxy 2/2] COPY irods_client_rest_cpp_reverse_proxy.conf /etc/nginx/conf.d/default.conf                                                                                                      0.8s
+ => [irods-client-zmt internal] load build definition from Dockerfile                                                                                                                                           0.0s
+ => => transferring dockerfile: 2B                                                                                                                                                                              0.0s
+ => CANCELED [irods-client-zmt internal] load .dockerignore                                                                                                                                                     0.0s
+ => => transferring context:                                                                                                                                                                                    0.0s
+failed to solve: rpc error: code = Unknown desc = failed to solve with frontend dockerfile.v0: failed to read dockerfile: open /var/lib/docker/tmp/buildkit-mount2688283715/Dockerfile: no such file or directory
+
+```
+- **TODO** : faire un test de fonctionnement du docker-compose irods dans g5k en utilisant kdeploy3 pour initialiser un noeud dasn une machine virtuelle Ubuntu ou Debian 
+- Relecture Rapide des nix-pills
+- Creation de quelque flake et derivation pour des projets
+- Test de fonctionnement des overlays nix
 
 ## 16/06/23 :
 
