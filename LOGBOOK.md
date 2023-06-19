@@ -1154,6 +1154,15 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
 ## Semaine 10 :
 
 ## 19/06/23 :
+- Creation de la composition ceph
+- Il y a un problème de compilation
+  - Le noeud ne s'active pas si on active le système dhcpcd dans le networking `dhcpcd.enable = false;`
+- Creation de systeème de test sur la composition en reprensant ceux déja créé dans nixpkgs
+- Creation d'une note Mardown qui synthétise les informations importante de ceph, sont fonctionnement et les dépendances
+- Afin de pouvoir faire un FS ceph et non pas un système ceh il va falloir rrajouter un serveur de métadonnées dans la composition nix
+- Ce système n'as pas été tester dans nix il va donc falloir le faire a la main
+- Il existe cepandant dans la configuration un moyen d'activer des serveur de métadonnées.
+- Test de fonctionnement d'un système plus complexe qui utilse tous les noeud de ceh et essaye de les faire fonctionner ensemble sur le réseaux. 
 
 ## 20/06/23 :
 
