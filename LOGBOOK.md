@@ -1138,6 +1138,16 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
 - Test de fonctionnement des overlays nix
 
 ## 16/06/23 :
+- Test de fonctionneemnt de irods dans nxc avec kadeploy dans un Ubuntu (Fonctionel)
+- Lecture approfondie de la documentation Ceph afin d'essayer d'en faire une composition
+- Lecture des différentes ressources disposible sur ceph
+  - Test Simple : https://github.com/NixOS/nixpkgs/blob/master/nixos/tests/ceph-single-node.nix
+  - Test Multi : https://github.com/NixOS/nixpkgs/blob/master/nixos/tests/ceph-multi-node.nix
+  - Test Aprrofindie : https://github.com/NixOS/nixpkgs/blob/master/nixos/tests/ceph-single-node-bluestore.nix
+  - Dérivation : https://github.com/NixOS/nixpkgs/blob/master/pkgs/tools/filesystems/ceph/default.nix
+  - Module : https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/network-filesystems/ceph.nix
+- Création d'une composition de qui va servir de base pour y faire fonctionner ceph
+- Modification de la composition de base pour y rajouter les roles important de Ceph
 
 ---
 
