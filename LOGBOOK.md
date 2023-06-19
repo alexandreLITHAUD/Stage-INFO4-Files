@@ -1162,7 +1162,9 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
 - Afin de pouvoir faire un FS ceph et non pas un système ceh il va falloir rrajouter un serveur de métadonnées dans la composition nix
 - Ce système n'as pas été tester dans nix il va donc falloir le faire a la main
 - Il existe cepandant dans la configuration un moyen d'activer des serveur de métadonnées.
-- Test de fonctionnement d'un système plus complexe qui utilse tous les noeud de ceh et essaye de les faire fonctionner ensemble sur le réseaux. 
+- Test de fonctionnement d'un système plus complexe qui utilse tous les noeud de ceh et essaye de les faire fonctionner ensemble sur le réseaux.
+- Finalization d'u systeme ceph pour des initlisation simple a un seul noeud
+- Je ne sais pas si il sera possible de faire plusieur role ou si un role va tout contenir (à voir mais un role semble plus simple) (mais pas en accord avec nxc)
 
 ## 20/06/23 :
 
