@@ -11,6 +11,9 @@
   - [Semaine 9 :](#semaine-9-)
   - [Semaine 10 :](#semaine-10-)
   - [Semaine 11 :](#semaine-11-)
+  - [Semaine 12 :](#semaine-12-)
+  - [Semaine 13 :](#semaine-13-)
+  - [Semaine 14 :](#semaine-14-)
 
 ---
 
@@ -1167,6 +1170,19 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
 - Je ne sais pas si il sera possible de faire plusieur role ou si un role va tout contenir (à voir mais un role semble plus simple) (mais pas en accord avec nxc)
 
 ## 20/06/23 :
+- Meilleur apprentissage de G5K (comment fonctionne oar...)
+- Meilleur apprentissage de tmux (pour le faire fonctionner avec g5k et ssh)
+- Creation d'une composition simple pour faire fonctionner ceph (ne peux pas marcher par il n'y a pas de disk avec les vm)
+- Test de fonctionnement de cette composition dans g5k
+  - g5k-nfs-store ne fonctionne pas il faut donc utiliser g5k-ramdisk
+  - ne pas oublier de faire `oarsub -I` pour faire le build dans un noeud et non pas dans la frontale !!!
+- Il y a des problème avec les IP (je les avais mise au harsard en prié mais il y a un serveur dhcp et un accès a l'extérieur cela ne peux donc pas marcher)
+  - Discutution avec Olivier pour ce problème : utiliser les activations script pour récuperer l'adresse IP directement avant même le systemd
+- Il y aussi un questionemment avec les osd sur comment faire pour que chaque role puisse utiliser des "identifiant différent"
+  - Deux Solutions :
+  - Faire une fonction dans le let et append le tout dans la set roles de nxc
+  - Ou trouver un code nix capable de générer un uuid et key dans le bon format (et ce de mannière unique)
+- Creation d'une liste des technologies rencontrer (avec ceux qu'il aut que je fasse une petite docuementation)   
 
 ## 21/06/23 :
 
@@ -1177,3 +1193,43 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
 ---
 
 ## Semaine 11 :
+
+## 26/06/23 :
+
+## 27/06/23 :
+
+## 28/06/23 :
+
+## 29/06/23 :
+
+## 30/06/23 :
+
+---
+
+## Semaine 12 :
+
+## 03/07/23
+
+## 04/07/23
+
+## 05/07/23
+
+## 06/07/23
+
+## 07/07/23
+
+--- 
+
+## Semaine 13 :
+
+## 10/07/23
+
+## 11/07/23
+
+## 12/07/23
+
+## 13/07/23
+
+---
+
+## Semaine 14 :
