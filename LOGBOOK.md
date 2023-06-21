@@ -1185,6 +1185,13 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
 - Creation d'une liste des technologies rencontrer (avec ceux qu'il aut que je fasse une petite docuementation)   
 
 ## 21/06/23 :
+- Test de fonctionnement des modules dhcp dans g5k
+- Creation d'un module nix dans la composition afin de pourvoir configurer l'ip de chaque machine directement a l'initilisation
+- Creation d'un code python permttant d'auto generer des uuid v4
+- Creation d'un code python permettant d'auto générer des keys ceph
+- Creation d'un test pour voir si le role va creer des uuid différents pour chaque insatnce de ce role
+- **TODO** : corriger le bug qui refuse d'executer le code python
+- Creation de multiple version de module systemd afin de savoir lequel est le plus efficace
 
 ## 22/06/23 :
 
