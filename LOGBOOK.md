@@ -1194,6 +1194,24 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
 - Creation de multiple version de module systemd afin de savoir lequel est le plus efficace
 
 ## 22/06/23 :
+- Mise a jour de la composition nix
+  - Correction du service systemd de recuperation de l'adresse IP pour utiliser le chier ip_addr dans le dossier etc/nix afin de pouvoir quand même faire une configuration de ceph même si il y a plusieurs instances d'un même role
+  - Ajout des fonction python de generation de uuid et de key : **Problème** :
+  - Les valeur sont identique malgré le fait qu'il soie générer directement dans le role
+  - Pour résoudre ce problème je pense soie créer l'uuid et la key dans un service le problème sera que nxc n'aura pas les informations
+  - Ou trouver une autre soluction
+- Lecture intensive du code nixos compose afin d'essayer de voir si il n'y a pas un moyen de le faire quand meme dans nxc
+- **SEMINAIRE** : FGPA dans les HPC, Olivier Richard et Olivier Muller (14h->15h50)
+  - lorem
+  - lorem
+  - lorem
+  - lorem
+  - lorem
+  - lorem
+  - lorem
+- Debut de l'implementation de la martie multi node dans la composition ceph
+- **TODO** : finir cette partie
+- **TODO** : faire une common config afin de facilité la lecture
 
 ## 23/06/23 :
 
