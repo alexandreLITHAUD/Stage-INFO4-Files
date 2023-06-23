@@ -1202,13 +1202,18 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
   - Ou trouver une autre soluction
 - Lecture intensive du code nixos compose afin d'essayer de voir si il n'y a pas un moyen de le faire quand meme dans nxc
 - **SEMINAIRE** : FGPA dans les HPC, Olivier Richard et Olivier Muller (14h->15h50)
-  - lorem
-  - lorem
-  - lorem
-  - lorem
-  - lorem
-  - lorem
-  - lorem
+  - Les FPGA sont des architectures reconfigurable
+  - Utilise des LUT -> cad les plus petite unité recoonfigurable -> Utilise d'autre trucs BRAM (mémoire) et DSP (unité de calcul) 
+  - On peux reconfigurer en utilisant des langages spécifique, VHDL, Verilog
+  - Longue chaine de travail (workflow); environ 48h
+  - On peux mainteant utiliser C et C++ pour faire de la configuration fpga
+  - Les fpga peuvent accelerer le code si il est adapté (parrallèle)
+  - Les fpga consomme moins par opération qu'un cpu ou gpu
+  - Il commence a avoir un rapprochement entre gpu et fpga
+  - Il y mainteant des api propriétaire qui permtte de ne plus tout devoir faire a la main
+  - Cela depend beacoups des composant et machines
+  - Pour faire du fpga il faut accepter de changé ses algo (remplacer les flottant par des entiers)
+  - FPGA commence enfin à être un peux accessible 
 - Debut de l'implementation de la martie multi node dans la composition ceph
 - **TODO** : finir cette partie
 - **TODO** : faire une common config afin de facilité la lecture
