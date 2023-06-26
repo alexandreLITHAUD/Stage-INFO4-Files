@@ -1219,6 +1219,13 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
 - **TODO** : faire une common config afin de facilité la lecture
 
 ## 23/06/23 :
+- Discution sur le problème d'autogénération des osd ceph
+- Pour ce faire on va essayer de creer la même mecanique que dans nixos compose
+- Donc en utilisant une méthode makeMany qui va créer un certain nombre de fois la set donnée en paramètre
+- On pourras ensuite "append" ces valeurs au set role afin de pouvoir créer leur noeud
+- Cette méthode est plutot simple mais le programme ne pourra pas être capable de changer de nombre d'osd à la volé sans recompiler
+- On va donc mettre une valeur dans le setup.toml qui va pemettre de choisir le nombre d'osd voulu
+- Mais il faudra recompiler entre chaque changement
 
 ---
 
