@@ -1232,8 +1232,17 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
 ## Semaine 11 :
 
 ## 26/06/23 :
+- Debuggage des différentes fonctions a rajouter pour pouvoir faire des osd modulable
+- Creation d'autres fonctionnement pour les même raisons
+- Correction de certaines fonction
+- Implementation de ces solutions dans la composition pour essayer de fauire fonctionner parfaitement
+- Aide Adrien pour des test de oar avec g5k -> Priblème avec g5k-image et la fonction makeMany de nixosCompose
+- Test du programme dans g5k
 
 ## 27/06/23 :
+- Ecriture de Documentation et commentaire sur le code de la composition
+- Ecriture de tests python nix afin de tester le bon fonctionnement de nxc
+- Creation du dépot pour stocker le code la composition ceph : https://gitlab.inria.fr/nixos-compose/hpc-io/ceph-fs/-/tree/main/
 
 ## 28/06/23 :
 
