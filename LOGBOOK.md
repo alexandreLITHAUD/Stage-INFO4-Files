@@ -1258,6 +1258,10 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
 - Continuation du rapport de stage
 
 ## 30/06/23 :
+- Redaction du rapport
+- Creation du script de base
+- Test des fonctionnalitées importante ce ceph dans grid500
+- Creation d'un script de test complet afin de verifier le bon fonctionnement de cephfs
 
 ---
 
