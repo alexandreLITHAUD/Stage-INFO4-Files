@@ -1245,8 +1245,17 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
 - Creation du dépot pour stocker le code la composition ceph : https://gitlab.inria.fr/nixos-compose/hpc-io/ceph-fs/-/tree/main/
 
 ## 28/06/23 :
+- Lecture intensive du script python de fonctionnement de nsf
+- Comphréntion de ce code
+- Lecture de la docuementation de execo
+- Documentation du code de ceph
 
 ## 29/06/23 :
+- Correction d'un bug sur ceph
+  - Une clé est créer mais doit être présente sur tous les autres noeud or il n'y a pas de communication
+  - Pour ce faire utiliser les commande ceph pour utiliser une clé deja creer dans un service systemd
+  - Lecture intensive de la doc ceph et des différentes commandes possible pour résoudre ce problème
+- Continuation du rapport de stage
 
 ## 30/06/23 :
 
