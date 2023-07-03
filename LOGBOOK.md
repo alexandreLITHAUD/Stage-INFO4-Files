@@ -1255,6 +1255,17 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
 ## Semaine 12 :
 
 ## 03/07/23
+- **Réunion**
+  - Continuation de l'intrumentation du code de ceph
+  - Push du dépot beegfs
+  - Push du dépot glusterfs
+  - Lecture intensive du code de orangefs pour le script execo
+  - Creation d'un script de base pour "mettre en place" ceph
+  - Creation de schema du workflow de packaging de FS dans nxc
+- **TODO**
+  - Documentation (dans le readme par exemple) de beegfs, ou on en ai, comment ça marche et raison d'arret
+  - Documentation (dans le readme par exemple) de cephfs, ou on en ai, comment ça marche et raison d'arret
+  - Creation d'un docuementation spécialisé pour les différent cas (systemd, activation scrip, MakmanyById...) 
 
 ## 04/07/23
 
