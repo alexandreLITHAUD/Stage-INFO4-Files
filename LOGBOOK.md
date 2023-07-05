@@ -1281,6 +1281,13 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
   - Creation d'un docuementation spécialisé pour les différent cas (systemd, activation scrip, MakmanyById...) 
 
 ## 04/07/23
+- Creation d'un scrpt python de test pour tester les performances de cephfs dans g5k
+- Il va falloir adapter ce code et surtout rajouter des script pour bien mettre en place ceph avant les test
+- Creation de schéma mermaid pour représenter les différents fs et fonctionnement de certaines parties clé de mon stage
+- Ceph a un problème de décodage de base64 dans la partie osd (a tester en au-générant puis a essayer d'automatisé)
+- Avancement sur le rapport de stage (création de la table de matières + Résumé/Abstract)
+- Migration du rapport de stage sur latex en utilisant rubber et pandoc
+
 
 ## 05/07/23
 
