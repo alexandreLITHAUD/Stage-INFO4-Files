@@ -1303,6 +1303,13 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
   - Aide de résolution de oar régale (ma branche a ete merge mais elle est pas forcement bonne)
 
 ## 06/07/23
+- Mise à jour de ceph pour mettre a jour makeMany afin de commancer au bon ID les osd Ceph
+- Redaction de documentation NixOS-Compose qui traite du cas d'usage d'utilisation des spcrit en NixOS-Compose
+- **TODO** Faire le schéma général
+- **TODO** Faire La doc pour les role
+- **TODO** Finir redaction de la doc script
+- Essai de rajout des mds et client dans ceph afin de le faire fonctionner
+- Discution avec Adrien sur le fonctionnement des role en nxc, sur leur avantage et les closure que certaines peuvent générer
 
 ## 07/07/23
 
