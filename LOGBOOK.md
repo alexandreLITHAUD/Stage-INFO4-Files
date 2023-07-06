@@ -14,6 +14,7 @@
   - [Semaine 12 :](#semaine-12-)
   - [Semaine 13 :](#semaine-13-)
   - [Semaine 14 :](#semaine-14-)
+  - [Semaine 15 :](#semaine-15-)
 
 ---
 
@@ -1288,8 +1289,18 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
 - Avancement sur le rapport de stage (création de la table de matières + Résumé/Abstract)
 - Migration du rapport de stage sur latex en utilisant rubber et pandoc
 
-
 ## 05/07/23
+- Creation d'un shema general sur mon flow de pensé pour rajouter un Fs dans nxc
+- **TODO** : Faire un shema général qui traite les cas d'utiliation de script et de role pour rajouter des services dans NXC
+- Test de fonctionnement de ceph
+- Lecture de la docuementation et tentative de reiinstallation complete sans suivre le test nixpkgs
+- Aide Adrien a résudre le problème de g5k-image
+  - Creation de l'issue du problème : https://gitlab.inria.fr/nixos-compose/nixos-compose/-/issues/33
+  - Problème de déploiement même dans le cas le plus simple avec le role distribution
+  - Test en 22.05 (moi), 22.11 et 23.05 (Adrien)
+  - Problème semble venir de nisos compose et de la version
+  - l'issues git est résolu
+  - Aide de résolution de oar régale (ma branche a ete merge mais elle est pas forcement bonne)
 
 ## 06/07/23
 
@@ -1310,3 +1321,27 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
 ---
 
 ## Semaine 14 :
+
+## 17/07/23
+
+## 18/07/23
+
+## 19/07/23
+
+## 20/07/23
+
+## 21/07/23
+
+---
+
+## Semaines 15 :
+
+## 24/07/23
+
+## 25/07/23
+
+## 26/07/23
+
+## 27/07/23
+
+## 28/07/23
