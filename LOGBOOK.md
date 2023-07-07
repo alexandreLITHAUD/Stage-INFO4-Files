@@ -1312,6 +1312,14 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
 - Discution avec Adrien sur le fonctionnement des role en nxc, sur leur avantage et les closure que certaines peuvent générer
 
 ## 07/07/23
+- Creation de noeud mds dans ceph et test de fonctionnement
+- MDS Semble fonctionner correctment
+- Je j'ai fait dans la meme machine que mon et mgr et ça semble être le plus simple
+- Creation d'un Fs simple 
+- Creation de pool ceph (je n'ai pas compris comment ça marche il faut revoir ça)
+- Il ne manque plus que de faire un noeud simple client et essayer de monter le fs dessus
+- Quand ce sera finis j'essaierai de modifier le fs pour le rendre mieux en fonction des parametre données (pgr...)
+- Si tout est bon il ne manquera plus que l'automatiser et tester les performances
 
 --- 
 
