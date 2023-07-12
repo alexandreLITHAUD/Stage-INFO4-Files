@@ -1326,10 +1326,16 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
 ## Semaine 13 :
 
 ## 10/07/23
+- Test de fonctionnement de ceph complet
+- Creation de documentation sur le workflow de la creation de composiiton
+- Continuuation du rapport de stage (la deadline est le 28/07) 
 
 ## 11/07/23
+- Continuation du rapoort de stage
+- **TODO** : Faire les readme des composition faites pour definir ou j'en suis
 
 ## 12/07/23
+- Continuation du raport
 
 ## 13/07/23
 
