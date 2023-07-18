@@ -1338,14 +1338,23 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
 - Continuation du raport
 
 ## 13/07/23
+- Continuation du raport (Partie Nix,NixOS,Nixpkgs)
 
 ---
 
 ## Semaine 14 :
 
 ## 17/07/23
+- Continuation du rapport de stage
+- Redaction d'un glossaire détaillé
+- Redaction de la Conclusion et modification pour mettre au propre les anciennes partie
+- Lecture du rapport par Quentin
+- Redaction de documentation sur nxc
 
 ## 18/07/23
+- Lecture de référence sur les différents outils utiliser lors du stage afin de pouvoir les cité dans le prapport de stage.
+- Continuation du raport (Modification suite au retour de Quentin)
+- Redaction des références dans le rapport
 
 ## 19/07/23
 
