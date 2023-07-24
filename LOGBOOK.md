@@ -1357,10 +1357,14 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
 - Redaction des références dans le rapport
 
 ## 19/07/23
+- Continuation du rapport de stage
 
 ## 20/07/23
+- Continuation du rapport de stage
 
 ## 21/07/23
+- Continuation du rapport de stage
+- Finnalisation du Rapport (ce week-end)
 
 ---
 
