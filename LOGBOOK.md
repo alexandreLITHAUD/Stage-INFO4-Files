@@ -14,6 +14,7 @@
   - [Semaine 12 :](#semaine-12-)
   - [Semaine 13 :](#semaine-13-)
   - [Semaine 14 :](#semaine-14-)
+  - [Semaine 15 :](#semaine-15-)
 
 ---
 
@@ -1281,25 +1282,100 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
   - Creation d'un docuementation spécialisé pour les différent cas (systemd, activation scrip, MakmanyById...) 
 
 ## 04/07/23
+- Creation d'un scrpt python de test pour tester les performances de cephfs dans g5k
+- Il va falloir adapter ce code et surtout rajouter des script pour bien mettre en place ceph avant les test
+- Creation de schéma mermaid pour représenter les différents fs et fonctionnement de certaines parties clé de mon stage
+- Ceph a un problème de décodage de base64 dans la partie osd (a tester en au-générant puis a essayer d'automatisé)
+- Avancement sur le rapport de stage (création de la table de matières + Résumé/Abstract)
+- Migration du rapport de stage sur latex en utilisant rubber et pandoc
 
 ## 05/07/23
+- Creation d'un shema general sur mon flow de pensé pour rajouter un Fs dans nxc
+- **TODO** : Faire un shema général qui traite les cas d'utiliation de script et de role pour rajouter des services dans NXC
+- Test de fonctionnement de ceph
+- Lecture de la docuementation et tentative de reiinstallation complete sans suivre le test nixpkgs
+- Aide Adrien a résudre le problème de g5k-image
+  - Creation de l'issue du problème : https://gitlab.inria.fr/nixos-compose/nixos-compose/-/issues/33
+  - Problème de déploiement même dans le cas le plus simple avec le role distribution
+  - Test en 22.05 (moi), 22.11 et 23.05 (Adrien)
+  - Problème semble venir de nisos compose et de la version
+  - l'issues git est résolu
+  - Aide de résolution de oar régale (ma branche a ete merge mais elle est pas forcement bonne)
 
 ## 06/07/23
+- Mise à jour de ceph pour mettre a jour makeMany afin de commancer au bon ID les osd Ceph
+- Redaction de documentation NixOS-Compose qui traite du cas d'usage d'utilisation des spcrit en NixOS-Compose
+- **TODO** Faire le schéma général
+- **TODO** Faire La doc pour les role
+- **TODO** Finir redaction de la doc script
+- Essai de rajout des mds et client dans ceph afin de le faire fonctionner
+- Discution avec Adrien sur le fonctionnement des role en nxc, sur leur avantage et les closure que certaines peuvent générer
 
 ## 07/07/23
+- Creation de noeud mds dans ceph et test de fonctionnement
+- MDS Semble fonctionner correctment
+- Je j'ai fait dans la meme machine que mon et mgr et ça semble être le plus simple
+- Creation d'un Fs simple 
+- Creation de pool ceph (je n'ai pas compris comment ça marche il faut revoir ça)
+- Il ne manque plus que de faire un noeud simple client et essayer de monter le fs dessus
+- Quand ce sera finis j'essaierai de modifier le fs pour le rendre mieux en fonction des parametre données (pgr...)
+- Si tout est bon il ne manquera plus que l'automatiser et tester les performances
 
 --- 
 
 ## Semaine 13 :
 
 ## 10/07/23
+- Test de fonctionnement de ceph complet
+- Creation de documentation sur le workflow de la creation de composiiton
+- Continuuation du rapport de stage (la deadline est le 28/07) 
 
 ## 11/07/23
+- Continuation du rapoort de stage
+- **TODO** : Faire les readme des composition faites pour definir ou j'en suis
 
 ## 12/07/23
+- Continuation du raport
 
 ## 13/07/23
+- Continuation du raport (Partie Nix,NixOS,Nixpkgs)
 
 ---
 
 ## Semaine 14 :
+
+## 17/07/23
+- Continuation du rapport de stage
+- Redaction d'un glossaire détaillé
+- Redaction de la Conclusion et modification pour mettre au propre les anciennes partie
+- Lecture du rapport par Quentin
+- Redaction de documentation sur nxc
+
+## 18/07/23
+- Lecture de référence sur les différents outils utiliser lors du stage afin de pouvoir les cité dans le prapport de stage.
+- Continuation du raport (Modification suite au retour de Quentin)
+- Redaction des références dans le rapport
+
+## 19/07/23
+- Continuation du rapport de stage
+
+## 20/07/23
+- Continuation du rapport de stage
+
+## 21/07/23
+- Continuation du rapport de stage
+- Finnalisation du Rapport (ce week-end)
+
+---
+
+## Semaines 15 :
+
+## 24/07/23
+
+## 25/07/23
+
+## 26/07/23
+
+## 27/07/23
+
+## 28/07/23
