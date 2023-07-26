@@ -1371,10 +1371,22 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
 ## Semaines 15 :
 
 ## 24/07/23
+- Relecture du rapport de stage
+- Rajout de quelque reerence dans le rapport
+- v1.1 du rapport https://github.com/alexandreLITHAUD/Rapport-De-Stage-INFO4-LIG/tree/v1.1
+- Ecriture de la documentation sur le script
 
 ## 25/07/23
+- Relecture du rapport
+- Rajout de nombreuse ressources dans le rapport
+- Correction de certaines petites erreurs sr le rapport 
+- v1.2 du rapport https://github.com/alexandreLITHAUD/Rapport-De-Stage-INFO4-LIG/tree/v1.2
+- Finalisation de la doc sur les scripts
 
 ## 26/07/23
+- Réalisation de schéme sur le fonctionnement des script NixOS-Compose
+- Ecriture de la docuemntation sur les roles NixOS-Compose
+- Essai de réalisation sur le shéma principal du workflow
 
 ## 27/07/23
 
