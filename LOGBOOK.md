@@ -1387,6 +1387,7 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
 - Réalisation de schéme sur le fonctionnement des script NixOS-Compose
 - Ecriture de la docuemntation sur les roles NixOS-Compose
 - Essai de réalisation sur le shéma principal du workflow
+- v1.3 du rapport https://github.com/alexandreLITHAUD/Rapport-De-Stage-INFO4-LIG/tree/v1.3
 
 ## 27/07/23
 
