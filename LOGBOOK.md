@@ -1390,5 +1390,10 @@ failed to solve: rpc error: code = Unknown desc = failed to solve with frontend 
 - v1.3 du rapport https://github.com/alexandreLITHAUD/Rapport-De-Stage-INFO4-LIG/tree/v1.3
 
 ## 27/07/23
+- Finalisation de la version priliminaire du rapport 
+- v1.4 du rapport https://github.com/alexandreLITHAUD/Rapport-De-Stage-INFO4-LIG/tree/v1.4
+- Finalisation des schemas pour le rapport et la soutenance
 
 ## 28/07/23
+- Au revoir au membre de l'équipe
+- Rendu des clés
